@@ -16,11 +16,62 @@
 
 .navbar-scroll {
   background-color: white !important;
-  box-shadow: 0 4px 2px -2px gray;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
 .navbar-scroll .nav-link {
-  color: black !important;
+  color: #343a40 !important;
+}
+
+.navbar {
+  padding: 12px 0;
+  transition: all 0.3s ease;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  letter-spacing: 0.5px;
+}
+
+.brand-artisan {
+  color: #C63E46;
+  font-weight: 700;
+}
+
+.brand-express {
+  color: #343a40;
+}
+
+.nav-link {
+  font-weight: 500;
+  padding: 0.5rem 1rem !important;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.navbar-scroll .nav-link:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.nav-btn {
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  background-color: #C63E46;
+  border-color: #C63E46;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+  background-color: #b73840;
+  border-color: #b73840;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Position styles */
@@ -29,4 +80,39 @@
   justify-content: center !important;
   align-items: center !important;
   margin-top: 30px;
+}
+
+/* Mobile menu styles */
+.mobile-menu .offcanvas-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.mobile-menu .nav-link {
+  padding: 0.75rem 0 !important;
+  font-size: 1.1rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.mobile-menu .offcanvas-body {
+  padding-top: 1rem;
+}
+
+/* Navbar toggler custom style */
+.navbar-toggler-custom {
+  border: none;
+  padding: 0.5rem;
+  font-size: 1.25rem;
+  color: currentColor;
+  background: transparent;
+}
+
+@media (max-width: 991.98px) {
+  .navbar-brand {
+    font-size: 1.25rem;
+  }
+  
+  .navbar {
+    padding: 8px 0;
+  }
 }
