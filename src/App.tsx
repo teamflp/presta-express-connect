@@ -11,7 +11,7 @@ import ProtectedRoute from './components/Routes/ProtectedRoute';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Search from './pages/Search';
+import SearchResults from './pages/SearchResults'; // Changed from Search to SearchResults
 import Metiers from './pages/ArtisanMetiers';
 import ProductDetails from './pages/ProductDetails';
 import DomainesIntervention from './pages/DomaineIntervention';
@@ -30,7 +30,7 @@ function App() {
             <Route path="/auth" element={<LoginComponent />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/search" element={<Search />} />
+            <Route path="/search" element={<SearchResults />} /> {/* Updated to use SearchResults */}
             <Route
               path="/testUser"
               element={<ProtectedRoute element={<TestUsersComponent />} />}
