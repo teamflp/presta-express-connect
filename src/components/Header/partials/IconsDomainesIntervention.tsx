@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import domaines from '../../../assets/tableaux/domaines.tsx'
+import domaines from '../../../assets/tableaux/domaines';
 import { Car, Wrench, Home, Hospital, Scale, Hammer, HandshakeIcon, Medkit, Building } from 'lucide-react';
 
 function IconsDomainesIntervention() {
