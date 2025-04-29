@@ -45,7 +45,7 @@ const CategoryDetails: React.FC = () => {
                 <div className="card job-card h-100 border-0 shadow-sm hover-card">
                   <img className="img-fluid job-image" src={job.image} alt={job.name} />
                   <div className="card-body">
-                    <h5 className="card-title text-lg">{job.name}</h5>
+                    <h5 className="card-title text-base text-center">{job.name}</h5>
                     <a href="#" className="card-link">
                       Voir les professionnels
                     </a>
