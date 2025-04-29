@@ -2,8 +2,8 @@
 import { useState, useEffect } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import Background from '../../../assets/images/lyon.jpg';
-import SearchButton from './SearchButton';
 import { ExternalLink } from 'lucide-react';
+import LocationSearchBar from './LocationSearchBar';
 
 function ImageHeader() {
     const [clicked, setClicked] = useState(false);
@@ -38,10 +38,11 @@ function ImageHeader() {
             <Card className="card-bg-image" style={{ background: `url(${Background}) no-repeat center center / cover`, height: '100%', borderRadius: '0px 0px 25px 25px', boxShadow: '0 8px 20px rgba(0, 0, 0, 0.15)' }}>
                 <div className="card-imageHeader" style={backgroundStyle}>
                     <div className="text-center px-3">
+                        <LocationSearchBar />
                         <h1 className="card-title text-white mb-4 fw-bold">Trouvez le professionnel idéal pour vos projets</h1>
                         <p className="text-white mb-5 fs-5">Des milliers d'artisans qualifiés à votre service partout en France</p>
                         <div className="d-flex justify-content-center">
-                            {!isLargeScreen && <SearchButton />}
+                            {/* Le SearchButton n'est plus nécessaire ici car nous avons notre barre de recherche de localisation */}
                         </div>
                         <Button 
                             className={`mt-3 button-primary ${clicked ? 'clicked' : ''}`} 

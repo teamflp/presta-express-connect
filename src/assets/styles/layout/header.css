@@ -176,6 +176,80 @@
   height: 61px; /* Hauteur de la navbar */
 }
 
+/* Styles pour la barre de recherche de localisation */
+.location-search-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto 1.5rem;
+  padding: 0 15px;
+}
+
+.location-search-form {
+  width: 100%;
+}
+
+.location-search-input {
+  height: 50px;
+  border: none;
+  padding-left: 15px;
+  font-size: 1rem;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05) !important;
+  border-radius: 0 !important;
+}
+
+.location-search-input:focus {
+  box-shadow: 0 4px 12px rgba(198, 62, 70, 0.15) !important;
+  border-color: #C63E46 !important;
+}
+
+.location-search-icon {
+  background-color: #ffffff;
+  border: none;
+  border-radius: 50px 0 0 50px !important;
+  padding: 0.75rem 1rem;
+  color: #C63E46;
+}
+
+.geolocation-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: rgba(255, 255, 255, 0.85);
+  color: #343a40;
+  border: none;
+  padding: 0.5rem 1rem;
+  z-index: 10;
+  transition: all 0.3s ease;
+  border-radius: 0;
+}
+
+.geolocation-button:hover, 
+.geolocation-button:focus {
+  background-color: #ffffff;
+  color: #C63E46;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.geolocation-button:disabled {
+  background-color: rgba(255, 255, 255, 0.5);
+  color: #999;
+  cursor: not-allowed;
+}
+
+.geolocation-text {
+  display: inline-block;
+}
+
+.search-submit-button {
+  border-radius: 0 50px 50px 0 !important;
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 @media (max-width: 991.98px) {
   .navbar-brand {
     font-size: 1.25rem;
@@ -187,5 +261,25 @@
   
   .header-spacing {
     height: 53px; /* Hauteur de la navbar en version mobile */
+  }
+  
+  .geolocation-text {
+    display: none;
+  }
+  
+  .search-submit-button {
+    padding: 0.5rem 1rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .location-search-container {
+    margin-bottom: 1rem;
+  }
+  
+  .location-search-input,
+  .geolocation-button,
+  .search-submit-button {
+    height: 45px;
   }
 }
