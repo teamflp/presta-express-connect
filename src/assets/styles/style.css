@@ -1,10 +1,4 @@
-<<<<<<< HEAD
 
-
-
-
-=======
->>>>>>> 3d500189628424456591be5e2c2de3a66e3abab7
 /*____DEBUT NAVBAR____ */
 /* Applique un margin-top de 100px uniquement lorsque l'utilisateur est sur la page Home */
 .navbar-home {
@@ -23,18 +17,10 @@
 }
 /*____FIN NAVBAR____ */
 
-<<<<<<< HEAD
-
 /*  Traits rouge  */
 .redLineStyle {
   border: none;
   border-top: 2px solid #C63E46;
-=======
-/*  Traits rouge  */
-.redLineStyle {
-  border: none;
-  border-top: 2px solid #c63e46;
->>>>>>> 3d500189628424456591be5e2c2de3a66e3abab7
   width: 100px;
   position: relative;
   right: 17px;
@@ -43,27 +29,14 @@
 }
 
 .redLineContainer {
-<<<<<<< HEAD
-border-top: 2px solid #C63E46;
-width: 100%;
-opacity: 1;
-}
-
-/* FILTRES PRODUCT */
-ortByPrice{
-  border-top: 0,5px solid #C63E46 !important;
-=======
-  border-top: 2px solid #c63e46;
+  border-top: 2px solid #C63E46;
   width: 100%;
   opacity: 1;
 }
 
 /* FILTRES PRODUCT */
 ortByPrice {
-  border-top:
-    0,
-    5px solid #c63e46 !important;
->>>>>>> 3d500189628424456591be5e2c2de3a66e3abab7
+  border-top: 0.5px solid #C63E46 !important;
 }
 
 .form-filter {
@@ -77,17 +50,9 @@ ortByPrice {
 
 .form-filter:focus,
 .form-filter:hover {
-<<<<<<< HEAD
   border: 1px solid #C63E46;
 }
 
-
-
-=======
-  border: 1px solid #c63e46;
-}
-
->>>>>>> 3d500189628424456591be5e2c2de3a66e3abab7
 /* CAROUSSEL */
 .carousel-wrapper {
   overflow: hidden;
@@ -108,25 +73,19 @@ ortByPrice {
   display: flex;
 }
 
-<<<<<<< HEAD
 .job-card {
   width: 200px; /* Définir la largeur standard */
   height: 200px; /* Définir la hauteur standard */
   display: inline-block;
   border-radius: 20px 0px 20px 70px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-=======
+}
+
 .cardCarousel {
   display: inline-block;
   width: 30%; /* Ajustez la largeur pour afficher 3 cartes par ligne */
   border-radius: 15px 0px 15px 15px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.job-card {
-  width: 200px; /* Définir la largeur standard */
-  height: 200px; /* Définir la hauteur standard */
->>>>>>> 3d500189628424456591be5e2c2de3a66e3abab7
 }
 
 .job-image {
@@ -144,43 +103,16 @@ ortByPrice {
   color: #141414;
   text-decoration: none;
   padding: 5px;
-<<<<<<< HEAD
   transition: color 0.3s ease, font-weight 0.3s ease;
 }
 
 .cardCarousel a:hover {
   color: #C63E46;
-=======
-  transition:
-    color 0.3s ease,
-    font-weight 0.3s ease;
-}
-
-.cardCarousel a:hover {
-  color: #c63e46;
->>>>>>> 3d500189628424456591be5e2c2de3a66e3abab7
   font-weight: bold;
 }
 
 .cardCarousel .card-link-city:hover {
-<<<<<<< HEAD
   color: #C63E46 !important;
-  font-weight: bold;
-}
-
-.cardCarousel .card-link-city{
-  color:white !important;
-}
-
-.card-link:hover {
-  color: #C63E46 !important;
-  font-weight: bold;
-}
-
-.card-link{
-  color:#C63E46 !important;
-=======
-  color: #c63e46 !important;
   font-weight: bold;
 }
 
@@ -189,13 +121,12 @@ ortByPrice {
 }
 
 .card-link:hover {
-  color: #c63e46 !important;
+  color: #C63E46 !important;
   font-weight: bold;
 }
 
 .card-link {
-  color: #c63e46 !important;
->>>>>>> 3d500189628424456591be5e2c2de3a66e3abab7
+  color: #C63E46 !important;
   text-decoration: none;
 }
 
@@ -228,20 +159,12 @@ ortByPrice {
 
 .custom-select:focus {
   box-shadow: 0 0 0 0.25rem rgba(197, 62, 70, 0.25); /* Ombre de focus */
-<<<<<<< HEAD
   border: 1px solid #C63E46 !important; /* Bordure au focus */
-=======
-  border: 1px solid #c63e46 !important; /* Bordure au focus */
->>>>>>> 3d500189628424456591be5e2c2de3a66e3abab7
 }
 
 .custom-select:hover,
 .custom-select:active {
-<<<<<<< HEAD
   border: 1px solid #C63E46 !important; /* Bordure au survol et activation */
-=======
-  border: 1px solid #c63e46 !important; /* Bordure au survol et activation */
->>>>>>> 3d500189628424456591be5e2c2de3a66e3abab7
 }
 
 .Form.Control {
@@ -252,17 +175,12 @@ ortByPrice {
 
 /* PAGINATION*/
 .pagination .page-item .page-link {
-<<<<<<< HEAD
   color: #C63E46;
-=======
-  color: #c63e46;
->>>>>>> 3d500189628424456591be5e2c2de3a66e3abab7
 }
 
 .pagination .page-item.active .page-link {
   font-weight: bold;
   background-color: transparent !important;
-<<<<<<< HEAD
   border-color: #C63E46;
   z-index: 1 !important;
 }
@@ -270,8 +188,6 @@ ortByPrice {
 .pagination {  
   --bs-pagination-focus-box-shadow: transparent !important;
 }
-
-
 
 /* ____DEBUT IMAGEHEADER____ */
 .card-bg-image{
@@ -282,8 +198,6 @@ ortByPrice {
   font-size: clamp(18px, 3vw, 44px);
 }
 /* ____FIN IMAGEHEADER____ */
-
-
 
 /* ____DEBUT DOMAINES D'INTERVENTION____ */ 
 .domaines-container {
@@ -306,7 +220,6 @@ ortByPrice {
 }
 /* ____FIN DOMAINES D'INTERVENTION____ */
 
-
 /* COMPOSANT ARGUMENT */
 .titre span{
   color:#b73840;
@@ -320,7 +233,6 @@ ortByPrice {
 .argument-title{
   width: clamp(14px, 3vw, 18px);  
 }
-
 
 /* LISTE DE METIERS PAR LETTRE */
 .letter-button {
@@ -348,12 +260,3 @@ ortByPrice {
   border: 1px solid #C63E46 !important;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2) !important; /* Légère intensification de l'ombre lors du focus */
 }
-=======
-  border-color: #c63e46;
-  z-index: 1 !important;
-}
-
-.pagination {
-  --bs-pagination-focus-box-shadow: transparent !important;
-}
->>>>>>> 3d500189628424456591be5e2c2de3a66e3abab7
