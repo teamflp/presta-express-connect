@@ -32,35 +32,35 @@ const CategoryDetails: React.FC = () => {
       case 'paint-bucket': return <PaintBucket size={size} className="category-icon-large" />;
       
       // Job Icons
-      case 'tool': return <Settings size={size} className="job-icon" />;
-      case 'pipe': return <Wrench size={size} className="job-icon" />; // Changed from PipeLine to Wrench as a fallback
-      case 'thermometer': return <Thermometer size={size} className="job-icon" />;
-      case 'droplet': return <Droplet size={size} className="job-icon" />;
-      case 'bath': return <Bath size={size} className="job-icon" />;
-      case 'flame': return <Flame size={size} className="job-icon" />;
-      case 'search': return <Search size={size} className="job-icon" />;
-      case 'axe': return <Axe size={size} className="job-icon" />;
-      case 'gem': return <Gem size={size} className="job-icon" />;
-      case 'door': return <Home size={size} className="job-icon" />;
-      case 'home': return <Home size={size} className="job-icon" />;
-      case 'sofa': return <Sofa size={size} className="job-icon" />;
-      case 'grid': return <Grid size={size} className="job-icon" />;
-      case 'square': return <Square size={size} className="job-icon" />;
-      case 'refresh-cw': return <RefreshCw size={size} className="job-icon" />;
-      case 'plug': return <Plug size={size} className="job-icon" />;
-      case 'cpu': return <Cpu size={size} className="job-icon" />;
-      case 'lightbulb': return <Lightbulb size={size} className="job-icon" />;
-      case 'sun': return <Sun size={size} className="job-icon" />;
-      case 'wifi': return <Wifi size={size} className="job-icon" />;
-      case 'shield': return <Shield size={size} className="job-icon" />;
-      case 'smartphone': return <Smartphone size={size} className="job-icon" />;
-      case 'palette': return <Palette size={size} className="job-icon" />;
-      case 'building': return <Building size={size} className="job-icon" />;
-      case 'framer': return <Framer size={size} className="job-icon" />;
-      case 'layers': return <Layers size={size} className="job-icon" />;
-      case 'brush': return <Brush size={size} className="job-icon" />;
-      case 'feather': return <Feather size={size} className="job-icon" />;
-      default: return <Wrench size={size} className="category-icon-large" />;
+      case 'tool': return <Settings size={size} className="job-icon-large" />;
+      case 'pipe': return <Wrench size={size} className="job-icon-large" />; // Changed from PipeLine to Wrench as a fallback
+      case 'thermometer': return <Thermometer size={size} className="job-icon-large" />;
+      case 'droplet': return <Droplet size={size} className="job-icon-large" />;
+      case 'bath': return <Bath size={size} className="job-icon-large" />;
+      case 'flame': return <Flame size={size} className="job-icon-large" />;
+      case 'search': return <Search size={size} className="job-icon-large" />;
+      case 'axe': return <Axe size={size} className="job-icon-large" />;
+      case 'gem': return <Gem size={size} className="job-icon-large" />;
+      case 'door': return <Home size={size} className="job-icon-large" />;
+      case 'home': return <Home size={size} className="job-icon-large" />;
+      case 'sofa': return <Sofa size={size} className="job-icon-large" />;
+      case 'grid': return <Grid size={size} className="job-icon-large" />;
+      case 'square': return <Square size={size} className="job-icon-large" />;
+      case 'refresh-cw': return <RefreshCw size={size} className="job-icon-large" />;
+      case 'plug': return <Plug size={size} className="job-icon-large" />;
+      case 'cpu': return <Cpu size={size} className="job-icon-large" />;
+      case 'lightbulb': return <Lightbulb size={size} className="job-icon-large" />;
+      case 'sun': return <Sun size={size} className="job-icon-large" />;
+      case 'wifi': return <Wifi size={size} className="job-icon-large" />;
+      case 'shield': return <Shield size={size} className="job-icon-large" />;
+      case 'smartphone': return <Smartphone size={size} className="job-icon-large" />;
+      case 'palette': return <Palette size={size} className="job-icon-large" />;
+      case 'building': return <Building size={size} className="job-icon-large" />;
+      case 'framer': return <Framer size={size} className="job-icon-large" />;
+      case 'layers': return <Layers size={size} className="job-icon-large" />;
+      case 'brush': return <Brush size={size} className="job-icon-large" />;
+      case 'feather': return <Feather size={size} className="job-icon-large" />;
+      default: return <Wrench size={size} className="job-icon-large" />;
     }
   };
 
@@ -105,15 +105,8 @@ const CategoryDetails: React.FC = () => {
             categoryJobs.map(job => (
               <div className="job-card-container" key={job.id}>
                 <div className="modern-job-card">
-                  <div className="job-image-container">
-                    <img 
-                      src={job.image} 
-                      alt={job.name} 
-                      className="job-image-modern"
-                    />
-                    <div className="job-icon-overlay">
-                      {getIconComponent(job.icon, 24)}
-                    </div>
+                  <div className="job-icon-container">
+                    {getIconComponent(job.icon, 100)}
                   </div>
                   <div className="job-content">
                     <h3 className="job-title-modern">{job.name}</h3>
