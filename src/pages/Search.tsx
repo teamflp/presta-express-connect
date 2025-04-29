@@ -195,6 +195,7 @@ const Search = () => {
       sortBy: 'rating'
     });
     setSearchQuery('');
+    toast.success('Filtres réinitialisés');
   };
 
   // Get unique professions and locations for filters
