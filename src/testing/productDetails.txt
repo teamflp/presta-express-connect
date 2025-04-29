@@ -1,0 +1,56 @@
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import ProductDetails from '../pages/ProductDetails';
+import { products } from '../assets/tableaux/productData';
+
+// Mock des composants enfants pour isoler le test du composant ProductDetails
+jest.mock('../components/Header/partials/NavBar', () => () => (
+  <div>Mocked Navbar</div>
+));
+jest.mock('../components/FAQ/Faqs', () => () => <div>Mocked FaqAccordion</div>);
+jest.mock('../components/Footer/Footer', () => () => <div>Mocked Footer</div>);
+jest.mock('../components/Filtres/ProductSearch', () => () => (
+  <div>Mocked ProductSearch</div>
+));
+import { Product } from '../components/Product/Product'; // Assuming you have a type named 'Product' for your product data
+
+jest.mock(
+  '../components/Product/ProductDetailsCard',
+  () =>
+    ({ product }: { product: Product }) => (
+      <div>Mocked ProductDetailsCard - {product.name}</div>
+    )
+);
+
+describe('ProductDetails Component', () => {
+  // Test pour vérifier que le composant se rend sans planter
+  test('renders without crashing', () => {
+    render(<ProductDetails />);
+    // Vérifie que le composant Navbar mocké est bien rendu
+    expect(screen.getByText('Mocked Navbar')).toBeInTheDocument();
+  });
+
+  // Test pour vérifier que les détails du produit sont affichés si le produit est trouvé
+  test('displays product details if product is found', () => {
+    render(<ProductDetails />);
+    // Recherche un produit avec l'ID 1 dans les données de produits
+    const product = products.find((p) => p.id === 1);
+    if (product) {
+      // Vérifie que le composant ProductDetailsCard mocké affiche le nom du produit
+      expect(
+        screen.getByText(`Mocked ProductDetailsCard - ${product.name}`)
+      ).toBeInTheDocument();
+    }
+  });
+
+  // Test pour vérifier que le message "Produit non trouvé" est affiché si le produit n'est pas trouvé
+  test('displays "Produit non trouvé" if product is not found', () => {
+    render(<ProductDetails />);
+    // Recherche un produit avec un ID non existant (999) dans les données de produits
+    const product = products.find((p) => p.id === 999);
+    if (!product) {
+      // Vérifie que le message "Produit non trouvé" est bien rendu
+      expect(screen.getByText('Produit non trouvé')).toBeInTheDocument();
+    }
+  });
+});

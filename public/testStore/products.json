@@ -1,0 +1,35 @@
+[
+    {
+        "id" : 1,
+        "name" : "Produit 1",
+        "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Earum tenetur iure provident repudiandae mollitia laborum! Officiis dolorem nulla iure consequuntur enim eos tempora eligendi dolore.",
+        "price" : 25,
+        "quantity": 2,
+        "createdAt" : "2024-07-02T10:00:00Z",
+        "modifiedAt" :"2024-07-02T12:30:00Z",
+        "latitude" : 133232,
+        "longitude" : 232422323
+    },
+    {
+        "id" : 2,
+        "name" : "Produit 2",
+        "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Earum tenetur iure provident repudiandae mollitia laborum! Officiis dolorem nulla iure consequuntur enim eos tempora eligendi dolore.",
+        "price" : 55,
+        "quantity": 1,
+        "createdAt" : "2024-07-02T10:00:00Z",
+        "modifiedAt" :"2024-07-02T12:30:00Z",
+        "latitude" : 1323232,
+        "longitude" : 23425323
+    },
+    {
+        "id" : 3,
+        "name" : "Produit 3",
+        "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Earum tenetur iure provident repudiandae mollitia laborum! Officiis dolorem nulla iure consequuntur enim eos tempora eligendi dolore.",
+        "price" : 900,
+        "quantity": 10,
+        "createdAt" : "2024-07-02T10:00:00Z",
+        "modifiedAt" :"2024-07-02T12:30:00Z",
+        "latitude" : 1323232,
+        "longitude" : 2325323
+    }
+]

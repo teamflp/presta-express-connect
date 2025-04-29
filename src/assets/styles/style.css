@@ -1,0 +1,359 @@
+<<<<<<< HEAD
+
+
+
+
+=======
+>>>>>>> 3d500189628424456591be5e2c2de3a66e3abab7
+/*____DEBUT NAVBAR____ */
+/* Applique un margin-top de 100px uniquement lorsque l'utilisateur est sur la page Home */
+.navbar-home {
+  margin-top: 61px;
+}
+
+/* Styles appliqués lorsque la navbar est scrollée */
+.navbar-scroll {
+  background-color: white !important;
+  box-shadow: 0 4px 2px -2px gray;
+}
+
+/* Modifie la couleur du texte des liens dans la navbar lorsqu'elle est scrollée */
+.navbar-scroll .nav-link {
+  color: black !important;
+}
+/*____FIN NAVBAR____ */
+
+<<<<<<< HEAD
+
+/*  Traits rouge  */
+.redLineStyle {
+  border: none;
+  border-top: 2px solid #C63E46;
+=======
+/*  Traits rouge  */
+.redLineStyle {
+  border: none;
+  border-top: 2px solid #c63e46;
+>>>>>>> 3d500189628424456591be5e2c2de3a66e3abab7
+  width: 100px;
+  position: relative;
+  right: 17px;
+  top: -10px;
+  opacity: 1;
+}
+
+.redLineContainer {
+<<<<<<< HEAD
+border-top: 2px solid #C63E46;
+width: 100%;
+opacity: 1;
+}
+
+/* FILTRES PRODUCT */
+ortByPrice{
+  border-top: 0,5px solid #C63E46 !important;
+=======
+  border-top: 2px solid #c63e46;
+  width: 100%;
+  opacity: 1;
+}
+
+/* FILTRES PRODUCT */
+ortByPrice {
+  border-top:
+    0,
+    5px solid #c63e46 !important;
+>>>>>>> 3d500189628424456591be5e2c2de3a66e3abab7
+}
+
+.form-filter {
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  border-radius: 5px 0 5px 5px;
+  border: none;
+  padding: 5px;
+  outline: none;
+}
+
+.form-filter:focus,
+.form-filter:hover {
+<<<<<<< HEAD
+  border: 1px solid #C63E46;
+}
+
+
+
+=======
+  border: 1px solid #c63e46;
+}
+
+>>>>>>> 3d500189628424456591be5e2c2de3a66e3abab7
+/* CAROUSSEL */
+.carousel-wrapper {
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.carousel-content {
+  display: flex;
+  white-space: nowrap;
+  transition: transform 0.1s linear;
+  flex-grow: 1;
+  scroll-behavior: smooth; /* Ajout de l'effet de défilement fluide */
+}
+
+.carousel-group {
+  display: flex;
+}
+
+<<<<<<< HEAD
+.job-card {
+  width: 200px; /* Définir la largeur standard */
+  height: 200px; /* Définir la hauteur standard */
+  display: inline-block;
+  border-radius: 20px 0px 20px 70px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+=======
+.cardCarousel {
+  display: inline-block;
+  width: 30%; /* Ajustez la largeur pour afficher 3 cartes par ligne */
+  border-radius: 15px 0px 15px 15px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.job-card {
+  width: 200px; /* Définir la largeur standard */
+  height: 200px; /* Définir la hauteur standard */
+>>>>>>> 3d500189628424456591be5e2c2de3a66e3abab7
+}
+
+.job-image {
+  width: 100%;
+  height: 150px; /* Définir la hauteur de l'image */
+  object-fit: cover; /* Ajuster l'image pour couvrir l'espace */
+  border-radius: 15px 0px 0px 0px;
+}
+
+.cardCarousel .card-body {
+  padding: 15px; /* Ajustez le padding selon vos besoins */
+}
+
+.cardCarousel a {
+  color: #141414;
+  text-decoration: none;
+  padding: 5px;
+<<<<<<< HEAD
+  transition: color 0.3s ease, font-weight 0.3s ease;
+}
+
+.cardCarousel a:hover {
+  color: #C63E46;
+=======
+  transition:
+    color 0.3s ease,
+    font-weight 0.3s ease;
+}
+
+.cardCarousel a:hover {
+  color: #c63e46;
+>>>>>>> 3d500189628424456591be5e2c2de3a66e3abab7
+  font-weight: bold;
+}
+
+.cardCarousel .card-link-city:hover {
+<<<<<<< HEAD
+  color: #C63E46 !important;
+  font-weight: bold;
+}
+
+.cardCarousel .card-link-city{
+  color:white !important;
+}
+
+.card-link:hover {
+  color: #C63E46 !important;
+  font-weight: bold;
+}
+
+.card-link{
+  color:#C63E46 !important;
+=======
+  color: #c63e46 !important;
+  font-weight: bold;
+}
+
+.cardCarousel .card-link-city {
+  color: white !important;
+}
+
+.card-link:hover {
+  color: #c63e46 !important;
+  font-weight: bold;
+}
+
+.card-link {
+  color: #c63e46 !important;
+>>>>>>> 3d500189628424456591be5e2c2de3a66e3abab7
+  text-decoration: none;
+}
+
+.carousel-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.carousel-button.prev {
+  position: absolute;
+  left: 0;
+}
+
+.carousel-button.next {
+  position: absolute;
+  right: 0;
+}
+
+/* FILTRES PRODUCT */
+.custom-select {
+  border-radius: 5px 0 0 0; /* Radius spécifique */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Ajouter une ombre */
+  transition: border 0.3s ease; /* Transition pour les changements de bordure */
+  --bs-pagination-focus-box-shadow: transparent !important;
+}
+
+.custom-select:focus {
+  box-shadow: 0 0 0 0.25rem rgba(197, 62, 70, 0.25); /* Ombre de focus */
+<<<<<<< HEAD
+  border: 1px solid #C63E46 !important; /* Bordure au focus */
+=======
+  border: 1px solid #c63e46 !important; /* Bordure au focus */
+>>>>>>> 3d500189628424456591be5e2c2de3a66e3abab7
+}
+
+.custom-select:hover,
+.custom-select:active {
+<<<<<<< HEAD
+  border: 1px solid #C63E46 !important; /* Bordure au survol et activation */
+=======
+  border: 1px solid #c63e46 !important; /* Bordure au survol et activation */
+>>>>>>> 3d500189628424456591be5e2c2de3a66e3abab7
+}
+
+.Form.Control {
+  border-radius: 5px 0 0 0; /* Radius spécifique */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important; /* Ajouter une ombre */
+  transition: border 0.3s ease; /* Transition pour les changements de bordure */
+}
+
+/* PAGINATION*/
+.pagination .page-item .page-link {
+<<<<<<< HEAD
+  color: #C63E46;
+=======
+  color: #c63e46;
+>>>>>>> 3d500189628424456591be5e2c2de3a66e3abab7
+}
+
+.pagination .page-item.active .page-link {
+  font-weight: bold;
+  background-color: transparent !important;
+<<<<<<< HEAD
+  border-color: #C63E46;
+  z-index: 1 !important;
+}
+
+.pagination {  
+  --bs-pagination-focus-box-shadow: transparent !important;
+}
+
+
+
+/* ____DEBUT IMAGEHEADER____ */
+.card-bg-image{
+  width: clamp(90%, 3vw, 80%);
+}
+
+.card-title{
+  font-size: clamp(18px, 3vw, 44px);
+}
+/* ____FIN IMAGEHEADER____ */
+
+
+
+/* ____DEBUT DOMAINES D'INTERVENTION____ */ 
+.domaines-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  font-size: clamp(14px, 3vw, 16px);    
+}
+    
+.domaine-card {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+    
+.domaine-image{
+  width: clamp(30px, 3vw, 50px);  
+  height: auto;
+}
+/* ____FIN DOMAINES D'INTERVENTION____ */
+
+
+/* COMPOSANT ARGUMENT */
+.titre span{
+  color:#b73840;
+}
+
+.argument-image{
+  width: clamp(50px, 3vw, 70px);  
+  height: auto;
+}
+
+.argument-title{
+  width: clamp(14px, 3vw, 18px);  
+}
+
+
+/* LISTE DE METIERS PAR LETTRE */
+.letter-button {
+  background-color: transparent;
+  border: none;
+  font-weight: bold;
+  color: #343a40; /* Couleur sombre de Bootstrap */
+}
+
+.letter-button:hover,
+.letter-button.active {
+  color: #C63E46;
+  background-color: transparent; /* Assurez-vous que le fond reste transparent */
+}
+
+/* POPUP MESSAGE */
+/* CSS personnalisé pour les éléments input et textarea */
+.custom-form-control {
+  border-radius: 5px 1px 5px 5px !important;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1) !important;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease !important;
+}
+
+.custom-form-control:focus {
+  border: 1px solid #C63E46 !important;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2) !important; /* Légère intensification de l'ombre lors du focus */
+}
+=======
+  border-color: #c63e46;
+  z-index: 1 !important;
+}
+
+.pagination {
+  --bs-pagination-focus-box-shadow: transparent !important;
+}
+>>>>>>> 3d500189628424456591be5e2c2de3a66e3abab7
