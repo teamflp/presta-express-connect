@@ -4,7 +4,7 @@
   "compilerOptions": {
     "outDir": "../dist",
     "declaration": true,
-    "noEmit": false
+    "emitDeclarationOnly": false
   },
   "exclude": [
     "**/*.test.tsx",
