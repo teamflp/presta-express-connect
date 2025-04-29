@@ -18,6 +18,8 @@ import DomainesIntervention from './pages/DomaineIntervention';
 import Categories from './pages/Categories';
 import CategoryDetails from './pages/CategoryDetails';
 import ProfessionalsByJob from './pages/ProfessionalsByJob';
+import ProfessionalProfile from './pages/ProfessionalProfile';
+import ContactProfessional from './pages/ContactProfessional';
 
 function App() {
   return (
@@ -41,6 +43,8 @@ function App() {
             <Route path="/categories" element={<Categories />} />
             <Route path="/categories/:id" element={<CategoryDetails />} />
             <Route path="/professionals/:categoryId/:jobId" element={<ProfessionalsByJob />} />
+            <Route path="/professional/:id" element={<ProfessionalProfile />} />
+            <Route path="/contact-professional/:id" element={<ContactProfessional />} />
           </Routes>
         </Router>
       </AuthProvider>

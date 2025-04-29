@@ -8,6 +8,7 @@
 @import './components/categories.css';
 @import './components/domaines.css';
 @import './components/pagination.css';
+@import './components/profile-image.css';
 @import './layout/header.css';
 @import './utilities/spacing.css';
 @import './utilities/colors.css';
