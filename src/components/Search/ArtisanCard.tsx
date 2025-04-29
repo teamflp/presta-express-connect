@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface ArtisanProps {
   artisan: {
@@ -14,10 +15,12 @@ interface ArtisanProps {
     availability: string;
     image?: string;
   };
-  onContact: () => void;
+  onContact: (id: number) => void;
 }
 
 const ArtisanCard: React.FC<ArtisanProps> = ({ artisan, onContact }) => {
+  const navigate = useNavigate();
+  
   const getAvailabilityColor = (availability: string) => {
     switch(availability) {
       case 'Aujourd\'hui':
@@ -27,6 +30,28 @@ const ArtisanCard: React.FC<ArtisanProps> = ({ artisan, onContact }) => {
       default:
         return 'text-muted';
     }
+  };
+
+  const handleContact = () => {
+    // Appeler la fonction onContact avec l'ID de l'artisan
+    onContact(artisan.id);
+    
+    // Naviguer vers la page de contact avec l'ID de l'artisan
+    navigate(`/contact-professional/${artisan.id}`, {
+      state: { 
+        professional: {
+          id: artisan.id,
+          name: artisan.name,
+          speciality: artisan.profession,
+          location: artisan.location,
+          address: "123 Rue des Artisans", // Donnée fictive pour démo
+          phone: "06 12 34 56 78", // Donnée fictive pour démo
+          experience: Math.floor(Math.random() * 15) + 5, // Entre 5 et 20 ans d'expérience (aléatoire)
+          rating: artisan.rating,
+          profileImage: artisan.image || "https://randomuser.me/api/portraits/men/32.jpg" // Image par défaut si pas d'image
+        }
+      }
+    });
   };
 
   return (
@@ -61,7 +86,8 @@ const ArtisanCard: React.FC<ArtisanProps> = ({ artisan, onContact }) => {
             </span>
             <button 
               className="artisan-contact-btn mt-3 w-100"
-              onClick={onContact}
+              onClick={handleContact}
+              aria-label={`Contacter ${artisan.name}`}
             >
               Contacter
             </button>

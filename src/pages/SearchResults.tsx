@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -166,9 +165,15 @@ const SearchResults: React.FC = () => {
   };
 
   const handleContactArtisan = (id: number) => {
-    toast.success("Demande de contact envoyée !");
-    // Navigate to contact page
-    navigate(`/contact-professional/${id}`);
+    // Trouver l'artisan dans la liste par son ID
+    const artisan = filteredArtisans.find(a => a.id === id);
+    
+    if (artisan) {
+      toast.success(`Demande de contact envoyée à ${artisan.name} !`);
+      // La navigation est maintenant gérée dans le composant ArtisanCard
+    } else {
+      toast.error("Artisan non trouvé");
+    }
   };
 
   const resetFilters = () => {
@@ -293,7 +298,7 @@ const SearchResults: React.FC = () => {
                 <ArtisanCard 
                   key={artisan.id} 
                   artisan={artisan} 
-                  onContact={() => handleContactArtisan(artisan.id)} 
+                  onContact={handleContactArtisan} 
                 />
               ))}
             </div>
