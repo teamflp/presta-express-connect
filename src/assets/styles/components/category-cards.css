@@ -1,0 +1,83 @@
+
+/* Category Card Styles */
+.categories-container {
+  padding: 2rem 0;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.category-card {
+  background-color: white;
+  border-radius: 25px 1px 25px 25px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.category-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #141414;
+}
+
+.category-description {
+  color: #555;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  flex-grow: 1;
+}
+
+.category-job-count {
+  color: #666;
+  margin-bottom: 1.25rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+/* Category Icon Styles */
+.category-icon-wrapper {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
+  background-color: rgba(198, 62, 70, 0.1);
+  width: 70px;
+  border-radius: 50%;
+  margin: 0 auto 1.5rem;
+}
+
+.category-icon {
+  color: #C63E46;
+}
+
+.discover-button {
+  display: inline-block;
+  background-color: #C63E46;
+  color: white;
+  padding: 0.5rem 1.25rem;
+  border-radius: 15px 1px 15px 15px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.discover-button:hover {
+  background-color: #a7343b;
+  transform: scale(1.05);
+  color: white;
+}
