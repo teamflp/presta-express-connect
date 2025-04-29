@@ -15,7 +15,7 @@ function Infos() {
 
   return (
     <Card
-      className="text-bg-dark d-flex justify-content-center border-0 shadow"
+      className="text-bg-dark d-flex justify-content-center border-0 shadow hover-card"
       style={{
         background: `url(${Background}) no-repeat center center / cover`,
         width: '100%',
