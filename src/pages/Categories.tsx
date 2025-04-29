@@ -6,8 +6,25 @@ import jobs from '../assets/tableaux/jobs';
 import { Category as CategoryType } from '../assets/tableaux/categories';
 import Navbar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
+import { Wrench, PaintBucket, Hammer, Zap } from 'lucide-react';
 
 const Categories: React.FC = () => {
+  // Fonction pour obtenir l'icône en fonction du nom
+  const getIconComponent = (iconName: string | undefined) => {
+    switch (iconName) {
+      case 'wrench':
+        return <Wrench className="category-icon" size={32} />;
+      case 'hammer':
+        return <Hammer className="category-icon" size={32} />;
+      case 'zap':
+        return <Zap className="category-icon" size={32} />;
+      case 'paintbrush':
+        return <PaintBucket className="category-icon" size={32} />;
+      default:
+        return <Wrench className="category-icon" size={32} />;
+    }
+  };
+
   return (
     <div className="App">
       <Navbar />
@@ -18,6 +35,9 @@ const Categories: React.FC = () => {
         <div className="categories-grid">
           {categories.map((category: CategoryType) => (
             <div key={category.id} className="category-card">
+              <div className="category-icon-wrapper">
+                {getIconComponent(category.icon)}
+              </div>
               <h3 className="category-title">{category.title}</h3>
               <p className="category-job-count">
                 {jobs[category.id] ? jobs[category.id].length : 0} métiers disponibles
