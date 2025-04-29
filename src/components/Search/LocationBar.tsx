@@ -83,41 +83,43 @@ const LocationBar: React.FC<LocationBarProps> = ({ initialLocation, onLocationCh
   };
   
   return (
-    <div className="w-full max-w-3xl mx-auto">
-      <form onSubmit={handleSubmit} className="flex shadow-sm">
-        <div className="relative flex-grow">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <MapPin size={20} className="text-[#C63E46]" />
-          </div>
-          <input
-            type="text"
-            placeholder={placeholder}
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            className="block w-full pl-10 py-3 border border-gray-200 rounded-l-md focus:outline-none focus:ring-2 focus:ring-[#C63E46] text-gray-700"
-            disabled={isGeolocating}
-            aria-label="Localisation"
-          />
+    <div className="location-bar-container">
+      <div className="container mx-auto px-4">
+        <div className="max-w-3xl mx-auto">
+          <form onSubmit={handleSubmit} className="location-input-container">
+            <div className="relative flex-grow">
+              <MapPin size={20} className="location-icon" />
+              <input
+                type="text"
+                placeholder={placeholder}
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                className="location-input"
+                disabled={isGeolocating}
+                aria-label="Localisation"
+              />
+            </div>
+            
+            <button
+              type="button"
+              onClick={handleGeolocation}
+              disabled={isGeolocating}
+              className="geolocation-button"
+              aria-label="Utiliser ma position actuelle"
+            >
+              <Compass size={20} />
+              <span className="hidden sm:inline">Ma position</span>
+            </button>
+            
+            <button
+              type="submit"
+              className="search-button"
+            >
+              Rechercher
+            </button>
+          </form>
         </div>
-        
-        <button
-          type="button"
-          onClick={handleGeolocation}
-          disabled={isGeolocating}
-          className="flex items-center gap-2 px-4 bg-gray-100 border border-gray-200 border-l-0 text-gray-700 hover:bg-gray-200 transition-colors"
-          aria-label="Utiliser ma position actuelle"
-        >
-          <Compass size={20} />
-          <span className="hidden sm:inline">Ma position</span>
-        </button>
-        
-        <button
-          type="submit"
-          className="px-5 py-3 bg-[#C63E46] text-white rounded-r-md hover:bg-[#A33138] transition-colors font-medium"
-        >
-          Rechercher
-        </button>
-      </form>
+      </div>
     </div>
   );
 };

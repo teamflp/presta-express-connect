@@ -66,7 +66,7 @@ const ArtisanResults: React.FC<ArtisanResultsProps> = ({ artisans, isLoading }) 
         {currentArtisans.map((artisan) => (
           <div 
             key={artisan.id} 
-            className="bg-white rounded-lg shadow-sm overflow-hidden transition-all hover:shadow-md"
+            className="artisan-card-horizontal bg-white overflow-hidden"
           >
             <div className="flex flex-col sm:flex-row">
               <div 
@@ -76,7 +76,7 @@ const ArtisanResults: React.FC<ArtisanResultsProps> = ({ artisans, isLoading }) 
                 <img
                   src={artisan.imageUrl}
                   alt={artisan.name}
-                  className="w-full h-full object-cover"
+                  className="artisan-image"
                 />
               </div>
               
@@ -89,16 +89,16 @@ const ArtisanResults: React.FC<ArtisanResultsProps> = ({ artisans, isLoading }) 
                     >
                       {artisan.name}
                     </h3>
-                    <div className="flex items-center bg-[#C63E46] text-white px-2 py-1 rounded text-sm">
+                    <div className="artisan-rating">
                       {artisan.rating} ★
                     </div>
                   </div>
                   
                   <div className="mb-2 flex flex-wrap gap-2">
-                    <span className="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded">
+                    <span className="artisan-badge">
                       {artisan.profession}
                     </span>
-                    <span className="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded">
+                    <span className="artisan-badge">
                       {artisan.location}
                     </span>
                   </div>
@@ -110,7 +110,7 @@ const ArtisanResults: React.FC<ArtisanResultsProps> = ({ artisans, isLoading }) 
                 
                 <div className="flex justify-end mt-2 sm:mt-0">
                   <button 
-                    className="bg-[#C63E46] hover:bg-[#A33138] text-white py-1.5 px-4 rounded-md transition-colors text-sm flex items-center"
+                    className="artisan-contact-btn"
                     onClick={() => handleContactClick(artisan.id)}
                   >
                     Contacter
