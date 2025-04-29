@@ -7,7 +7,13 @@ import { Category as CategoryType } from '../assets/tableaux/categories';
 import { Job } from '../assets/tableaux/jobs';
 import Navbar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
-import { Wrench, PaintBucket, Hammer, Zap } from 'lucide-react';
+import { 
+  Wrench, PaintBucket, Hammer, Zap, Tool, Pipe, 
+  Thermometer, Droplet, Bath, Flame, Search, 
+  Axe, Gem, Home, Sofa, Grid, Square, RefreshCw,
+  Plug, Cpu, Lightbulb, Sun, Wifi, Shield, Smartphone,
+  Palette, Building, Framer, Layers, Brush, Feather
+} from 'lucide-react';
 
 const CategoryDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -16,18 +22,44 @@ const CategoryDetails: React.FC = () => {
   const categoryJobs: Job[] = jobs[categoryId] || [];
 
   // Fonction pour obtenir l'icône en fonction du nom
-  const getIconComponent = (iconName: string | undefined) => {
+  const getIconComponent = (iconName: string | undefined, size = 24) => {
     switch (iconName) {
-      case 'wrench':
-        return <Wrench className="category-icon-large" size={64} />;
-      case 'hammer':
-        return <Hammer className="category-icon-large" size={64} />;
-      case 'zap':
-        return <Zap className="category-icon-large" size={64} />;
-      case 'paintbrush':
-        return <PaintBucket className="category-icon-large" size={64} />;
-      default:
-        return <Wrench className="category-icon-large" size={64} />;
+      // Category Icons
+      case 'wrench': return <Wrench size={size} className="category-icon-large" />;
+      case 'hammer': return <Hammer size={size} className="category-icon-large" />;
+      case 'zap': return <Zap size={size} className="category-icon-large" />;
+      case 'paint-bucket': return <PaintBucket size={size} className="category-icon-large" />;
+      
+      // Job Icons
+      case 'tool': return <Tool size={size} className="job-icon" />;
+      case 'pipe': return <Wrench size={size} className="job-icon" />;
+      case 'thermometer': return <Thermometer size={size} className="job-icon" />;
+      case 'droplet': return <Droplet size={size} className="job-icon" />;
+      case 'bath': return <Droplet size={size} className="job-icon" />;
+      case 'flame': return <Flame size={size} className="job-icon" />;
+      case 'search': return <Search size={size} className="job-icon" />;
+      case 'axe': return <Axe size={size} className="job-icon" />;
+      case 'gem': return <Gem size={size} className="job-icon" />;
+      case 'door': return <Home size={size} className="job-icon" />;
+      case 'home': return <Home size={size} className="job-icon" />;
+      case 'sofa': return <Sofa size={size} className="job-icon" />;
+      case 'grid': return <Grid size={size} className="job-icon" />;
+      case 'square': return <Square size={size} className="job-icon" />;
+      case 'refresh-cw': return <RefreshCw size={size} className="job-icon" />;
+      case 'plug': return <Plug size={size} className="job-icon" />;
+      case 'cpu': return <Cpu size={size} className="job-icon" />;
+      case 'lightbulb': return <Lightbulb size={size} className="job-icon" />;
+      case 'sun': return <Sun size={size} className="job-icon" />;
+      case 'wifi': return <Wifi size={size} className="job-icon" />;
+      case 'shield': return <Shield size={size} className="job-icon" />;
+      case 'smartphone': return <Smartphone size={size} className="job-icon" />;
+      case 'palette': return <Palette size={size} className="job-icon" />;
+      case 'building': return <Building size={size} className="job-icon" />;
+      case 'framer': return <Palette size={size} className="job-icon" />;
+      case 'layers': return <Layers size={size} className="job-icon" />;
+      case 'brush': return <Brush size={size} className="job-icon" />;
+      case 'feather': return <Feather size={size} className="job-icon" />;
+      default: return <Wrench size={size} className="category-icon-large" />;
     }
   };
 
@@ -56,24 +88,28 @@ const CategoryDetails: React.FC = () => {
         
         <div className="category-header mb-4">
           <div className="category-icon-wrapper-large">
-            {getIconComponent(category.icon)}
+            {getIconComponent(category.icon, 64)}
           </div>
-          <h1 className="mb-4 fw-bold title1">{category.title}</h1>
+          <div>
+            <h1 className="mb-1 fw-bold title1">{category.title}</h1>
+            <p className="mb-0 text-muted">{category.description}</p>
+          </div>
         </div>
         
-        <p className="mb-5">
-          Découvrez tous nos professionnels dans le domaine de {category.title.toLowerCase()}
-        </p>
+        <h3 className="mb-4 title2">Nos professionnels dans cette catégorie</h3>
         
-        <h3 className="mb-4">Métiers disponibles</h3>
         <div className="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 mb-5">
           {categoryJobs.length > 0 ? (
             categoryJobs.map(job => (
               <div className="col" key={job.id}>
                 <div className="card job-card h-100 border-0 shadow-sm hover-card">
+                  <div className="job-icon-wrapper">
+                    {getIconComponent(job.icon, 32)}
+                  </div>
                   <img className="img-fluid job-image" src={job.image} alt={job.name} />
                   <div className="card-body">
-                    <h5 className="card-title text-base text-center">{job.name}</h5>
+                    <h5 className="card-title text-base">{job.name}</h5>
+                    <p className="card-text small text-muted">{job.description}</p>
                     <a href="#" className="card-link">
                       Voir les professionnels
                     </a>

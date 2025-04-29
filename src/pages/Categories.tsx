@@ -18,7 +18,7 @@ const Categories: React.FC = () => {
         return <Hammer className="category-icon" size={32} />;
       case 'zap':
         return <Zap className="category-icon" size={32} />;
-      case 'paintbrush':
+      case 'paint-bucket':
         return <PaintBucket className="category-icon" size={32} />;
       default:
         return <Wrench className="category-icon" size={32} />;
@@ -39,6 +39,7 @@ const Categories: React.FC = () => {
                 {getIconComponent(category.icon)}
               </div>
               <h3 className="category-title">{category.title}</h3>
+              <p className="category-description">{category.description}</p>
               <p className="category-job-count">
                 {jobs[category.id] ? jobs[category.id].length : 0} métiers disponibles
               </p>
