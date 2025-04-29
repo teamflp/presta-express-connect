@@ -1,3 +1,4 @@
+
 // src/components/Pagination/PaginationComponent.tsx
 import React from 'react';
 import { Pagination } from 'react-bootstrap';
@@ -41,3 +42,5 @@ const PaginationComponent: React.FC<PaginationProps> = ({
     </Pagination>
   );
 };
+
+export default PaginationComponent;
