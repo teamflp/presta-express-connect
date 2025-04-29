@@ -8,6 +8,8 @@ import ProtectedRoute from '../components/Routes/ProtectedRoute';
 import Home from '../pages/Home';
 import ProductDetails from '../pages/ProductDetails';
 import ArtisanDetails from '../pages/ArtisanDetails';
+import About from '../pages/About';
+import Contact from '../pages/Contact';
 
 const Routes = () => (
   <ReactRoutes>
@@ -17,6 +19,8 @@ const Routes = () => (
     <Route path="/home" element={<Home />} />
     <Route path="/ProductDetails" element={<ProductDetails />} />
     <Route path="/ArtisanDetails" element={<ArtisanDetails />} />
+    <Route path="/about" element={<About />} />
+    <Route path="/contact" element={<Contact />} />
   </ReactRoutes>
 );
 

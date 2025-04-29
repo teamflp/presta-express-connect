@@ -11,7 +11,7 @@ import ProtectedRoute from './components/Routes/ProtectedRoute';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import SearchResults from './pages/SearchResults'; // Changed from Search to SearchResults
+import SearchResults from './pages/SearchResults';
 import Metiers from './pages/ArtisanMetiers';
 import ProductDetails from './pages/ProductDetails';
 import DomainesIntervention from './pages/DomaineIntervention';
@@ -20,6 +20,8 @@ import CategoryDetails from './pages/CategoryDetails';
 import ProfessionalsByJob from './pages/ProfessionalsByJob';
 import ProfessionalProfile from './pages/ProfessionalProfile';
 import ContactProfessional from './pages/ContactProfessional';
+import About from './pages/About';
+import Contact from './pages/Contact';
 
 function App() {
   return (
@@ -30,7 +32,7 @@ function App() {
             <Route path="/auth" element={<LoginComponent />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/search" element={<SearchResults />} /> {/* Updated to use SearchResults */}
+            <Route path="/search" element={<SearchResults />} />
             <Route
               path="/testUser"
               element={<ProtectedRoute element={<TestUsersComponent />} />}
@@ -45,6 +47,8 @@ function App() {
             <Route path="/professionals/:categoryId/:jobId" element={<ProfessionalsByJob />} />
             <Route path="/professional/:id" element={<ProfessionalProfile />} />
             <Route path="/contact-professional/:id" element={<ContactProfessional />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
           </Routes>
         </Router>
       </AuthProvider>
