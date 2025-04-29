@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Navbar, Nav, Container, Button, Offcanvas } from 'react-bootstrap';
 import { NavLink, useLocation, Link } from 'react-router-dom';
@@ -34,18 +33,10 @@ const NavbarComponent = () => {
 
     // Fonction pour ajouter ou supprimer la classe 'navbar-scroll' en fonction du défilement
     const handleScroll = () => {
-      const imageHeader = document.querySelector('.image-header') as HTMLElement;
-
-      if (imageHeader) {
-        const imageHeaderHeight = imageHeader.offsetHeight;
-        if (window.scrollY > imageHeaderHeight) {
-          setIsNavbarScroll(true); // Ajoute la classe si le scroll dépasse la hauteur de l'image
-        } else if (location.pathname === '/') {
-          setIsNavbarScroll(false); // Supprime la classe si on est sur la page Home
-        }
-      } else {
-        // Si pas d'image header sur la page (non-home pages)
-        setIsNavbarScroll(window.scrollY > 50);
+      if (window.scrollY > 50) {
+        setIsNavbarScroll(true); // Ajoute la classe si le scroll dépasse 50px
+      } else if (location.pathname === '/') {
+        setIsNavbarScroll(false); // Supprime la classe si on est sur la page Home et scroll < 50px
       }
     };
 
@@ -70,7 +61,7 @@ const NavbarComponent = () => {
       {/* Navbar principale */}
       <Navbar 
         expand="lg" 
-        className={`z-3 navbar position-fixed container-fluid ${isNavbarScroll ? 'navbar-scroll' : ''} ${location.pathname === '/' ? 'navbar-home' : ''}`}
+        className={`navbar ${isNavbarScroll ? 'navbar-scroll' : ''} ${location.pathname === '/' ? 'navbar-home' : ''}`}
       >
         <Container>
           <NavLink to="/" className="navbar-brand fw-bold">
@@ -138,6 +129,9 @@ const NavbarComponent = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
+
+      {/* Espace pour compenser la barre de navigation fixe */}
+      <div className="header-spacing"></div>
 
       {/* Menu mobile avec Offcanvas */}
       <Offcanvas show={showOffcanvas} onHide={handleOffcanvasClose} placement="end" className="mobile-menu">

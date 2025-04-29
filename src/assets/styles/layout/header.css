@@ -11,7 +11,7 @@
 
 /* Navbar */
 .navbar-home {
-  margin-top: 61px;
+  margin-top: 0; /* Changé de 61px à 0 */
 }
 
 .navbar-scroll {
@@ -27,6 +27,11 @@
 .navbar {
   padding: 12px 0;
   transition: all 0.3s ease;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
 }
 
 .navbar-brand {
@@ -76,10 +81,7 @@
 
 /* Position styles */
 .positionNav {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  margin-top: 30px;
+  width: 100%;
 }
 
 /* Mobile menu styles */
@@ -107,6 +109,11 @@
   background: transparent;
 }
 
+/* Ajout d'un espace pour compenser la barre de navigation fixe */
+.header-spacing {
+  height: 61px; /* Hauteur de la navbar */
+}
+
 @media (max-width: 991.98px) {
   .navbar-brand {
     font-size: 1.25rem;
@@ -114,5 +121,9 @@
   
   .navbar {
     padding: 8px 0;
+  }
+  
+  .header-spacing {
+    height: 53px; /* Hauteur de la navbar en version mobile */
   }
 }

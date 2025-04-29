@@ -1,10 +1,11 @@
+
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Header/partials/NavBar';
 import FaqAccordion from '../components/FAQ/Faqs';
 import Footer from '../components/Footer/Footer';
 import ProductSearch from '../components/Filtres/ProductSearch';
-import ProductDetailsCard from '../components/Product/ProductDetailsCard'; // Assurez-vous que le chemin est correct
-import { products, Product } from '../assets/tableaux/productData'; // Assurez-vous que le chemin est correct
+import ProductDetailsCard from '../components/Product/ProductDetailsCard';
+import { products, Product } from '../assets/tableaux/productData';
 
 const ProductDetails: React.FC = () => {
   // État pour gérer la taille de l'écran
@@ -40,42 +41,27 @@ const ProductDetails: React.FC = () => {
   }, []);
 
   return (
-    <>
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-          .positionNav {
-            display: flex !important;
-            justify-content: center !important;
-            align-items: center !important;
-            margin-top: 30px;
-          }
-        `,
-        }}
-      />
-      <div className="App">
-        {/* Affichage de la barre de navigation */}
-        <div className="positionNav">
-          <Navbar />
-        </div>
-        {/* Affichage des détails du produit si trouvé */}
-        {selectedProduct ? (
-          <ProductDetailsCard product={selectedProduct} />
-        ) : (
-          <p>Produit non trouvé</p>
-        )}
+    <div className="App">
+      {/* Affichage de la barre de navigation */}
+      <Navbar />
+      
+      {/* Affichage des détails du produit si trouvé */}
+      {selectedProduct ? (
+        <ProductDetailsCard product={selectedProduct} />
+      ) : (
+        <p>Produit non trouvé</p>
+      )}
 
-        {/* Affichage du composant de recherche de produits */}
-        <ProductSearch />
+      {/* Affichage du composant de recherche de produits */}
+      <ProductSearch />
 
-        <div className="container my-3 my-md-5">
-          {/* Affichage des questions fréquemment posées */}
-          <FaqAccordion />
-        </div>
-        {/* Affichage du pied de page */}
-        <Footer />
+      <div className="container my-3 my-md-5">
+        {/* Affichage des questions fréquemment posées */}
+        <FaqAccordion />
       </div>
-    </>
+      {/* Affichage du pied de page */}
+      <Footer />
+    </div>
   );
 };
 

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Header/partials/NavBar';
 import FaqAccordion from '../components/FAQ/Faqs';
@@ -29,7 +30,7 @@ const DomainesIntervention: React.FC = () => {
 
   useEffect(() => {
     // Trouver le domaine avec l'ID spécifié dans les données
-    const domaineId = 1; // Remplacez cette valeur par l'ID du domaine souhaité ou obtenez-la dynamiquement (ex. depuis les props ou un autre état)
+    const domaineId = 1; // Remplacez cette valeur par l'ID du domaine souhaité ou obtenez-la dynamiquement
 
     const domaine = domaines.find(d => d.id === domaineId) || null;
 
@@ -38,39 +39,23 @@ const DomainesIntervention: React.FC = () => {
   }, []);
 
   return (
-    <>
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-          .positionNav {
-            display: flex !important;
-            justify-content: center !important;
-            align-items: center !important;
-            margin-top: 30px;
-          }
-        `,
-        }}
-      />
-      <div className="App">
-        {/* Affichage de la barre de navigation */}
-        <div className="positionNav">
-          <Navbar />
-        </div>
-        
-        {/* Affichage des filtres pour les domaines */}
-        <div className="container my-3 my-md-5">
-          <DomainFilter />
-        </div>
-        
-        {/* Affichage des questions fréquemment posées */}
-        <div className="container my-3 my-md-5">
-          <FaqAccordion />
-        </div>
-        
-        {/* Affichage du pied de page */}
-        <Footer />
+    <div className="App">
+      {/* Affichage de la barre de navigation */}
+      <Navbar />
+      
+      {/* Affichage des filtres pour les domaines */}
+      <div className="container my-3 my-md-5">
+        <DomainFilter />
       </div>
-    </>
+      
+      {/* Affichage des questions fréquemment posées */}
+      <div className="container my-3 my-md-5">
+        <FaqAccordion />
+      </div>
+      
+      {/* Affichage du pied de page */}
+      <Footer />
+    </div>
   );
 };
 

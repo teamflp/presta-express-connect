@@ -6,6 +6,7 @@ import ImageHeader from './partials/ImageHeader';
 
 function Header() {
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
+  
   useEffect(() => {
     const handleResize = () => {
       setIsLargeScreen(window.innerWidth >= 992);
@@ -19,17 +20,8 @@ function Header() {
 
   return (
     <>
-      <style dangerouslySetInnerHTML={{ __html: `
-        .positionNav {
-          display: flex !important;
-          justify-content: center !important;
-          align-items: center !important;
-        }
-      `}} />
       <div className="App">
-        <div className="positionNav">
-          <NavBar />
-        </div>
+        <NavBar />
         <ImageHeader />
         <IconsDomainesIntervention />
       </div>
