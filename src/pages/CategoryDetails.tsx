@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import categories from '../assets/tableaux/categories';
@@ -7,7 +8,7 @@ import { Job } from '../assets/tableaux/jobs';
 import Navbar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
 import { 
-  Wrench, PaintBucket, Hammer, Zap, PipeLine, 
+  Wrench, PaintBucket, Hammer, Zap,
   Thermometer, Droplet, Bath, Flame, Search, 
   Axe, Gem, Home, Sofa, Grid, Square, RefreshCw,
   Plug, Cpu, Lightbulb, Sun, Wifi, Shield, Smartphone,
@@ -31,7 +32,7 @@ const CategoryDetails: React.FC = () => {
       
       // Job Icons
       case 'tool': return <Settings size={size} className="job-icon" />;
-      case 'pipe': return <PipeLine size={size} className="job-icon" />;
+      case 'pipe': return <Wrench size={size} className="job-icon" />; // Changed from PipeLine to Wrench as a fallback
       case 'thermometer': return <Thermometer size={size} className="job-icon" />;
       case 'droplet': return <Droplet size={size} className="job-icon" />;
       case 'bath': return <Bath size={size} className="job-icon" />;
