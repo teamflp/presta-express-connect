@@ -1,115 +1,112 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import cities from '../../assets/tableaux/cityData';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 interface CityProps {
-  ville: string;
-  backgroundImage: string;
+  ville?: string;
+  backgroundImage?: string;
 }
 
-const City: React.FC<CityProps> = ({ ville, backgroundImage }) => {
+const City: React.FC<CityProps> = () => {
   const carouselContentRef = useRef<HTMLDivElement>(null);
-  let autoScrollIntervalId: NodeJS.Timeout | null = null;
-  let autoScrollTimeoutId: NodeJS.Timeout | null = null;
-  const [scrollInterval, setScrollInterval] = useState(25);
-  const [scrollStep, setScrollStep] = useState(1);
+  const [autoScrollActive, setAutoScrollActive] = useState(true);
+  const [currentPosition, setCurrentPosition] = useState(0);
+  const autoScrollRef = useRef<NodeJS.Timeout | null>(null);
+  const scrollIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Fonction pour faire défiler automatiquement
+  const startAutoScroll = () => {
+    if (autoScrollRef.current) clearInterval(autoScrollRef.current);
+    
+    autoScrollRef.current = setInterval(() => {
+      if (autoScrollActive) {
+        setCurrentPosition(prev => {
+          const carouselContent = carouselContentRef.current;
+          if (!carouselContent) return prev;
+          
+          const newPosition = prev + 1;
+          if (newPosition >= carouselContent.scrollWidth / 2) {
+            return 0;
+          }
+          return newPosition;
+        });
+      }
+    }, 30);
+  };
+
+  // Appliquer la position de défilement
   useEffect(() => {
     const carouselContent = carouselContentRef.current;
-    let scrollAmount = 0;
-
-    function autoScroll() {
-      if (carouselContent) {
-        scrollAmount += scrollStep;
-        if (scrollAmount >= carouselContent.scrollWidth / 2) {
-          scrollAmount = 0;
-        }
-        carouselContent.style.transform = `translateX(-${scrollAmount}px)`;
-      }
+    if (carouselContent) {
+      carouselContent.style.transform = `translateX(-${currentPosition}px)`;
     }
+  }, [currentPosition]);
 
-    autoScrollIntervalId = setInterval(autoScroll, scrollInterval);
-
+  // Démarrer le défilement automatique au chargement
+  useEffect(() => {
+    startAutoScroll();
+    
     return () => {
-      if (autoScrollIntervalId) {
-        clearInterval(autoScrollIntervalId);
-      }
+      if (autoScrollRef.current) clearInterval(autoScrollRef.current);
+      if (scrollIntervalRef.current) clearInterval(scrollIntervalRef.current);
     };
-  }, [scrollInterval, scrollStep]);
+  }, [autoScrollActive]);
 
-  const stopAutoScroll = () => {
-    if (autoScrollIntervalId) {
-      clearInterval(autoScrollIntervalId);
-      autoScrollIntervalId = null;
-    }
-    if (autoScrollTimeoutId) {
-      clearTimeout(autoScrollTimeoutId);
-      autoScrollTimeoutId = null;
-    }
-  };
-
-  const resumeAutoScroll = () => {
-    stopAutoScroll();
-    setScrollInterval(25); // Ajustez l'intervalle de défilement
-    autoScrollTimeoutId = setTimeout(() => {
-      autoScrollIntervalId = setInterval(() => {
-        const carouselContent = carouselContentRef.current;
-        if (carouselContent) {
-          let scrollAmount = parseInt(carouselContent.style.transform.replace('translateX(-', '').replace('px)', ''), 10) || 0;
-          setScrollStep(1);
-          if (scrollAmount >= carouselContent.scrollWidth / 2) {
-            scrollAmount = 0;
-          }
-          carouselContent.style.transform = `translateX(-${scrollAmount}px)`;
+  // Fonction pour accélérer le défilement
+  const handleScroll = (direction: 'next' | 'prev') => {
+    setAutoScrollActive(false);
+    
+    if (scrollIntervalRef.current) clearInterval(scrollIntervalRef.current);
+    
+    scrollIntervalRef.current = setInterval(() => {
+      setCurrentPosition(prev => {
+        const step = 10;
+        if (direction === 'next') {
+          return prev + step;
+        } else {
+          return Math.max(0, prev - step);
         }
-      }, scrollInterval);
-    }, 3000); // Reprendre le défilement automatique après 3 secondes
+      });
+    }, 10);
   };
 
-  const handlePrevious = () => {
-    setScrollInterval(5);
-    setScrollStep(5);
-    resumeAutoScroll();
+  // Arrêter l'accélération et reprendre le défilement automatique
+  const handleScrollStop = () => {
+    if (scrollIntervalRef.current) {
+      clearInterval(scrollIntervalRef.current);
+    }
+    
+    setTimeout(() => {
+      setAutoScrollActive(true);
+    }, 1000);
   };
 
-  const handleNext = () => {
-    setScrollInterval(5);
-    setScrollStep(-5);
-    resumeAutoScroll();
-  };
-
-  // Inverser l'ordre des jobs
-  const reversedCities = [...cities].reverse();
-
-  // Diviser les jobs en groupes de 3
+  // Diviser les villes en groupes de 3
   const cityGroups = [];
-  for (let i = 0; i < reversedCities.length; i += 3) {
-    cityGroups.push(reversedCities.slice(i, i + 3));
+  for (let i = 0; i < cities.length; i += 3) {
+    cityGroups.push(cities.slice(i, i + 3));
   }
-
-      
-  // Style pour le fond du titre
- /*  const backgroundStyle = {
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fond noir avec opacité de 50%
-        height: '100%', 
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: '20px 0px 20px 20px',
-    }; */
 
   return (
     <div className="city container my-5">
+      <h3 className="mb-4 fw-bold">Explorez nos destinations</h3>
       <div className="carousel-wrapper">
-        <button className="carousel-button prev" onClick={handlePrevious}>
-          <FiChevronRight className="icon" />
+        <button
+          className="carousel-button prev"
+          onMouseDown={() => handleScroll('prev')}
+          onMouseUp={handleScrollStop}
+          onMouseLeave={handleScrollStop}
+          aria-label="Défiler vers la gauche"
+        >
+          <FiChevronLeft className="icon" />
         </button>
         <div className="carousel-content" ref={carouselContentRef}>
           {cityGroups.map((group, index) => (
             <div className="carousel-group" key={index}>
               {group.map((city) => (
                 <div
-                  className="card mb-1 border-0 mx-2 cardCarousel job-card"
+                  className="card mb-3 border-0 mx-2 cardCarousel job-card"
                   key={city.id}
                   style={{ 
                     backgroundImage: `url(${city.backgroundImage})`,
@@ -122,7 +119,7 @@ const City: React.FC<CityProps> = ({ ville, backgroundImage }) => {
                     borderRadius: '20px 0px 20px 20px',
                    }}
                 >
-                 <div className="card-body d-flex justify-content-start align-items-end">
+                  <div className="card-body d-flex justify-content-start align-items-end">
                     <a href="#" className="card-link-city">
                       {city.ville}
                     </a>
@@ -135,11 +132,11 @@ const City: React.FC<CityProps> = ({ ville, backgroundImage }) => {
             <div className="carousel-group" key={`clone-${index}`}>
               {group.map((city) => (
                 <div
-                  className="card mx-2 mb-1 border- cardCarousel job-card"
+                  className="card mx-2 mb-3 border-0 cardCarousel job-card"
                   key={`${city.id}-clone`}
                   style={{ 
                     backgroundImage: `url(${city.backgroundImage})`,
-                    height: '100%',
+                    height: '200px',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     display: 'flex',
@@ -147,7 +144,6 @@ const City: React.FC<CityProps> = ({ ville, backgroundImage }) => {
                     justifyContent: 'center',
                     borderRadius: '20px 0px 20px 20px'
                    }}
-                  
                 >
                   <div className="card-body d-flex justify-content-start align-items-end">
                     <a href="#" className="card-link-city">
@@ -159,8 +155,14 @@ const City: React.FC<CityProps> = ({ ville, backgroundImage }) => {
             </div>
           ))}
         </div>
-        <button className="carousel-button next" onClick={handleNext}>
-          <FiChevronLeft className="icon" style={{ fontSize: '15px', verticalAlign: 'middle' }} />
+        <button
+          className="carousel-button next"
+          onMouseDown={() => handleScroll('next')}
+          onMouseUp={handleScrollStop}
+          onMouseLeave={handleScrollStop}
+          aria-label="Défiler vers la droite"
+        >
+          <FiChevronRight className="icon" />
         </button>
       </div>
     </div>
@@ -168,5 +170,3 @@ const City: React.FC<CityProps> = ({ ville, backgroundImage }) => {
 };
 
 export default City;
-
-

@@ -1,28 +1,34 @@
+
 .App{
   background-color: #FDFAF7;
 }
 
 .title1{
   font-size: clamp(18px, 3vw, 42px); 
+  font-weight: 700;
+  margin-bottom: 1.5rem;
 }
 
 .title2{
   font-size: clamp(14px, 3vw, 28px); 
+  font-weight: 600;
 }
 
 .card_border1{
-  border: 15px 1px 15px  15px;
+  border-radius: 15px 1px 15px 15px;
+  overflow: hidden;
 }
 
 .card{
-  border: 25px 1px 25px 25px;
+  border-radius: 25px 1px 25px 25px;
+  overflow: hidden;
 }
 
     
 /* ____DEBUT BOUTONS____ */
 .button1 {
-  text-align:center;
-  padding: 10px 10px;
+  text-align: center;
+  padding: 10px 12px;
   width: clamp(215px, 3vw, 220px);
   height: clamp(40px, 3vw, 45px) ;
   box-sizing: border-box;
@@ -32,6 +38,7 @@
   border-radius: 10px 0px 10px 10px !important;
   cursor: pointer;
   box-shadow: 0 0 5px rgba(92, 92, 92, 0.5);
+  transition: all 0.3s ease;
 }
 
 .fit-picture {
@@ -61,8 +68,8 @@
 }
 
 .button2 {
-  text-align:center;
-  padding: 10px 10px;
+  text-align: center;
+  padding: 10px 12px;
   width: clamp(215px, 3vw, 220px);
   height: clamp(40px, 3vw, 45px) ;
   box-sizing: border-box;
@@ -73,15 +80,24 @@
   border-radius: 10px 0px 10px 10px;
   box-shadow: 0 0 5px rgba(92, 92, 92, 0.5);
   cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .button1:hover{
   border-color: #b73840 !important;
-  background-color:  #FDFAF7 !important;
+  background-color: #FDFAF7 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(92, 92, 92, 0.3);
 }
 
 .button2:hover{
   background-color: #a33138;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(92, 92, 92, 0.3);
 }
 /* ____FIN BOUTONS____ */
 
@@ -89,14 +105,13 @@
 /* ____DEBUT IMAGEHEADER____ */
 .card-bg-image{
   width: clamp(90%, 3vw, 80%);
-  color:rgba(198, 62, 71, 0.838);
+  color: rgba(198, 62, 71, 0.838);
 }
 
 .card-title{
   font-size: clamp(18px, 3vw, 44px);
 }
 /* ____FIN IMAGEHEADER____ */
-
 
 
 /* ____DEBUT DOMAINES D'INTERVENTION____ */ 
@@ -125,29 +140,46 @@
   background-color: #fdfaf7df !important;
   border: none;
   border-radius: 50%;
-  padding: 10px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 0 5px;
-  height: 40px !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.carousel-button:hover {
+  background-color: #C63E46 !important;
+}
+
+.carousel-button:hover .icon {
+  color: white;
 }
 
 .icon {
   color: #1C1A14;
   font-size: 20px;
   font-weight: bold;
-  padding-bottom: 5px;
-
+  transition: color 0.3s ease;
 }
 /*___FIN ICON CARROUSEL ____ */
 
 
 /* COMPOSANT ARGUMENT */
 .titre span{
-  color:#b73840;
+  color: #b73840;
 }
 
 .argument-image{
   width: clamp(50px, 3vw, 70px);  
   height: auto;
+  transition: transform 0.3s ease;
+}
+
+.argument-image:hover {
+  transform: scale(1.1);
 }
 
 .argument-title{
@@ -155,13 +187,12 @@
 }
 
 
-/* ACOORDION */our 
+/* ACOORDION */
 .accordion-container{
     display: flex;
     flex-direction: column;
     gap: 10px;
     padding: 0 25px 0 0 !important;
-   
 }
 
 .accordion {
@@ -207,4 +238,15 @@
 
 .accordion-flush>.accordion-item>.accordion-header .accordion-button, .accordion-flush>.accordion-item>.accordion-header .accordion-button.collapsed {
   border-radius: 10px 0px 10px 10px !important;
+}
+
+/* Spacing utilities */
+.my-15 {
+  margin-top: 5rem !important;
+  margin-bottom: 5rem !important;
+}
+
+/* Better card shadows */
+.shadow-sm {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
 }

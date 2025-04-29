@@ -1,46 +1,46 @@
+
 import React from 'react';
 import LoremsData from '../../assets/tableaux/lorems';
 import { Card } from 'react-bootstrap';
 
-// Styles définis
-const defaultLinkStyle = {
-    color: '#141414',
-    textDecoration: 'none', 
-    padding: '5px', 
-    transition: 'color 0.3s ease, font-weight 0.3s ease',
-  };
-  
-  const activeLinkStyle = {
-    color: '#C63E46',
-    textDecoration: 'none',
-    padding: '5px',
-    fontWeight: 'bold',
-    transition: 'color 0.3s ease, font-weight 0.3s ease', 
-  };
-
 function LoremsPresta() {
     return (
-        <div className="container">
-            <div className="">
-                <h2 className="my-5 title Lorem">Lorem ipsum (Suggestion:Actualité ou publicité)</h2>
+        <div className="container py-5">
+            <div className="mb-4">
+                <h2 className="fw-bold">Lorem ipsum (Suggestion:Actualité ou publicité)</h2>
             </div>
             <div className="row row-cols-1 row-cols-md-4 g-4">
                 {LoremsData.map((Lorem) => (
-                    <div key={Lorem.id} className="col">
-                        <Card className="bg-white border-0 shadow-sm" style={{ borderRadius: "25px 1px 25px 25px" }}>
-                            <div className="text-center">
-                                <img src={Lorem.icone} alt={`Image de ${Lorem.titre}`} className="Lorem-image" />
+                    <div key={Lorem.id} className="col mb-4">
+                        <Card className="h-100 bg-white border-0 shadow-sm hover-card" style={{ borderRadius: "25px 1px 25px 25px" }}>
+                            <div className="text-center p-3">
+                                <img src={Lorem.icone} alt={`Image de ${Lorem.titre}`} className="Lorem-image mb-3" style={{ maxHeight: "80px", objectFit: "contain" }} />
                                 <div className="card-body">
-                                    <h5 className="title2">{Lorem.titre}</h5>
-                                    <p className="card-text">{Lorem.description}</p>
+                                    <h5 className="title2 mb-3">{Lorem.titre}</h5>
+                                    <p className="card-text mb-4">{Lorem.description}</p>
                                     <a 
-                                    href={Lorem.lien} 
-                                    className=""         
-                                    style={defaultLinkStyle}
-                                    onMouseEnter={(e) => { e.currentTarget.style.color = '#C63E46'; e.currentTarget.style.fontWeight = 'bold'; }}
-                                    onMouseLeave={(e) => { e.currentTarget.style.color = '#141414'; e.currentTarget.style.fontWeight = 'normal'; }}
+                                        href={Lorem.lien} 
+                                        className="btn-link"         
+                                        style={{
+                                            color: '#141414',
+                                            textDecoration: 'none', 
+                                            padding: '8px 16px',
+                                            borderRadius: '20px 0px 20px 20px',
+                                            border: '1px solid #C63E46',
+                                            transition: 'all 0.3s ease'
+                                        }}
+                                        onMouseEnter={(e) => { 
+                                            e.currentTarget.style.color = '#FFFFFF'; 
+                                            e.currentTarget.style.fontWeight = 'bold';
+                                            e.currentTarget.style.backgroundColor = '#C63E46';
+                                        }}
+                                        onMouseLeave={(e) => { 
+                                            e.currentTarget.style.color = '#141414'; 
+                                            e.currentTarget.style.fontWeight = 'normal';
+                                            e.currentTarget.style.backgroundColor = 'transparent';
+                                        }}
                                     >
-                                    Voir plus
+                                        Voir plus
                                     </a>
                                 </div>
                             </div>
@@ -53,6 +53,3 @@ function LoremsPresta() {
 }
 
 export default LoremsPresta;
-
-
-

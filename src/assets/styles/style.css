@@ -59,6 +59,8 @@ ortByPrice {
   position: relative;
   display: flex;
   align-items: center;
+  border-radius: 15px;
+  padding: 10px 0;
 }
 
 .carousel-content {
@@ -66,37 +68,52 @@ ortByPrice {
   white-space: nowrap;
   transition: transform 0.1s linear;
   flex-grow: 1;
-  scroll-behavior: smooth; /* Ajout de l'effet de défilement fluide */
+  scroll-behavior: smooth;
+  padding: 10px 5px;
 }
 
 .carousel-group {
   display: flex;
+  padding: 5px;
 }
 
 .job-card {
-  width: 200px; /* Définir la largeur standard */
-  height: 200px; /* Définir la hauteur standard */
+  width: 220px;
+  height: 220px;
   display: inline-block;
-  border-radius: 20px 0px 20px 70px;
+  border-radius: 20px 0px 20px 20px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin: 0 8px;
+}
+
+.job-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
 }
 
 .cardCarousel {
   display: inline-block;
-  width: 30%; /* Ajustez la largeur pour afficher 3 cartes par ligne */
+  width: 300px;
   border-radius: 15px 0px 15px 15px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cardCarousel:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
 }
 
 .job-image {
   width: 100%;
-  height: 150px; /* Définir la hauteur de l'image */
-  object-fit: cover; /* Ajuster l'image pour couvrir l'espace */
+  height: 150px;
+  object-fit: cover;
   border-radius: 15px 0px 0px 0px;
 }
 
 .cardCarousel .card-body {
-  padding: 15px; /* Ajustez le padding selon vos besoins */
+  padding: 15px;
 }
 
 .cardCarousel a {
@@ -111,13 +128,20 @@ ortByPrice {
   font-weight: bold;
 }
 
+.cardCarousel .card-link-city {
+  color: white !important;
+  font-weight: 500;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+  padding: 8px 15px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px 0px 10px 10px;
+  transition: all 0.3s ease;
+}
+
 .cardCarousel .card-link-city:hover {
   color: #C63E46 !important;
   font-weight: bold;
-}
-
-.cardCarousel .card-link-city {
-  color: white !important;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .card-link:hover {
@@ -131,22 +155,38 @@ ortByPrice {
 }
 
 .carousel-button {
-  background-color: #007bff;
-  color: white;
+  background-color: #FDFAF7 !important;
+  color: #1C1A14;
   border: none;
-  padding: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
-  z-index: 1;
+  z-index: 10;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.carousel-button:hover {
+  background-color: #C63E46 !important;
+  color: white;
 }
 
 .carousel-button.prev {
   position: absolute;
-  left: 0;
+  left: 10px;
 }
 
 .carousel-button.next {
   position: absolute;
-  right: 0;
+  right: 10px;
+}
+
+.carousel-button .icon {
+  font-size: 20px;
 }
 
 /* FILTRES PRODUCT */
@@ -238,14 +278,17 @@ ortByPrice {
 .letter-button {
   background-color: transparent;
   border: none;
-  font-weight: bold;
-  color: #343a40; /* Couleur sombre de Bootstrap */
+  font-weight: 600;
+  color: #343a40;
+  transition: all 0.3s ease;
+  border-radius: 10px 0px 10px 10px;
+  padding: 8px 16px;
 }
 
 .letter-button:hover,
 .letter-button.active {
-  color: #C63E46;
-  background-color: transparent; /* Assurez-vous que le fond reste transparent */
+  color: white;
+  background-color: #C63E46;
 }
 
 /* POPUP MESSAGE */
@@ -259,4 +302,14 @@ ortByPrice {
 .custom-form-control:focus {
   border: 1px solid #C63E46 !important;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2) !important; /* Légère intensification de l'ombre lors du focus */
+}
+
+/* Hover Effects */
+.hover-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1) !important;
 }
