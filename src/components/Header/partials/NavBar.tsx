@@ -2,29 +2,30 @@ import { useState, useEffect } from 'react';
 import { Navbar, Nav, Container, Button, Offcanvas } from 'react-bootstrap';
 import { NavLink, useLocation, Link } from 'react-router-dom';
 import SearchButton from './SearchButton';
-import { FaUser, FaSignInAlt, FaSignOutAlt, FaSearch, FaBars } from 'react-icons/fa'; 
+import { FaUser, FaSignInAlt, FaSignOutAlt, FaSearch, FaBars } from 'react-icons/fa';
 import { useAuth } from '../../../hooks/useAuth';
 import '../../../assets/styles/layout/header.css';
-
 const NavbarComponent = () => {
   // État pour gérer si l'écran est large ou non
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
-  
+
   // Hook pour obtenir l'emplacement actuel de la page
   const location = useLocation();
 
   // État pour déterminer si la navbar doit être stylisée comme scrollée
   const [isNavbarScroll, setIsNavbarScroll] = useState(false);
-  
+
   // État pour gérer le menu mobile
   const [showOffcanvas, setShowOffcanvas] = useState(false);
 
   // Utilisation du hook d'authentification
-  const { isAuthenticated, currentUser, logout } = useAuth();
-
+  const {
+    isAuthenticated,
+    currentUser,
+    logout
+  } = useAuth();
   const handleOffcanvasClose = () => setShowOffcanvas(false);
   const handleOffcanvasShow = () => setShowOffcanvas(true);
-
   useEffect(() => {
     // Fonction pour mettre à jour l'état lorsque la taille de l'écran change
     const handleResize = () => {
@@ -56,33 +57,23 @@ const NavbarComponent = () => {
     };
   }, [location.pathname]); // Recalcule l'effet lorsque la page change
 
-  return (
-    <>
+  return <>
       {/* Navbar principale */}
-      <Navbar 
-        expand="lg" 
-        className={`navbar ${isNavbarScroll ? 'navbar-scroll' : ''} ${location.pathname === '/' ? 'navbar-home' : ''}`}
-      >
+      <Navbar expand="lg" className={`navbar ${isNavbarScroll ? 'navbar-scroll' : ''} ${location.pathname === '/' ? 'navbar-home' : ''}`}>
         <Container>
           <NavLink to="/" className="navbar-brand fw-bold">
-            <span className="brand-artisan">ARTISAN</span>
+            <span className="brand-artisan">PRESTA</span>
             <span className="brand-express">EXPRESS</span>
           </NavLink>
 
           <div className="d-flex align-items-center">
             {/* Bouton de recherche pour les grands écrans */}
-            {isLargeScreen && (
-              <div className="searchButtonContainer me-3">
+            {isLargeScreen && <div className="searchButtonContainer me-3">
                 <SearchButton />
-              </div>
-            )}
+              </div>}
 
             {/* Bouton pour afficher le menu mobile */}
-            <Navbar.Toggle 
-              aria-controls="navbarNavAltMarkup" 
-              onClick={handleOffcanvasShow} 
-              className="navbar-toggler-custom"
-            >
+            <Navbar.Toggle aria-controls="navbarNavAltMarkup" onClick={handleOffcanvasShow} className="navbar-toggler-custom">
               <FaBars />
             </Navbar.Toggle>
           </div>
@@ -100,19 +91,12 @@ const NavbarComponent = () => {
               </Nav.Link>
             </Nav>
             <Nav className="ms-auto d-flex align-items-center">
-              {isAuthenticated ? (
-                <>
+              {isAuthenticated ? <>
                   <span className="me-3 nav-link">Bonjour, {currentUser?.name}</span>
-                  <Button 
-                    variant="outline-light" 
-                    className="d-flex align-items-center gap-2 nav-btn"
-                    onClick={logout}
-                  >
+                  <Button variant="outline-light" className="d-flex align-items-center gap-2 nav-btn" onClick={logout}>
                     <FaSignOutAlt /> Déconnexion
                   </Button>
-                </>
-              ) : (
-                <>
+                </> : <>
                   <Nav.Link as={Link} to="/login" className="me-2 nav-link">
                     <span className="d-flex align-items-center">
                       <FaSignInAlt className="me-1" /> Connexion
@@ -123,8 +107,7 @@ const NavbarComponent = () => {
                       <FaUser className="me-1" /> Inscription
                     </Button>
                   </Link>
-                </>
-              )}
+                </>}
             </Nav>
           </Navbar.Collapse>
         </Container>
@@ -157,47 +140,29 @@ const NavbarComponent = () => {
             </div>
             
             {/* Authentification pour mobile */}
-            {isAuthenticated ? (
-              <>
+            {isAuthenticated ? <>
                 <div className="mb-2">Bonjour, {currentUser?.name}</div>
-                <Button 
-                  variant="danger" 
-                  className="w-100 d-flex align-items-center justify-content-center"
-                  onClick={() => {
-                    logout();
-                    handleOffcanvasClose();
-                  }}
-                >
+                <Button variant="danger" className="w-100 d-flex align-items-center justify-content-center" onClick={() => {
+              logout();
+              handleOffcanvasClose();
+            }}>
                   <FaSignOutAlt className="me-2" /> Déconnexion
                 </Button>
-              </>
-            ) : (
-              <>
+              </> : <>
                 <Link to="/login" className="w-100 mb-2">
-                  <Button 
-                    variant="outline-primary" 
-                    className="w-100"
-                    onClick={handleOffcanvasClose}
-                  >
+                  <Button variant="outline-primary" className="w-100" onClick={handleOffcanvasClose}>
                     <FaSignInAlt className="me-2" /> Connexion
                   </Button>
                 </Link>
                 <Link to="/register" className="w-100">
-                  <Button 
-                    variant="primary" 
-                    className="w-100"
-                    onClick={handleOffcanvasClose}
-                  >
+                  <Button variant="primary" className="w-100" onClick={handleOffcanvasClose}>
                     <FaUser className="me-2" /> Inscription
                   </Button>
                 </Link>
-              </>
-            )}
+              </>}
           </Nav>
         </Offcanvas.Body>
       </Offcanvas>
-    </>
-  );
+    </>;
 };
-
 export default NavbarComponent;
