@@ -2,6 +2,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import PaginationComponent from '../Pagination/PaginationComponent';
+import { MapPin, AlertCircle, ArrowRight } from 'lucide-react';
 
 interface Artisan {
   id: number;
@@ -16,9 +17,22 @@ interface Artisan {
 interface ArtisanResultsProps {
   artisans: Artisan[];
   isLoading: boolean;
+  onExpandSearch?: () => void;
+  activeFilters?: {
+    profession?: string;
+    location?: string;
+    minRating?: number;
+  };
+  onResetFilter?: (filterName: string) => void;
 }
 
-const ArtisanResults: React.FC<ArtisanResultsProps> = ({ artisans, isLoading }) => {
+const ArtisanResults: React.FC<ArtisanResultsProps> = ({ 
+  artisans, 
+  isLoading, 
+  onExpandSearch,
+  activeFilters,
+  onResetFilter 
+}) => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = React.useState(1);
   const itemsPerPage = 6;
@@ -47,9 +61,85 @@ const ArtisanResults: React.FC<ArtisanResultsProps> = ({ artisans, isLoading }) 
   
   if (artisans.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow p-8 text-center mt-8 animate-fadeIn">
-        <h3 className="text-xl font-medium text-gray-900 mb-2">Aucun artisan trouvé</h3>
-        <p className="text-gray-600">Essayez de modifier vos critères de recherche.</p>
+      <div className="bg-white rounded-lg shadow p-8 animate-fadeIn no-results-container">
+        <div className="text-center mb-6">
+          <AlertCircle size={48} className="mx-auto mb-4 text-[#C63E46] opacity-80" />
+          <h3 className="text-xl font-medium text-gray-900 mb-3">Aucun artisan ne correspond à vos critères</h3>
+          <p className="text-gray-600 max-w-lg mx-auto">
+            Nous n'avons pas trouvé d'artisans correspondant à tous vos filtres actuels. Voici quelques suggestions pour affiner votre recherche.
+          </p>
+        </div>
+
+        {activeFilters && Object.keys(activeFilters).some(key => activeFilters[key]) && (
+          <div className="mb-6 bg-gray-50 p-4 rounded-lg">
+            <h4 className="font-medium text-gray-800 mb-3">Filtres actifs limitant vos résultats:</h4>
+            <div className="flex flex-wrap gap-2">
+              {activeFilters.profession && (
+                <div 
+                  onClick={() => onResetFilter && onResetFilter('profession')}
+                  className="filter-suggestion-chip"
+                >
+                  <span>Profession: {activeFilters.profession}</span>
+                  <span className="ml-1">×</span>
+                </div>
+              )}
+              {activeFilters.location && (
+                <div 
+                  onClick={() => onResetFilter && onResetFilter('location')}
+                  className="filter-suggestion-chip"
+                >
+                  <span>Localisation: {activeFilters.location}</span>
+                  <span className="ml-1">×</span>
+                </div>
+              )}
+              {activeFilters.minRating && activeFilters.minRating > 0 && (
+                <div 
+                  onClick={() => onResetFilter && onResetFilter('minRating')}
+                  className="filter-suggestion-chip"
+                >
+                  <span>Évaluation min.: {activeFilters.minRating}+ étoiles</span>
+                  <span className="ml-1">×</span>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <div className="suggestion-action-card" onClick={onExpandSearch}>
+            <div className="flex items-center mb-2 text-[#C63E46] font-medium">
+              <MapPin size={20} className="mr-2" />
+              Élargir votre zone de recherche
+            </div>
+            <p className="text-sm text-gray-600">
+              Étendre votre recherche à un plus grand rayon pour trouver plus d'artisans.
+            </p>
+            <ArrowRight size={16} className="mt-2 text-[#C63E46]" />
+          </div>
+          
+          <div className="suggestion-action-card" onClick={() => onResetFilter && onResetFilter('all')}>
+            <div className="flex items-center mb-2 text-[#C63E46] font-medium">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
+                <path d="M3 3h18v18H3z"></path><path d="M13 17V7H7"></path>
+              </svg>
+              Réinitialiser tous les filtres
+            </div>
+            <p className="text-sm text-gray-600">
+              Recommencer votre recherche sans filtres pour voir tous les artisans disponibles.
+            </p>
+            <ArrowRight size={16} className="mt-2 text-[#C63E46]" />
+          </div>
+        </div>
+
+        <div className="text-center">
+          <h4 className="font-medium text-gray-800 mb-3">Vous ne trouvez pas ce que vous cherchez?</h4>
+          <button 
+            onClick={() => navigate('/contact')}
+            className="px-4 py-2 bg-[#C63E46] text-white rounded-md hover:bg-[#A33138] transition-all"
+          >
+            Contactez-nous pour de l'aide
+          </button>
+        </div>
       </div>
     );
   }

@@ -31,6 +31,7 @@ const SearchResults = () => {
   const [filteredArtisans, setFilteredArtisans] = useState<Artisan[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchParams] = useSearchParams();
+  const [searchRadius, setSearchRadius] = useState(10); // Default 10km
   const [filters, setFilters] = useState<Filter>({
     profession: '',
     location: '',
@@ -202,6 +203,37 @@ const SearchResults = () => {
     toast.success('Filtres réinitialisés');
   };
 
+  const handleResetFilter = (filterName: string) => {
+    if (filterName === 'all') {
+      clearFilters();
+      return;
+    }
+    
+    setFilters(prev => ({
+      ...prev,
+      [filterName]: filterName === 'minRating' ? 0 : ''
+    }));
+    
+    toast.success(`Filtre ${filterName} réinitialisé`);
+  };
+
+  const expandSearch = () => {
+    // Simulate expanding search radius
+    setSearchRadius(prev => prev + 15);
+    toast.success(`Recherche élargie à ${searchRadius + 15} km`);
+    
+    // In a real app, we would fetch more artisans here
+    // For this demo, let's just pretend we found more artisans by removing location filter
+    if (filters.location) {
+      setFilters(prev => ({...prev, location: ''}));
+    }
+  };
+
+  const handleRadiusChange = (radius: number) => {
+    setSearchRadius(radius);
+    toast.success(`Rayon de recherche défini à ${radius} km`);
+  };
+
   return (
     <div className="min-h-screen bg-[#FDFAF7]">
       <NavBar />
@@ -211,6 +243,7 @@ const SearchResults = () => {
           <LocationBar 
             initialLocation={filters.location} 
             onLocationChange={(location) => setFilters(prev => ({...prev, location}))}
+            onRadiusChange={handleRadiusChange}
           />
         </div>
       </div>
@@ -228,7 +261,14 @@ const SearchResults = () => {
         
         <ArtisanResults 
           artisans={filteredArtisans} 
-          isLoading={isLoading} 
+          isLoading={isLoading}
+          onExpandSearch={expandSearch}
+          activeFilters={{
+            profession: filters.profession,
+            location: filters.location,
+            minRating: filters.minRating
+          }}
+          onResetFilter={handleResetFilter}
         />
       </div>
     </div>
