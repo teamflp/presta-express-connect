@@ -1,3 +1,4 @@
+
 import React from 'react';
 import argumentsData from '../../assets/tableaux/arguments';
 import { Card } from 'react-bootstrap';
@@ -7,6 +8,7 @@ function ArgumentsPresta() {
         <div className="container bg-white p-5 md-p-11" style={{ borderRadius: "25px 1px 25px 25px", boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)" }}>
             <div className="text-center">
                 <h2 className="my-5 title1 argument">Pourquoi choisir <span style={{ color: '#C63E46' }}>Presta Express</span>?</h2>
+                <p className="mb-4">La plateforme qui connecte particuliers et professionnels de confiance pour tous vos projets</p>
             </div>
             <div className="row row-cols-1 row-cols-md-4 g-4 mt-3">
                 {argumentsData.map(argument => (
@@ -26,5 +28,3 @@ function ArgumentsPresta() {
 }
 
 export default ArgumentsPresta;
-
-

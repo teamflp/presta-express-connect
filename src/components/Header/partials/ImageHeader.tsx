@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import Background from '../../../assets/images/lyon.jpg';
@@ -25,8 +26,8 @@ function ImageHeader() {
     }, []);
 
     const backgroundStyle = {
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fond noir avec opacité de 50%
-        height: '100%', // Hauteur de 100%
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        height: '100%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -38,7 +39,8 @@ function ImageHeader() {
             <Card className="card-bg-image" style={{ background: `url(${Background}) no-repeat center center / cover`, height: '100%', borderRadius: '0px 0px 25px 25px', boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)' }}>
                 <div className="card-imageHeader" style={backgroundStyle}>
                     <div className="text-center">
-                        <h1 className="card-title text-white mb-5">Lorem ipsum dolor sit amet consectetur</h1>
+                        <h1 className="card-title text-white mb-5">Trouvez le professionnel idéal pour vos projets</h1>
+                        <p className="text-white mb-5">Des milliers d'artisans qualifiés prêts à vous aider dans toute la France</p>
                         <div className="d-flex justify-content-center">
                             {!isLargeScreen && <SearchButton />}
                         </div>
@@ -54,6 +56,3 @@ function ImageHeader() {
 }
 
 export default ImageHeader;
-
-
-

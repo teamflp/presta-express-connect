@@ -14,17 +14,28 @@
 @import './utilities/shadows.css';
 
 /* Base styles */
-.App{
+.App {
   background-color: #FDFAF7;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.title1{
+.title1 {
   font-size: clamp(18px, 3vw, 42px); 
   font-weight: 700;
   margin-bottom: 1.5rem;
 }
 
-.title2{
+.title2 {
   font-size: clamp(14px, 3vw, 28px); 
   font-weight: 600;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #C63E46;
 }

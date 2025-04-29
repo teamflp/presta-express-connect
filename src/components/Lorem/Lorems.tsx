@@ -7,19 +7,20 @@ function LoremsPresta() {
     return (
         <div className="container py-5">
             <div className="mb-4">
-                <h2 className="fw-bold">Lorem ipsum (Suggestion:Actualité ou publicité)</h2>
+                <h2 className="fw-bold title1">Actualités et conseils</h2>
+                <p className="mb-4">Découvrez nos derniers articles et conseils pour vous aider dans vos projets</p>
             </div>
             <div className="row row-cols-1 row-cols-md-4 g-4">
-                {LoremsData.map((Lorem) => (
-                    <div key={Lorem.id} className="col mb-4">
+                {LoremsData.map((article) => (
+                    <div key={article.id} className="col mb-4">
                         <Card className="h-100 bg-white border-0 shadow-sm hover-card" style={{ borderRadius: "25px 1px 25px 25px" }}>
                             <div className="text-center p-3">
-                                <img src={Lorem.icone} alt={`Image de ${Lorem.titre}`} className="Lorem-image mb-3" style={{ maxHeight: "80px", objectFit: "contain" }} />
+                                <img src={article.icone} alt={`Image de ${article.titre}`} className="mb-3" style={{ maxHeight: "80px", objectFit: "contain" }} />
                                 <div className="card-body">
-                                    <h5 className="title2 mb-3">{Lorem.titre}</h5>
-                                    <p className="card-text mb-4">{Lorem.description}</p>
+                                    <h5 className="title2 mb-3">{article.titre}</h5>
+                                    <p className="card-text mb-4">{article.description}</p>
                                     <a 
-                                        href={Lorem.lien} 
+                                        href={article.lien} 
                                         className="btn-link"         
                                         style={{
                                             color: '#141414',

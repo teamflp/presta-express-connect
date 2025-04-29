@@ -7,7 +7,8 @@ import { Category as CategoryType } from '../../assets/tableaux/categories';
 const CategoriesArtisans: React.FC = () => {
   return (
     <div className="categories-container">
-      <h2 className="mb-4 fw-bold">Nos Catégories</h2>
+      <h2 className="mb-4 fw-bold title1">Nos Catégories de Professionnels</h2>
+      <p className="mb-4">Explorez nos différentes catégories de métiers pour trouver le professionnel adapté à votre projet</p>
       <div className="categories-grid">
         {categories.map((category: CategoryType) => (
           <div key={category.id} className="category-card">

@@ -1,38 +1,41 @@
 
 import IconSecurity from '../icons/IconSecurity.svg';
+import IconKey from '../icons/IconKey.svg';
+import IconLegal from '../icons/IconLegal.svg';
+import IconCare from '../icons/IconCare.svg';
 
 const LoremsData = [
   {
     id: 1,
-    titre: 'Lorem 1',
+    titre: 'Comment choisir le bon artisan ?',
     description:
-      'This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.',
+      'Découvrez nos conseils pour trouver le professionnel idéal pour vos travaux : vérification des qualifications, devis comparatifs et retours clients.',
     icone: IconSecurity,
-    lien: '/lien-pour-lorem-1',
+    lien: '/conseils/choisir-artisan',
   },
   {
     id: 2,
-    titre: 'Lorem 2',
+    titre: 'Rénovation énergétique',
     description:
-      'This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.',
-    icone: IconSecurity,
-    lien: '/lien-pour-lorem-2',
+      'Les aides financières disponibles en 2024 pour améliorer la performance énergétique de votre logement et réduire vos factures.',
+    icone: IconKey,
+    lien: '/conseils/renovation-energetique',
   },
   {
     id: 3,
-    titre: 'Lorem 3',
+    titre: 'Droits et obligations',
     description:
-      'This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.',
-    icone: IconSecurity,
-    lien: '/lien-pour-lorem-3',
+      'Quelles sont vos obligations et vos droits lors de la signature d\'un contrat avec un artisan ? Nos experts juridiques vous répondent.',
+    icone: IconLegal,
+    lien: '/conseils/droits-obligations',
   },
   {
     id: 4,
-    titre: 'Lorem 4',
+    titre: 'Entretien maison',
     description:
-      'This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.',
-    icone: IconSecurity,
-    lien: '/lien-pour-lorem-4',
+      'Le calendrier des entretiens essentiels pour maintenir votre maison en parfait état toute l\'année : chaudière, toiture, jardin...',
+    icone: IconCare,
+    lien: '/conseils/entretien-maison',
   },
 ];
 
