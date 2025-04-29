@@ -17,6 +17,7 @@ import ProductDetails from './pages/ProductDetails';
 import DomainesIntervention from './pages/DomaineIntervention';
 import Categories from './pages/Categories';
 import CategoryDetails from './pages/CategoryDetails';
+import ProfessionalsByJob from './pages/ProfessionalsByJob';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
             <Route path="/Intervention" element={<DomainesIntervention />} />
             <Route path="/categories" element={<Categories />} />
             <Route path="/categories/:id" element={<CategoryDetails />} />
+            <Route path="/professionals/:categoryId/:jobId" element={<ProfessionalsByJob />} />
           </Routes>
         </Router>
       </AuthProvider>

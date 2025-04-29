@@ -111,9 +111,9 @@ const CategoryDetails: React.FC = () => {
                   <div className="job-content">
                     <h3 className="job-title-modern">{job.name}</h3>
                     <p className="job-description-modern">{job.description}</p>
-                    <a href="#" className="job-link">
+                    <Link to={`/professionals/${categoryId}/${job.id}`} className="job-link">
                       Voir les professionnels
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
