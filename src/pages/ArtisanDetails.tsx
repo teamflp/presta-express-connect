@@ -1,41 +1,24 @@
+
 import React from 'react';
 import Header from '../components/Header/Header';
-import Cities from '../components/City/Cities';
-import CardArguments from '../components/Arguments/Arguments';
-import LoremsPresta from '../components/Lorem/Lorems';
-import ArtisanByLetter from '../components/SectionProf/ArtisanByLetter';
-import CategoriesArtisans from '../components/Artisant/CategoriesArtisans';
-import RegistrationArtisan from '../components/SectionProf/RegistrationArtisan';
+import Footer from '../components/Footer/Footer';
+import ProductDetailsCard from '../components/Product/ProductDetailsCard';
+import { useLocation } from 'react-router-dom';
+import { Product } from '../assets/tableaux/productData';
+import products from '../assets/tableaux/productData';
 
+function ArtisanDetails() {
+  const location = useLocation();
+  // Get product from location state or use the first product as default
+  const product: Product = location.state?.product || products[0];
 
-function Home() {
   return (
     <div className="App">
       <Header />
-      <div className="my-8">
-        <CardArguments />
-      </div>
-      <div className="container my-15 container-carousel">
-        <CategoriesArtisans />
-      </div>
-      <div className="container px-0 my-15">
-        <div className="row my-5 d-flex justify-content-between">
-          <div className="col-12 col-md-5">
-            <ArtisanByLetter />
-          </div>
-          <div className="col-12 col-md-7">
-            <RegistrationArtisan />
-          </div>
-        </div>
-      </div>
-      <div className="my-15">
-        <LoremsPresta />
-      </div>
-      <div className="my-15">
-        <Cities />
-      </div>
+      <ProductDetailsCard product={product} />
+      <Footer />
     </div>
   );
 }
 
-export default Home;
+export default ArtisanDetails;
