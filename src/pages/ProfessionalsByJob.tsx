@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Star, MapPin, Phone, UserRound, Mail } from 'lucide-react';
@@ -5,6 +6,7 @@ import Navbar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
 import products from '../assets/tableaux/productData';
 import jobs from '../assets/tableaux/jobs';
+
 const ProfessionalsByJob = () => {
   const {
     categoryId,
@@ -16,6 +18,21 @@ const ProfessionalsByJob = () => {
   const [professionals, setProfessionals] = useState([]);
   const [job, setJob] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  // Noms fictifs pour les professionnels
+  const fictionalNames = [
+    "Thomas Martin", 
+    "Sophie Dubois", 
+    "Jean Lefebvre", 
+    "Marie Lambert", 
+    "Pierre Dupont", 
+    "Claire Bernard",
+    "Lucas Moreau", 
+    "Camille Richard", 
+    "Antoine Leroy", 
+    "Julie Laurent"
+  ];
+
   useEffect(() => {
     // Récupération des informations du métier
     if (numCategoryId && numJobId && jobs[numCategoryId]) {
@@ -29,10 +46,11 @@ const ProfessionalsByJob = () => {
         // Simulation d'un délai réseau
         await new Promise(resolve => setTimeout(resolve, 800));
 
-        // Utilisez les données de produits comme professionnels (pour la démo)
+        // Utilisez les données de produits comme professionnels avec des noms fictifs
         const mockProfessionals = products.slice(0, 6).map((product, index) => ({
           ...product,
           id: index + 1,
+          name: fictionalNames[index], // Utilise des noms fictifs
           rating: (Math.random() * 2 + 3).toFixed(1),
           // Note entre 3 et 5
           speciality: job?.name || "Spécialiste",
@@ -51,6 +69,7 @@ const ProfessionalsByJob = () => {
     };
     fetchProfessionals();
   }, [numCategoryId, numJobId, job?.name]);
+
   const handleViewProfile = professionalId => {
     navigate(`/professional/${professionalId}`, {
       state: {
@@ -58,6 +77,7 @@ const ProfessionalsByJob = () => {
       }
     });
   };
+
   const handleContact = professionalId => {
     navigate(`/contact-professional/${professionalId}`, {
       state: {
@@ -65,6 +85,7 @@ const ProfessionalsByJob = () => {
       }
     });
   };
+
   return <div className="App">
       <Navbar />
       <div className="container my-5">
@@ -90,8 +111,8 @@ const ProfessionalsByJob = () => {
                   <div className="card-body p-4">
                     <div className="d-flex mb-3">
                       <div className="me-3">
-                        <div className="profile-image-container">
-                          <img src={professional.profileImage} alt={`${professional.name}`} className="profile-image rounded-circle" />
+                        <div className="profile-image-container-small">
+                          <img src={professional.profileImage} alt={`${professional.name}`} className="profile-image" />
                         </div>
                       </div>
                       <div>
@@ -143,4 +164,5 @@ const ProfessionalsByJob = () => {
       <Footer />
     </div>;
 };
+
 export default ProfessionalsByJob;

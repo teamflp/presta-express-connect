@@ -158,7 +158,7 @@ const ContactProfessional = () => {
           <div className="col-lg-4">
             <div className="contact-info-card mb-4">
               <div className="d-flex align-items-center mb-3">
-                <div className="profile-image-container" style={{width: '60px', height: '60px'}}>
+                <div className="profile-image-container-small">
                   <img 
                     src={professional.profileImage} 
                     alt={professional.name} 
