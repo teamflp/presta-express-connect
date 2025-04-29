@@ -15,6 +15,7 @@ import Search from './pages/Search';
 import Metiers from './pages/ArtisanMetiers';
 import ProductDetails from './pages/ProductDetails';
 import DomainesIntervention from './pages/DomaineIntervention';
+import CategoriesArtisans from './components/Artisant/CategoriesArtisans';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             <Route path="/ProductDetails" element={<ProductDetails />} />
             <Route path="/Metiers" element={<Metiers />} />
             <Route path="/Intervention" element={<DomainesIntervention />} />
+            <Route path="/categories" element={<CategoriesArtisans />} /> {/* Nouvelle route pour /categories */}
             {/* <Route path="/list-metiers/:letter" element={<LetterMetiersWithList />} /> */}{' '}
             {/* Route pour les métiers */}
           </Routes>
