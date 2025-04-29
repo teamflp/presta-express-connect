@@ -1,6 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { FaSearch, FaFilter } from 'react-icons/fa';
+import NavBar from '../components/Header/partials/NavBar';
+import { toast } from 'react-hot-toast';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 
 // Types
 interface Artisan {
@@ -17,6 +20,7 @@ interface Filter {
   profession: string;
   location: string;
   minRating: number;
+  sortBy: string;
 }
 
 const Search = () => {
@@ -27,9 +31,20 @@ const Search = () => {
   const [filters, setFilters] = useState<Filter>({
     profession: '',
     location: '',
-    minRating: 0
+    minRating: 0,
+    sortBy: 'rating'
   });
   const [isLoading, setIsLoading] = useState(true);
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  // Get location from URL params if present
+  useEffect(() => {
+    const locationParam = searchParams.get('location');
+    if (locationParam) {
+      setFilters(prev => ({ ...prev, location: locationParam }));
+    }
+  }, [searchParams]);
 
   // Simulating data fetch
   useEffect(() => {
@@ -38,7 +53,7 @@ const Search = () => {
         // Simulate API call with timeout
         await new Promise(resolve => setTimeout(resolve, 1000));
         
-        // Mock data
+        // Mock data - extended for better testing
         const mockArtisans: Artisan[] = [
           {
             id: 1,
@@ -84,6 +99,24 @@ const Search = () => {
             rating: 4.3,
             imageUrl: 'https://images.unsplash.com/photo-1586307078048-b065cc6855e1?ixlib=rb-4.0.3',
             description: 'Spécialiste en réparation de plomberie et installation de salles de bain.'
+          },
+          {
+            id: 6,
+            name: 'Claire Rousseau',
+            profession: 'Électricienne',
+            location: 'Paris',
+            rating: 4.7,
+            imageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3',
+            description: 'Électricienne spécialisée en domotique et installations smart home.'
+          },
+          {
+            id: 7,
+            name: 'Philippe Durand',
+            profession: 'Menuisier',
+            location: 'Lyon',
+            rating: 4.4,
+            imageUrl: 'https://images.unsplash.com/photo-1560250097-10c8f3c596ef?ixlib=rb-4.0.3',
+            description: 'Menuisier avec expertise en restauration de meubles anciens.'
           }
         ];
         
@@ -92,6 +125,7 @@ const Search = () => {
         setIsLoading(false);
       } catch (error) {
         console.error('Erreur lors de la récupération des artisans:', error);
+        toast.error('Impossible de charger les artisans');
         setIsLoading(false);
       }
     };
@@ -123,13 +157,20 @@ const Search = () => {
       // Apply location filter
       if (filters.location) {
         result = result.filter(artisan => 
-          artisan.location.toLowerCase() === filters.location.toLowerCase()
+          artisan.location.toLowerCase().includes(filters.location.toLowerCase())
         );
       }
       
       // Apply rating filter
       if (filters.minRating > 0) {
         result = result.filter(artisan => artisan.rating >= filters.minRating);
+      }
+      
+      // Apply sorting
+      if (filters.sortBy === 'rating') {
+        result.sort((a, b) => b.rating - a.rating);
+      } else if (filters.sortBy === 'name') {
+        result.sort((a, b) => a.name.localeCompare(b.name));
       }
       
       setFilteredArtisans(result);
@@ -150,7 +191,8 @@ const Search = () => {
     setFilters({
       profession: '',
       location: '',
-      minRating: 0
+      minRating: 0,
+      sortBy: 'rating'
     });
     setSearchQuery('');
   };
@@ -159,10 +201,16 @@ const Search = () => {
   const professions = [...new Set(artisans.map(a => a.profession))];
   const locations = [...new Set(artisans.map(a => a.location))];
 
+  const handleContactClick = (artisanId: number) => {
+    navigate(`/contact-professional/${artisanId}`);
+  };
+
   return (
-    <div className="min-h-screen bg-[#FDFAF7] py-8">
-      <div className="container mx-auto px-4">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8 text-center">
+    <div className="min-h-screen bg-[#FDFAF7]">
+      <NavBar />
+      
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold text-gray-900 mb-6 text-center">
           Trouvez l'artisan idéal pour votre projet
         </h1>
         
@@ -182,22 +230,23 @@ const Search = () => {
             <button
               onClick={() => setShowFilters(!showFilters)}
               className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-md transition-colors"
+              aria-expanded={showFilters}
             >
-              <FaFilter /> Filtres
+              <FaFilter /> {showFilters ? 'Masquer les filtres' : 'Afficher les filtres'}
             </button>
             
-            {filters.profession || filters.location || filters.minRating > 0 ? (
+            {(filters.profession || filters.location || filters.minRating > 0 || filters.sortBy !== 'rating') && (
               <button
                 onClick={clearFilters}
                 className="bg-[#C63E46] hover:bg-[#A33138] text-white px-4 py-2 rounded-md transition-colors"
               >
                 Effacer les filtres
               </button>
-            ) : null}
+            )}
           </div>
           
           {showFilters && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4 animate-fadeIn">
               <div>
                 <label htmlFor="profession" className="block text-sm font-medium text-gray-700 mb-1">
                   Profession
@@ -251,6 +300,22 @@ const Search = () => {
                   <option value="4.5">4.5+ étoiles</option>
                 </select>
               </div>
+              
+              <div>
+                <label htmlFor="sortBy" className="block text-sm font-medium text-gray-700 mb-1">
+                  Trier par
+                </label>
+                <select
+                  id="sortBy"
+                  name="sortBy"
+                  value={filters.sortBy}
+                  onChange={handleFilterChange}
+                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#C63E46]"
+                >
+                  <option value="rating">Meilleure évaluation</option>
+                  <option value="name">Nom (A-Z)</option>
+                </select>
+              </div>
             </div>
           )}
         </div>
@@ -262,7 +327,10 @@ const Search = () => {
         ) : filteredArtisans.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredArtisans.map((artisan) => (
-              <div key={artisan.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+              <div 
+                key={artisan.id} 
+                className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow hover-card"
+              >
                 <div className="h-48 overflow-hidden">
                   <img
                     src={artisan.imageUrl}
@@ -288,7 +356,10 @@ const Search = () => {
                   <p className="text-gray-600 text-sm mb-4">
                     {artisan.description}
                   </p>
-                  <button className="w-full bg-[#C63E46] hover:bg-[#A33138] text-white py-2 rounded-md transition-colors">
+                  <button 
+                    className="w-full bg-[#C63E46] hover:bg-[#A33138] text-white py-2 rounded-md transition-colors"
+                    onClick={() => handleContactClick(artisan.id)}
+                  >
                     Contacter
                   </button>
                 </div>

@@ -82,3 +82,18 @@ section {
 .text-muted {
   color: #6c757d !important;
 }
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* Add spacing between navbar and content */
+.navbar + .container {
+  padding-top: 1rem;
+}
