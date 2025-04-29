@@ -2,14 +2,13 @@
 import { useState, useEffect } from 'react';
 import { Navbar, Nav, Container, Button, Offcanvas } from 'react-bootstrap';
 import { NavLink, useLocation, Link } from 'react-router-dom';
-import SearchButton from './SearchButton';
 import { FaUser, FaSignInAlt, FaSignOutAlt, FaBars } from 'react-icons/fa';
 import { useAuth } from '../../../hooks/useAuth';
 import '../../../assets/styles/layout/header.css';
 
 const NavbarComponent = () => {
   // État pour gérer si l'écran est large ou non
-  const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
+  const [setIsLargeScreen] = useState(window.innerWidth >= 992);
 
   // Hook pour obtenir l'emplacement actuel de la page
   const location = useLocation();
@@ -72,12 +71,6 @@ const NavbarComponent = () => {
 
           <div className="d-flex align-items-center">
             {/* Bouton de recherche pour les grands écrans */}
-            {isLargeScreen && (
-              <div className="searchButtonContainer me-3">
-                <SearchButton />
-              </div>
-            )}
-
             {/* Bouton pour afficher le menu mobile */}
             <Navbar.Toggle 
               aria-controls="navbarNavAltMarkup" 
@@ -147,9 +140,6 @@ const NavbarComponent = () => {
             <hr className="my-3" />
             
             {/* Bouton de recherche pour mobile */}
-            <div className="mb-3">
-              <SearchButton />
-            </div>
             
             {/* Authentification pour mobile */}
             {isAuthenticated ? (
