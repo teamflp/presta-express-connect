@@ -8,11 +8,11 @@ import { Job } from '../assets/tableaux/jobs';
 import Navbar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
 import { 
-  Wrench, PaintBucket, Hammer, Zap, Tool, Pipe, 
+  Wrench, PaintBucket, Hammer, Zap, Pipe as PipeIcon, 
   Thermometer, Droplet, Bath, Flame, Search, 
   Axe, Gem, Home, Sofa, Grid, Square, RefreshCw,
   Plug, Cpu, Lightbulb, Sun, Wifi, Shield, Smartphone,
-  Palette, Building, Framer, Layers, Brush, Feather
+  Palette, Building, Framer, Layers, Brush, Feather, Settings
 } from 'lucide-react';
 
 const CategoryDetails: React.FC = () => {
@@ -31,11 +31,11 @@ const CategoryDetails: React.FC = () => {
       case 'paint-bucket': return <PaintBucket size={size} className="category-icon-large" />;
       
       // Job Icons
-      case 'tool': return <Tool size={size} className="job-icon" />;
-      case 'pipe': return <Wrench size={size} className="job-icon" />;
+      case 'tool': return <Settings size={size} className="job-icon" />;
+      case 'pipe': return <PipeIcon size={size} className="job-icon" />;
       case 'thermometer': return <Thermometer size={size} className="job-icon" />;
       case 'droplet': return <Droplet size={size} className="job-icon" />;
-      case 'bath': return <Droplet size={size} className="job-icon" />;
+      case 'bath': return <Bath size={size} className="job-icon" />;
       case 'flame': return <Flame size={size} className="job-icon" />;
       case 'search': return <Search size={size} className="job-icon" />;
       case 'axe': return <Axe size={size} className="job-icon" />;
@@ -55,7 +55,7 @@ const CategoryDetails: React.FC = () => {
       case 'smartphone': return <Smartphone size={size} className="job-icon" />;
       case 'palette': return <Palette size={size} className="job-icon" />;
       case 'building': return <Building size={size} className="job-icon" />;
-      case 'framer': return <Palette size={size} className="job-icon" />;
+      case 'framer': return <Framer size={size} className="job-icon" />;
       case 'layers': return <Layers size={size} className="job-icon" />;
       case 'brush': return <Brush size={size} className="job-icon" />;
       case 'feather': return <Feather size={size} className="job-icon" />;
@@ -98,19 +98,26 @@ const CategoryDetails: React.FC = () => {
         
         <h3 className="mb-4 title2">Nos professionnels dans cette catégorie</h3>
         
-        <div className="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 mb-5">
+        <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
           {categoryJobs.length > 0 ? (
             categoryJobs.map(job => (
               <div className="col" key={job.id}>
                 <div className="card job-card h-100 border-0 shadow-sm hover-card">
-                  <div className="job-icon-wrapper">
-                    {getIconComponent(job.icon, 32)}
+                  <div className="job-image-wrapper">
+                    <img 
+                      className="img-fluid job-image" 
+                      src={job.image} 
+                      alt={job.name} 
+                      loading="lazy"
+                    />
+                    <div className="job-icon-wrapper">
+                      {getIconComponent(job.icon, 28)}
+                    </div>
                   </div>
-                  <img className="img-fluid job-image" src={job.image} alt={job.name} />
                   <div className="card-body">
-                    <h5 className="card-title text-base">{job.name}</h5>
-                    <p className="card-text small text-muted">{job.description}</p>
-                    <a href="#" className="card-link">
+                    <h5 className="card-title job-title">{job.name}</h5>
+                    <p className="card-text job-description">{job.description}</p>
+                    <a href="#" className="card-link stretched-link">
                       Voir les professionnels
                     </a>
                   </div>
