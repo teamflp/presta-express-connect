@@ -1,19 +1,24 @@
+
 import { useState, useEffect } from 'react';
-import { Navbar, Nav } from 'react-bootstrap';
-import { NavLink, useLocation } from 'react-router-dom';
+import { Navbar, Nav, Container, Button } from 'react-bootstrap';
+import { NavLink, useLocation, Link } from 'react-router-dom';
 import SearchButton from './SearchButton';
-import { FaUser } from 'react-icons/fa'; // Importation de l'icône utilisateur
-import '../../../assets/styles/style.css' // Importation du fichier CSS
+import { FaUser, FaSignInAlt, FaSignOutAlt, FaSearch } from 'react-icons/fa'; 
+import { useAuth } from '../../../hooks/useAuth';
+import '../../../assets/styles/style.css'; // Importation du fichier CSS
 
 const NavbarComponent = () => {
   // État pour gérer si l'écran est large ou non (pour afficher ou non le bouton de recherche)
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
   
-  // Hook pour obtenir l'emplacement actuel de la page (utile pour appliquer des styles conditionnels)
+  // Hook pour obtenir l'emplacement actuel de la page
   const location = useLocation();
 
   // État pour déterminer si la navbar doit être stylisée comme scrollée
   const [isNavbarScroll, setIsNavbarScroll] = useState(false);
+  
+  // Utilisation du hook d'authentification
+  const { isAuthenticated, currentUser, logout } = useAuth();
 
   useEffect(() => {
     // Fonction pour mettre à jour l'état lorsque la taille de l'écran change
@@ -32,6 +37,9 @@ const NavbarComponent = () => {
         } else if (location.pathname === '/') {
           setIsNavbarScroll(false); // Supprime la classe si on est sur la page Home
         }
+      } else {
+        // Si pas d'image header sur la page (non-home pages)
+        setIsNavbarScroll(window.scrollY > 50);
       }
     };
 
@@ -57,26 +65,54 @@ const NavbarComponent = () => {
       expand="lg" 
       className={`z-3 navbar position-fixed container-fluid ${isNavbarScroll ? 'navbar-scroll' : ''} ${location.pathname === '/' ? 'navbar-home' : ''}`}
     >
-      <div className="container">
-        <a className="navbar-brand" href="#">LOGO</a>
+      <Container>
+        <NavLink to="/" className="navbar-brand">ARTISAN EXPRESS</NavLink>
         <Navbar.Toggle aria-controls="navbarNavAltMarkup" />
         <Navbar.Collapse id="navbarNavAltMarkup">
           <Nav className="me-auto">
-            <Nav.Link as={NavLink} className="nav-link text-white" to="/" exact>Home</Nav.Link>
-            <Nav.Link as={NavLink} className="nav-link text-white" to="/features">Features</Nav.Link>
-            <Nav.Link as={NavLink} className="nav-link text-white" to="/pricing">Pricing</Nav.Link>
-            <Nav.Link className="nav-link disabled text-white" href="#" aria-disabled="true">Disabled</Nav.Link>
+            <Nav.Link as={NavLink} className="nav-link" to="/">Accueil</Nav.Link>
+            <Nav.Link as={NavLink} className="nav-link" to="/Metiers">Métiers</Nav.Link>
+            <Nav.Link as={NavLink} className="nav-link" to="/Intervention">Domaines</Nav.Link>
+            <Nav.Link as={NavLink} className="nav-link" to="/search">
+              <span className="d-flex align-items-center">
+                <FaSearch className="me-1" /> Rechercher un artisan
+              </span>
+            </Nav.Link>
           </Nav>
           <Nav className="ms-auto d-flex align-items-center">
-            <Nav.Link as={NavLink} className="nav-link text-white" to="/admin"><FaUser /></Nav.Link>
+            {isAuthenticated ? (
+              <>
+                <span className="me-3 nav-link">Bonjour, {currentUser?.name}</span>
+                <Button 
+                  variant="outline-light" 
+                  className="d-flex align-items-center gap-2"
+                  onClick={logout}
+                >
+                  <FaSignOutAlt /> Déconnexion
+                </Button>
+              </>
+            ) : (
+              <>
+                <Nav.Link as={Link} to="/login" className="me-2 nav-link">
+                  <span className="d-flex align-items-center">
+                    <FaSignInAlt className="me-1" /> Connexion
+                  </span>
+                </Nav.Link>
+                <Link to="/register">
+                  <Button variant="outline-light" className="nav-btn">
+                    <FaUser className="me-1" /> Inscription
+                  </Button>
+                </Link>
+              </>
+            )}
           </Nav>
         </Navbar.Collapse>
         {isLargeScreen && (
-          <div className="searchButtonContainer">
+          <div className="searchButtonContainer ms-3">
             <SearchButton />
           </div>
         )}
-      </div>
+      </Container>
     </Navbar>
   );
 };
