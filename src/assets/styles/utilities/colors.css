@@ -1,0 +1,22 @@
+
+/* ____COLORS UTILITIES____ */
+.titre span{
+  color: #b73840;
+}
+
+/* Line styles */
+.redLineStyle {
+  border: none;
+  border-top: 2px solid #C63E46;
+  width: 100px;
+  position: relative;
+  right: 17px;
+  top: -10px;
+  opacity: 1;
+}
+
+.redLineContainer {
+  border-top: 2px solid #C63E46;
+  width: 100%;
+  opacity: 1;
+}

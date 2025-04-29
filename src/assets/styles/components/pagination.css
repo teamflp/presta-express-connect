@@ -1,0 +1,16 @@
+
+/* ____PAGINATION STYLES____ */
+.pagination .page-item .page-link {
+  color: #C63E46;
+}
+
+.pagination .page-item.active .page-link {
+  font-weight: bold;
+  background-color: transparent !important;
+  border-color: #C63E46;
+  z-index: 1 !important;
+}
+
+.pagination {  
+  --bs-pagination-focus-box-shadow: transparent !important;
+}

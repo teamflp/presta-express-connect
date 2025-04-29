@@ -1,0 +1,98 @@
+
+/* ____CAROUSEL STYLES____ */
+.carousel-wrapper {
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 15px;
+  padding: 10px 0;
+}
+
+.carousel-content {
+  display: flex;
+  white-space: nowrap;
+  transition: transform 0.1s linear;
+  flex-grow: 1;
+  scroll-behavior: smooth;
+  padding: 10px 5px;
+}
+
+.carousel-group {
+  display: flex;
+  padding: 5px;
+}
+
+.job-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 15px 0px 0px 0px;
+}
+
+.cardCarousel .card-body {
+  padding: 15px;
+}
+
+.cardCarousel a {
+  color: #141414;
+  text-decoration: none;
+  padding: 5px;
+  transition: color 0.3s ease, font-weight 0.3s ease;
+}
+
+.cardCarousel a:hover {
+  color: #C63E46;
+  font-weight: bold;
+}
+
+.cardCarousel .card-link-city {
+  color: white !important;
+  font-weight: 500;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+  padding: 8px 15px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px 0px 10px 10px;
+  transition: all 0.3s ease;
+}
+
+.cardCarousel .card-link-city:hover {
+  color: #C63E46 !important;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.carousel-button {
+  background-color: #FDFAF7 !important;
+  color: #1C1A14;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.carousel-button:hover {
+  background-color: #C63E46 !important;
+  color: white;
+}
+
+.carousel-button.prev {
+  position: absolute;
+  left: 10px;
+}
+
+.carousel-button.next {
+  position: absolute;
+  right: 10px;
+}
+
+.carousel-button .icon {
+  font-size: 20px;
+}

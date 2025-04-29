@@ -1,0 +1,32 @@
+
+/* ____HEADER STYLES____ */
+.card-bg-image{
+  width: clamp(90%, 3vw, 80%);
+  color: rgba(198, 62, 71, 0.838);
+}
+
+.card-title{
+  font-size: clamp(18px, 3vw, 44px);
+}
+
+/* Navbar */
+.navbar-home {
+  margin-top: 61px;
+}
+
+.navbar-scroll {
+  background-color: white !important;
+  box-shadow: 0 4px 2px -2px gray;
+}
+
+.navbar-scroll .nav-link {
+  color: black !important;
+}
+
+/* Position styles */
+.positionNav {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin-top: 30px;
+}

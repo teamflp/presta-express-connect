@@ -1,0 +1,30 @@
+
+/* Import all CSS files */
+@import './components/buttons.css';
+@import './components/cards.css';
+@import './components/forms.css';
+@import './components/accordion.css';
+@import './components/carousel.css';
+@import './components/categories.css';
+@import './components/domaines.css';
+@import './components/pagination.css';
+@import './layout/header.css';
+@import './utilities/spacing.css';
+@import './utilities/colors.css';
+@import './utilities/shadows.css';
+
+/* Base styles */
+.App{
+  background-color: #FDFAF7;
+}
+
+.title1{
+  font-size: clamp(18px, 3vw, 42px); 
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.title2{
+  font-size: clamp(14px, 3vw, 28px); 
+  font-weight: 600;
+}
