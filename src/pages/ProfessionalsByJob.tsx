@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Star, MapPin, Phone, UserRound, Mail } from 'lucide-react';
@@ -6,7 +5,6 @@ import Navbar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
 import products from '../assets/tableaux/productData';
 import jobs from '../assets/tableaux/jobs';
-
 const ProfessionalsByJob = () => {
   const {
     categoryId,
@@ -20,19 +18,7 @@ const ProfessionalsByJob = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   // Noms fictifs pour les professionnels
-  const fictionalNames = [
-    "Thomas Martin", 
-    "Sophie Dubois", 
-    "Jean Lefebvre", 
-    "Marie Lambert", 
-    "Pierre Dupont", 
-    "Claire Bernard",
-    "Lucas Moreau", 
-    "Camille Richard", 
-    "Antoine Leroy", 
-    "Julie Laurent"
-  ];
-
+  const fictionalNames = ["Thomas Martin", "Sophie Dubois", "Jean Lefebvre", "Marie Lambert", "Pierre Dupont", "Claire Bernard", "Lucas Moreau", "Camille Richard", "Antoine Leroy", "Julie Laurent"];
   useEffect(() => {
     // Récupération des informations du métier
     if (numCategoryId && numJobId && jobs[numCategoryId]) {
@@ -50,7 +36,8 @@ const ProfessionalsByJob = () => {
         const mockProfessionals = products.slice(0, 6).map((product, index) => ({
           ...product,
           id: index + 1,
-          name: fictionalNames[index], // Utilise des noms fictifs
+          name: fictionalNames[index],
+          // Utilise des noms fictifs
           rating: (Math.random() * 2 + 3).toFixed(1),
           // Note entre 3 et 5
           speciality: job?.name || "Spécialiste",
@@ -69,7 +56,6 @@ const ProfessionalsByJob = () => {
     };
     fetchProfessionals();
   }, [numCategoryId, numJobId, job?.name]);
-
   const handleViewProfile = professionalId => {
     navigate(`/professional/${professionalId}`, {
       state: {
@@ -77,7 +63,6 @@ const ProfessionalsByJob = () => {
       }
     });
   };
-
   const handleContact = professionalId => {
     navigate(`/contact-professional/${professionalId}`, {
       state: {
@@ -85,7 +70,6 @@ const ProfessionalsByJob = () => {
       }
     });
   };
-
   return <div className="App">
       <Navbar />
       <div className="container my-5">
@@ -116,7 +100,7 @@ const ProfessionalsByJob = () => {
                         </div>
                       </div>
                       <div>
-                        <h5 className="card-title mb-0 fw-bold text-base">{professional.name}</h5>
+                        <h5 className="card-title mb-0 fw-bold text-base font-normal">{professional.name}</h5>
                         <div className="d-flex align-items-center mt-1">
                           <Star size={14} fill="#ffc107" stroke="#ffc107" className="me-1" />
                           <span className="fw-medium">{professional.rating}</span>
@@ -164,5 +148,4 @@ const ProfessionalsByJob = () => {
       <Footer />
     </div>;
 };
-
 export default ProfessionalsByJob;
