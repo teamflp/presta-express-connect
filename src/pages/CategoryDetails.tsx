@@ -12,7 +12,8 @@ import {
   Thermometer, Droplet, Bath, Flame, Search, 
   Axe, Gem, Home, Sofa, Grid, Square, RefreshCw,
   Plug, Cpu, Lightbulb, Sun, Wifi, Shield, Smartphone,
-  Palette, Building, Framer, Layers, Brush, Feather, Settings
+  Palette, Building, Framer, Layers, Brush, Feather, Settings,
+  ArrowLeft
 } from 'lucide-react';
 
 const CategoryDetails: React.FC = () => {
@@ -81,12 +82,13 @@ const CategoryDetails: React.FC = () => {
       <Navbar />
       <div className="container my-5">
         <div className="mb-4">
-          <Link to="/categories" className="text-decoration-none">
-            &larr; Retour aux catégories
+          <Link to="/categories" className="text-decoration-none d-flex align-items-center gap-2">
+            <ArrowLeft size={18} />
+            <span>Retour aux catégories</span>
           </Link>
         </div>
         
-        <div className="category-header mb-4">
+        <div className="category-header mb-5">
           <div className="category-icon-wrapper-large">
             {getIconComponent(category.icon, 64)}
           </div>
@@ -96,28 +98,27 @@ const CategoryDetails: React.FC = () => {
           </div>
         </div>
         
-        <h3 className="mb-4 title2">Nos professionnels dans cette catégorie</h3>
+        <h2 className="mb-4 title2">Nos professionnels dans cette catégorie</h2>
         
-        <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5">
+        <div className="jobs-grid">
           {categoryJobs.length > 0 ? (
             categoryJobs.map(job => (
-              <div className="col" key={job.id}>
-                <div className="card job-card h-100 border-0 shadow-sm hover-card">
-                  <div className="job-image-wrapper">
+              <div className="job-card-container" key={job.id}>
+                <div className="modern-job-card">
+                  <div className="job-image-container">
                     <img 
-                      className="img-fluid job-image" 
                       src={job.image} 
                       alt={job.name} 
-                      loading="lazy"
+                      className="job-image-modern"
                     />
-                    <div className="job-icon-wrapper">
-                      {getIconComponent(job.icon, 28)}
+                    <div className="job-icon-overlay">
+                      {getIconComponent(job.icon, 24)}
                     </div>
                   </div>
-                  <div className="card-body">
-                    <h5 className="card-title job-title">{job.name}</h5>
-                    <p className="card-text job-description">{job.description}</p>
-                    <a href="#" className="card-link stretched-link">
+                  <div className="job-content">
+                    <h3 className="job-title-modern">{job.name}</h3>
+                    <p className="job-description-modern">{job.description}</p>
+                    <a href="#" className="job-link">
                       Voir les professionnels
                     </a>
                   </div>
