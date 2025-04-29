@@ -1,6 +1,7 @@
+
 import React, { useState } from 'react';
 import domaines from '../../assets/tableaux/domaines';
-import type { PaginationComponent } from '../Pagination/PaginationComponent';
+import PaginationComponent from '../Pagination/PaginationComponent';
 
 function DomainFilter() {
   // États locaux pour la pagination
@@ -223,4 +224,3 @@ function DomainFilter() {
 }
 
 export default DomainFilter;
-
