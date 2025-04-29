@@ -104,9 +104,12 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({
   ].filter(Boolean).length;
 
   return (
-    <div className="filter-container animate-fadeIn">
+    <div className="filter-container">
       <div className="filter-header">
-        <h3 className="text-gray-800 font-semibold">Affiner votre recherche</h3>
+        <h3 className="text-gray-800 font-semibold flex items-center">
+          <SearchIcon size={18} className="mr-2 text-[#C63E46]" />
+          Affiner votre recherche
+        </h3>
         <button
           onClick={toggleFilters}
           className={`filter-toggle-button hover:bg-gray-200 transition-all duration-300 ${showAdvancedFilters ? 'bg-gray-200' : ''}`}
@@ -142,7 +145,7 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({
               }, 200);
             }}
             placeholder="Nom de l'artisan, profession, type de service..."
-            className="w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-[#C63E46] focus:border-transparent text-sm shadow-sm"
+            className="w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C63E46] focus:border-transparent text-sm shadow-sm"
             aria-label="Rechercher"
           />
           {searchQuery && (
@@ -181,56 +184,71 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({
               <label htmlFor="profession" className="block text-sm font-medium text-gray-700 mb-1">
                 Profession
               </label>
-              <select
-                id="profession"
-                name="profession"
-                value={filters.profession}
-                onChange={handleSelectChange}
-                className="w-full p-2.5 text-sm border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-[#C63E46] bg-white shadow-sm"
-              >
-                <option value="">Toutes les professions</option>
-                {professions.map(profession => (
-                  <option key={profession} value={profession}>{profession}</option>
-                ))}
-              </select>
+              <div className="relative">
+                <select
+                  id="profession"
+                  name="profession"
+                  value={filters.profession}
+                  onChange={handleSelectChange}
+                  className="w-full p-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C63E46] focus:border-transparent bg-white shadow-sm appearance-none pr-8"
+                >
+                  <option value="">Toutes les professions</option>
+                  {professions.map(profession => (
+                    <option key={profession} value={profession}>{profession}</option>
+                  ))}
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                  <ChevronDown size={16} />
+                </div>
+              </div>
             </div>
             
             <div>
               <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1">
                 Ville
               </label>
-              <select
-                id="location"
-                name="location"
-                value={filters.location}
-                onChange={handleSelectChange}
-                className="w-full p-2.5 text-sm border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-[#C63E46] bg-white shadow-sm"
-              >
-                <option value="">Toutes les villes</option>
-                {locations.map(location => (
-                  <option key={location} value={location}>{location}</option>
-                ))}
-              </select>
+              <div className="relative">
+                <select
+                  id="location"
+                  name="location"
+                  value={filters.location}
+                  onChange={handleSelectChange}
+                  className="w-full p-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C63E46] focus:border-transparent bg-white shadow-sm appearance-none pr-8"
+                >
+                  <option value="">Toutes les villes</option>
+                  {locations.map(location => (
+                    <option key={location} value={location}>{location}</option>
+                  ))}
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                  <ChevronDown size={16} />
+                </div>
+              </div>
             </div>
             
             <div>
               <label htmlFor="minRating" className="block text-sm font-medium text-gray-700 mb-1">
                 Évaluation minimale
               </label>
-              <div className="flex items-center">
+              <div className="relative">
                 <select
                   id="minRating"
                   name="minRating"
                   value={filters.minRating}
                   onChange={handleSelectChange}
-                  className="w-full p-2.5 text-sm border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-[#C63E46] bg-white shadow-sm"
+                  className="w-full p-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C63E46] focus:border-transparent bg-white shadow-sm appearance-none pr-8"
                 >
                   <option value="0">Toutes les évaluations</option>
                   <option value="3">3+ étoiles</option>
                   <option value="4">4+ étoiles</option>
                   <option value="4.5">4.5+ étoiles</option>
                 </select>
-                <Star size={16} className="text-yellow-500 ml-2" />
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                  <ChevronDown size={16} />
+                </div>
+                <div className="absolute inset-y-0 right-8 flex items-center">
+                  <Star size={14} className="text-yellow-500" />
+                </div>
               </div>
             </div>
             
@@ -238,16 +256,21 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({
               <label htmlFor="sortBy" className="block text-sm font-medium text-gray-700 mb-1">
                 Trier par
               </label>
-              <select
-                id="sortBy"
-                name="sortBy"
-                value={filters.sortBy}
-                onChange={handleSelectChange}
-                className="w-full p-2.5 text-sm border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-[#C63E46] bg-white shadow-sm"
-              >
-                <option value="rating">Meilleure évaluation</option>
-                <option value="name">Nom (A-Z)</option>
-              </select>
+              <div className="relative">
+                <select
+                  id="sortBy"
+                  name="sortBy"
+                  value={filters.sortBy}
+                  onChange={handleSelectChange}
+                  className="w-full p-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C63E46] focus:border-transparent bg-white shadow-sm appearance-none pr-8"
+                >
+                  <option value="rating">Meilleure évaluation</option>
+                  <option value="name">Nom (A-Z)</option>
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                  <ChevronDown size={16} />
+                </div>
+              </div>
             </div>
           </div>
         )}

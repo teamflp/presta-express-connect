@@ -235,11 +235,14 @@ const SearchResults = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFAF7]">
+    <div className="min-h-screen bg-[#fafafa]">
       <NavBar />
       
-      <div className="pt-6 pb-4 bg-white shadow">
+      <div className="pt-8 pb-6 bg-gradient-to-b from-white to-[#fafafa]">
         <div className="container mx-auto px-4">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">
+            Trouvez les meilleurs artisans
+          </h1>
           <LocationBar 
             initialLocation={filters.location} 
             onLocationChange={(location) => setFilters(prev => ({...prev, location}))}
