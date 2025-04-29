@@ -11,7 +11,8 @@
 
 /* Navbar */
 .navbar-home {
-  margin-top: 0; /* Changé de 61px à 0 */
+  background-color: transparent;
+  margin-top: 0;
 }
 
 .navbar-scroll {
@@ -34,9 +35,20 @@
   z-index: 1000;
 }
 
+.sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+}
+
 .navbar-brand {
   font-size: 1.5rem;
   letter-spacing: 0.5px;
+  transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover {
+  transform: scale(1.05);
 }
 
 .brand-artisan {
@@ -53,28 +65,68 @@
   padding: 0.5rem 1rem !important;
   transition: all 0.2s ease;
   border-radius: 4px;
+  position: relative;
+}
+
+.nav-link:after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 50%;
+  background-color: #C63E46;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover:after, 
+.nav-link.active:after {
+  width: 80%;
+  left: 10%;
 }
 
 .nav-link:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  color: #C63E46 !important;
 }
 
 .navbar-scroll .nav-link:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.welcome-text {
+  font-weight: 500;
+  color: #343a40;
 }
 
 .nav-btn {
   border-radius: 4px;
   padding: 0.5rem 1rem;
-  background-color: #C63E46;
-  border-color: #C63E46;
-  color: white;
   transition: all 0.3s ease;
 }
 
-.nav-btn:hover {
+/* Primary button styling */
+.btn-primary {
+  background-color: #C63E46;
+  border-color: #C63E46;
+  color: white;
+}
+
+.btn-primary:hover {
   background-color: #b73840;
   border-color: #b73840;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Outline button styling */
+.btn-outline-primary {
+  color: #C63E46;
+  border-color: #C63E46;
+}
+
+.btn-outline-primary:hover {
+  background-color: #C63E46;
+  color: white;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -88,12 +140,17 @@
 .mobile-menu .offcanvas-header {
   background-color: #f8f9fa;
   border-bottom: 1px solid #e9ecef;
+  padding: 1rem;
 }
 
 .mobile-menu .nav-link {
-  padding: 0.75rem 0 !important;
+  padding: 0.75rem 1rem !important;
   font-size: 1.1rem;
   border-bottom: 1px solid #f0f0f0;
+}
+
+.mobile-menu .nav-link:hover {
+  background-color: rgba(198, 62, 70, 0.05);
 }
 
 .mobile-menu .offcanvas-body {
@@ -107,6 +164,11 @@
   font-size: 1.25rem;
   color: currentColor;
   background: transparent;
+  transition: transform 0.3s ease;
+}
+
+.navbar-toggler-custom:hover {
+  transform: scale(1.1);
 }
 
 /* Ajout d'un espace pour compenser la barre de navigation fixe */
