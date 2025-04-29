@@ -206,7 +206,7 @@ const SearchResults = () => {
     <div className="min-h-screen bg-[#FDFAF7]">
       <NavBar />
       
-      <div className="pt-6 pb-4 bg-white shadow-sm">
+      <div className="pt-6 pb-4 bg-white shadow">
         <div className="container mx-auto px-4">
           <LocationBar 
             initialLocation={filters.location} 

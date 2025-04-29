@@ -83,7 +83,7 @@ const LocationBar: React.FC<LocationBarProps> = ({ initialLocation, onLocationCh
   };
   
   return (
-    <div className="location-bar-container">
+    <div className="location-bar-container shadow-md">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
           <form onSubmit={handleSubmit} className="location-input-container">
@@ -94,7 +94,7 @@ const LocationBar: React.FC<LocationBarProps> = ({ initialLocation, onLocationCh
                 placeholder={placeholder}
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
-                className="location-input"
+                className="location-input focus:ring-2 focus:ring-[#C63E46] focus:ring-opacity-50"
                 disabled={isGeolocating}
                 aria-label="Localisation"
               />
@@ -104,16 +104,16 @@ const LocationBar: React.FC<LocationBarProps> = ({ initialLocation, onLocationCh
               type="button"
               onClick={handleGeolocation}
               disabled={isGeolocating}
-              className="geolocation-button"
+              className="geolocation-button transition-all hover:bg-gray-100"
               aria-label="Utiliser ma position actuelle"
             >
-              <Compass size={20} />
-              <span className="hidden sm:inline">Ma position</span>
+              <Compass size={20} className={isGeolocating ? 'animate-spin' : ''} />
+              <span className="hidden sm:inline ml-2">Ma position</span>
             </button>
             
             <button
               type="submit"
-              className="search-button"
+              className="search-button transition-all hover:bg-[#b73840]"
             >
               Rechercher
             </button>
