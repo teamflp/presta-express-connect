@@ -1,22 +1,54 @@
 
 import React from 'react';
-import argumentsData from '../../assets/tableaux/arguments';
 import { Card } from 'react-bootstrap';
+import { Shield, Clock, Award, Users } from 'lucide-react';
 
 function ArgumentsPresta() {
+    // Données d'arguments améliorées avec du contenu réel
+    const argumentsData = [
+        {
+            id: 1,
+            titre: "Professionnels vérifiés",
+            description: "Tous nos artisans sont soigneusement sélectionnés et leurs qualifications sont vérifiées pour garantir un service de qualité.",
+            icon: Shield
+        },
+        {
+            id: 2,
+            titre: "Réponse rapide",
+            description: "Recevez des devis et des réponses en 24h maximum. Notre réseau d'artisans s'engage à être réactif pour tous vos projets.",
+            icon: Clock
+        },
+        {
+            id: 3,
+            titre: "Garantie satisfaction",
+            description: "Nous suivons chaque projet et garantissons votre satisfaction. En cas de problème, notre service client est à votre écoute.",
+            icon: Award
+        },
+        {
+            id: 4,
+            titre: "7000+ clients satisfaits",
+            description: "Rejoignez notre communauté de clients satisfaits qui font confiance à nos artisans pour leurs projets partout en France.",
+            icon: Users
+        }
+    ];
+
     return (
-        <div className="container bg-white p-5 md-p-11" style={{ borderRadius: "25px 1px 25px 25px", boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)" }}>
+        <div className="container bg-white p-4 p-md-5" style={{ borderRadius: "25px 1px 25px 25px", boxShadow: "0 8px 16px rgba(0, 0, 0, 0.08)" }}>
             <div className="text-center">
-                <h2 className="my-5 title1 argument">Pourquoi choisir <span style={{ color: '#C63E46' }}>Presta Express</span>?</h2>
-                <p className="mb-4">La plateforme qui connecte particuliers et professionnels de confiance pour tous vos projets</p>
+                <h2 className="my-4 title1 fw-bold">Pourquoi choisir <span style={{ color: '#C63E46' }}>Presta Express</span> ?</h2>
+                <p className="mb-5 fs-5">La plateforme qui connecte particuliers et professionnels de confiance pour tous vos projets</p>
             </div>
             <div className="row row-cols-1 row-cols-md-4 g-4 mt-3">
                 {argumentsData.map(argument => (
-                    <Card className="col border-0 " key={argument.id}>
-                        <div className="text-center">
-                            <img src={argument.icone} alt={`Image de ${argument.titre}`} className="argument-image" />
+                    <Card className="col border-0 hover-card" key={argument.id}>
+                        <div className="text-center p-3">
+                            <div className="d-flex justify-content-center mb-3">
+                                <div className="rounded-circle p-3" style={{ backgroundColor: '#f8f9fa', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.05)' }}>
+                                    {React.createElement(argument.icon, { size: 32, style: { color: '#C63E46' } })}
+                                </div>
+                            </div>
                             <div className="card-body">
-                                <h5 className="title2">{argument.titre}</h5>
+                                <h5 className="title2 fw-bold mb-3">{argument.titre}</h5>
                                 <p className="card-text">{argument.description}</p>
                             </div>
                         </div>

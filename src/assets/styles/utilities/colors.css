@@ -1,7 +1,42 @@
 
 /* ____COLORS UTILITIES____ */
-.titre span{
-  color: #b73840;
+.titre span {
+  color: #C63E46;
+}
+
+/* Primary brand colors */
+.text-primary {
+  color: #C63E46 !important;
+}
+
+.bg-primary {
+  background-color: #C63E46 !important;
+}
+
+.border-primary {
+  border-color: #C63E46 !important;
+}
+
+/* Secondary colors */
+.text-secondary {
+  color: #343a40 !important;
+}
+
+.bg-secondary {
+  background-color: #343a40 !important;
+}
+
+.border-secondary {
+  border-color: #343a40 !important;
+}
+
+/* Background colors */
+.bg-light-gray {
+  background-color: #f8f9fa !important;
+}
+
+.bg-main {
+  background-color: #FDFAF7 !important;
 }
 
 /* Line styles */
@@ -19,4 +54,34 @@
   border-top: 2px solid #C63E46;
   width: 100%;
   opacity: 1;
+}
+
+/* Button primary */
+.button-primary {
+  background-color: #C63E46 !important;
+  border-color: #C63E46 !important;
+  color: white !important;
+}
+
+.button-primary:hover, 
+.button-primary:focus {
+  background-color: #b73840 !important;
+  border-color: #b73840 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Button secondary */
+.button-secondary {
+  background-color: transparent !important;
+  border-color: #C63E46 !important;
+  color: #333 !important;
+}
+
+.button-secondary:hover, 
+.button-secondary:focus {
+  background-color: #C63E46 !important;
+  color: white !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1) !important;
 }
