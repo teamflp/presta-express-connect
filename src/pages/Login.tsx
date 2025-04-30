@@ -37,7 +37,15 @@ const Login = () => {
       
       if (success) {
         toast.success('Connexion réussie!');
-        navigate('/');
+        
+        // Rediriger vers le tableau de bord approprié en fonction du type d'utilisateur
+        if (email.includes('admin')) {
+          navigate('/admin-dashboard');
+        } else if (email.includes('pro') || email.includes('artisan')) {
+          navigate('/artisan-dashboard');
+        } else {
+          navigate('/client-dashboard');
+        }
       } else {
         setError('Email ou mot de passe incorrect');
         toast.error('Email ou mot de passe incorrect');

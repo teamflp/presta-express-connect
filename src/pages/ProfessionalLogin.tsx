@@ -37,7 +37,7 @@ const ProfessionalLogin = () => {
       
       if (success) {
         toast.success('Connexion réussie!');
-        navigate('/professional-dashboard');
+        navigate('/artisan-dashboard');
       } else {
         setError('Email ou mot de passe incorrect');
         toast.error('Email ou mot de passe incorrect');

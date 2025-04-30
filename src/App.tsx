@@ -26,6 +26,9 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import AdminDashboard from './pages/AdminDashboard';
+import ArtisanDashboard from './pages/ArtisanDashboard';
+import ClientDashboard from './pages/ClientDashboard';
 
 function App() {
   return (
@@ -48,6 +51,9 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/professional-login" element={<ProfessionalLogin />} />
               <Route path="/professional-register" element={<ProfessionalRegister />} />
+              <Route path="/admin-dashboard" element={<ProtectedRoute element={<AdminDashboard />} />} />
+              <Route path="/artisan-dashboard" element={<ProtectedRoute element={<ArtisanDashboard />} />} />
+              <Route path="/client-dashboard" element={<ProtectedRoute element={<ClientDashboard />} />} />
               <Route path="/professional-dashboard" element={<ProtectedRoute element={<ProfessionalDashboard />} />} />
               <Route path="/search" element={<SearchResults />} />
               <Route path="/testUser" element={<ProtectedRoute element={<TestUsersComponent />} />}/>

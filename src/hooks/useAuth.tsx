@@ -46,10 +46,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       
       // Pour démonstration, nous vérifions simplement si l'email contient "@" et si le mot de passe a au moins 6 caractères
       if (email.includes('@') && password.length >= 6) {
+        // Détermine le type d'utilisateur basé sur l'email
+        let userType = 'client';
+        if (email.includes('admin')) {
+          userType = 'admin';
+        } else if (email.includes('pro') || email.includes('artisan')) {
+          userType = 'professional';
+        }
+        
         const user = {
           id: Math.random().toString(36).substr(2, 9),
           email,
-          userType: email.includes('pro') ? 'professional' : 'client',
+          userType,
         };
         
         // Stockage des informations utilisateur dans localStorage
