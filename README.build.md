@@ -18,7 +18,4 @@ npm run build
 npm run dev
 ```
 
-Note: If you're able to modify package.json, please add the following script:
-```json
-"build:dev": "vite build --mode development"
-```
+Note: The build process now uses Vite directly instead of TypeScript compiler to avoid conflicts between build options.
