@@ -6,7 +6,7 @@ import Navbar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
 import { toast } from 'react-hot-toast';
 import { FormInput, FormCheckbox, FormButton, FormCard, FormDivider } from '../components/Forms/FormComponents';
-import { Mail, Lock } from 'lucide-react';
+import { Mail, Lock, Building } from 'lucide-react';
 
 const ProfessionalLogin = () => {
   const [email, setEmail] = useState('');
@@ -46,12 +46,17 @@ const ProfessionalLogin = () => {
   };
 
   return (
-    <div className="App">
+    <div className="App min-h-screen flex flex-col">
       <Navbar />
-      <div className="py-16 bg-[#FDFAF7]">
-        <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
+      <div className="flex-grow py-16 bg-[#FDFAF7] flex items-center justify-center">
+        <div className="w-full max-w-md">
           <FormCard 
-            title="Espace Professionnel" 
+            title={
+              <div className="flex items-center justify-center space-x-2">
+                <Building size={24} className="text-[#C63E46]" />
+                <span>Espace Professionnel</span>
+              </div>
+            }
             subtitle="Connectez-vous pour gérer vos services et demandes"
           >
             {error && (
@@ -103,6 +108,7 @@ const ProfessionalLogin = () => {
                 type="submit" 
                 isLoading={isLoading} 
                 fullWidth
+                className="mt-6"
               >
                 Se connecter
               </FormButton>
@@ -117,7 +123,7 @@ const ProfessionalLogin = () => {
               </Link>
             </div>
             
-            <div className="pt-4 text-center border-t border-gray-200">
+            <div className="pt-4 text-center border-t border-gray-200 mt-4">
               <Link to="/login" className="text-sm font-medium text-gray-600 hover:text-[#C63E46] transition-colors">
                 Espace client? Connectez-vous ici
               </Link>

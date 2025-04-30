@@ -107,7 +107,13 @@ export const FormButton: React.FC<ButtonProps> = ({
   );
 };
 
-export const FormCard: React.FC<{children: React.ReactNode, title: string, subtitle?: string}> = ({
+interface FormCardProps {
+  children: React.ReactNode;
+  title: React.ReactNode | string;
+  subtitle?: string;
+}
+
+export const FormCard: React.FC<FormCardProps> = ({
   children,
   title,
   subtitle
@@ -115,7 +121,11 @@ export const FormCard: React.FC<{children: React.ReactNode, title: string, subti
   return (
     <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg border border-gray-100">
       <div className="text-center space-y-2">
-        <h1 className="text-2xl font-bold text-gray-900">{title}</h1>
+        {typeof title === 'string' ? (
+          <h1 className="text-2xl font-bold text-gray-900">{title}</h1>
+        ) : (
+          <h1 className="text-2xl font-bold text-gray-900">{title}</h1>
+        )}
         {subtitle && <p className="text-sm text-gray-600">{subtitle}</p>}
       </div>
       {children}

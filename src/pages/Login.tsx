@@ -6,7 +6,7 @@ import Navbar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
 import { toast } from 'react-hot-toast';
 import { FormInput, FormCheckbox, FormButton, FormCard, FormDivider } from '../components/Forms/FormComponents';
-import { Mail, Lock } from 'lucide-react';
+import { Mail, Lock, User } from 'lucide-react';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -46,16 +46,21 @@ const Login = () => {
   };
 
   return (
-    <div className="App">
+    <div className="App min-h-screen flex flex-col">
       <Navbar />
-      <div className="py-16 bg-[#FDFAF7]">
-        <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
+      <div className="flex-grow py-16 bg-[#FDFAF7] flex items-center justify-center">
+        <div className="w-full max-w-md">
           <FormCard 
-            title="Connexion" 
+            title={
+              <div className="flex items-center justify-center space-x-2">
+                <User size={24} className="text-[#C63E46]" />
+                <span>Connexion</span>
+              </div>
+            }
             subtitle="Connectez-vous pour trouver les meilleurs artisans"
           >
             {error && (
-              <div className="p-3 text-sm text-white bg-red-500 rounded-md">
+              <div className="p-3 mb-4 text-sm text-white bg-red-500 rounded-md">
                 {error}
               </div>
             )}
@@ -103,6 +108,7 @@ const Login = () => {
                 type="submit" 
                 isLoading={isLoading} 
                 fullWidth
+                className="mt-6"
               >
                 Se connecter
               </FormButton>
@@ -117,7 +123,7 @@ const Login = () => {
               </Link>
             </div>
             
-            <div className="pt-4 text-center border-t border-gray-200">
+            <div className="pt-4 text-center border-t border-gray-200 mt-4">
               <Link to="/professional-login" className="text-sm font-medium text-gray-600 hover:text-[#C63E46] transition-colors">
                 Vous êtes un professionnel? Connectez-vous ici
               </Link>
