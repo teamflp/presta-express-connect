@@ -44,9 +44,9 @@ export const FormInput: React.FC<InputProps> = ({
             type="button"
             onClick={() => setShowPassword(!showPassword)}
             className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-500 hover:text-gray-700 transition-colors"
-            aria-label={showPassword ? "Hide password" : "Show password"}
+            aria-label={showPassword ? "Cacher le mot de passe" : "Afficher le mot de passe"}
           >
-            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
           </button>
         )}
       </div>
@@ -78,14 +78,14 @@ export const FormCheckbox: React.FC<CheckboxProps> = ({
         <input
           id={id}
           type="checkbox"
-          className={`peer appearance-none w-4.5 h-4.5 rounded border border-gray-300 
-          checked:bg-indigo-600 checked:border-indigo-600 
-          focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500/30
+          className={`appearance-none w-5 h-5 rounded border border-gray-300 
+          checked:bg-[#C63E46] checked:border-[#C63E46] 
+          focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-[#C63E46]/30
           transition-all duration-200 ${className}`}
           {...props}
         />
         <svg 
-          className="absolute w-4.5 h-4.5 pointer-events-none opacity-0 peer-checked:opacity-100 text-white" 
+          className="absolute w-3.5 h-3.5 left-[3px] top-[4px] pointer-events-none opacity-0 peer-checked:opacity-100 text-white" 
           xmlns="http://www.w3.org/2000/svg" 
           viewBox="0 0 24 24" 
           fill="none" 
@@ -121,9 +121,9 @@ export const FormButton: React.FC<ButtonProps> = ({
   const baseClasses = "px-5 py-3 rounded-lg font-medium text-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 relative overflow-hidden";
   
   const variantClasses = {
-    primary: "bg-indigo-600 hover:bg-indigo-700 text-white border border-transparent focus:ring-indigo-500/40 shadow-md hover:shadow-lg",
+    primary: "bg-[#C63E46] hover:bg-[#A33138] text-white border border-transparent focus:ring-[#C63E46]/40 shadow-md hover:shadow-lg",
     secondary: "bg-gray-100 hover:bg-gray-200 text-gray-800 border border-transparent focus:ring-gray-300 shadow-sm hover:shadow-md",
-    outline: "bg-transparent hover:bg-gray-50 text-indigo-600 border border-indigo-600 focus:ring-indigo-500/30 hover:shadow-sm"
+    outline: "bg-transparent hover:bg-gray-50 text-[#C63E46] border border-[#C63E46] focus:ring-[#C63E46]/30 hover:shadow-sm"
   };
   
   return (

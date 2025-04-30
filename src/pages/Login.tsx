@@ -5,7 +5,7 @@ import { useAuth } from '../hooks/useAuth';
 import Navbar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
 import { toast } from 'react-hot-toast';
-import { FormInput, FormCheckbox, FormButton, FormCard, FormDivider } from '../components/Forms/FormComponents';
+import { FormInput, FormCheckbox, FormButton } from '../components/Forms/FormComponents';
 import { Mail, Lock, User, Building } from 'lucide-react';
 
 const Login = () => {
@@ -54,19 +54,14 @@ const Login = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       <Navbar />
-      <div className="flex-grow py-12 sm:py-16 md:py-20 bg-gradient-to-b from-gray-50 to-gray-100 flex items-center justify-center px-4">
+      <div className="flex-grow flex items-center justify-center bg-gradient-to-b from-gray-50 to-gray-100 px-4 py-16 sm:py-24">
         <div className="w-full max-w-md">
-          <FormCard 
-            title={
-              <div className="flex items-center justify-center space-x-2">
-                <div className="bg-indigo-600 p-2 rounded-full">
-                  <User size={24} className="text-white" />
-                </div>
-                <span className="text-gray-800 font-bold text-2xl">Connexion</span>
-              </div>
-            }
-            subtitle="Connectez-vous pour trouver les meilleurs artisans"
-          >
+          <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+            <div className="text-center mb-8">
+              <h1 className="text-3xl font-bold text-gray-800 mb-2">Connexion</h1>
+              <p className="text-gray-600">Connectez-vous pour trouver les meilleurs artisans</p>
+            </div>
+            
             {error && (
               <div className="p-4 mb-6 text-sm text-white bg-red-500 rounded-lg shadow-lg animate-fade-in flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
@@ -76,7 +71,7 @@ const Login = () => {
               </div>
             )}
             
-            <form className="space-y-5" onSubmit={handleSubmit}>
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <FormInput
                 label="Email"
                 id="email"
@@ -87,9 +82,9 @@ const Login = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                icon={<Mail size={18} className="text-indigo-500" />}
+                icon={<Mail size={20} className="text-gray-500" />}
                 aria-label="Adresse email"
-                className="focus:border-indigo-500"
+                className="focus:ring-[#C63E46] focus:border-[#C63E46]"
               />
               
               <FormInput
@@ -102,9 +97,9 @@ const Login = () => {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                icon={<Lock size={18} className="text-indigo-500" />}
+                icon={<Lock size={20} className="text-gray-500" />}
                 aria-label="Mot de passe"
-                className="focus:border-indigo-500"
+                className="focus:ring-[#C63E46] focus:border-[#C63E46]"
               />
               
               <div className="flex items-center justify-between">
@@ -114,7 +109,7 @@ const Login = () => {
                   label="Se souvenir de moi"
                 />
                 
-                <Link to="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-800 transition-colors">
+                <Link to="#" className="text-sm font-medium text-[#C63E46] hover:text-[#A33138] transition-colors">
                   Mot de passe oublié?
                 </Link>
               </div>
@@ -124,37 +119,43 @@ const Login = () => {
                 isLoading={isLoading} 
                 fullWidth
                 disabled={!formValid}
-                className={`mt-6 bg-indigo-600 hover:bg-indigo-700 ${!formValid && !isLoading ? 'opacity-60 cursor-not-allowed' : ''}`}
+                className={`mt-6 bg-[#C63E46] hover:bg-[#A33138] focus:ring-[#C63E46] border-transparent ${!formValid && !isLoading ? 'opacity-60 cursor-not-allowed' : ''}`}
               >
                 Se connecter
               </FormButton>
             </form>
             
-            <FormDivider text="Ou" />
+            <div className="relative my-6">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-200"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-3 text-gray-500 bg-white">Ou</span>
+              </div>
+            </div>
             
-            <div className="text-center text-gray-600">
-              <p className="mb-4 text-sm">
+            <div className="text-center space-y-4">
+              <p className="text-gray-600">
                 Vous n'avez pas de compte?
               </p>
               <Link 
                 to="/register" 
-                className="inline-block font-medium text-indigo-600 hover:text-indigo-800 transition-colors
-                border-b border-indigo-600 hover:border-indigo-800 pb-0.5"
+                className="block w-full py-3 px-4 rounded-lg bg-gray-100 text-center text-gray-700 font-medium hover:bg-gray-200 transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-500"
               >
-                Inscrivez-vous
+                Créer un compte
               </Link>
             </div>
             
-            <div className="pt-5 text-center border-t border-gray-200 mt-6">
+            <div className="pt-5 text-center border-t border-gray-200 mt-8">
               <Link 
                 to="/professional-login" 
-                className="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors flex items-center justify-center"
+                className="inline-flex items-center text-sm font-medium text-gray-600 hover:text-[#C63E46] transition-colors"
               >
                 <Building size={16} className="mr-1.5" />
                 Vous êtes un professionnel? Connectez-vous ici
               </Link>
             </div>
-          </FormCard>
+          </div>
         </div>
       </div>
       <Footer />
