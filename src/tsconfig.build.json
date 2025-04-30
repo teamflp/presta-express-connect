@@ -8,7 +8,8 @@
     "declaration": false,
     "moduleResolution": "Node",
     "target": "es6",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "noEmit": false
   },
   "exclude": ["test.ts", "**/*.spec.ts", "**/*.test.ts", "**/*.stories.ts", "**/*.stories.tsx"]
 }
