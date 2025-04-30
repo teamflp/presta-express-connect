@@ -6,7 +6,7 @@ import Navbar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
 import { toast } from 'react-hot-toast';
 import { FormInput, FormCheckbox, FormButton } from '../components/Forms/FormComponents';
-import { Mail, Lock, User, Building } from 'lucide-react';
+import { Mail, Lock, Building } from 'lucide-react';
 
 const Login = () => {
   const [email, setEmail] = useState('');
