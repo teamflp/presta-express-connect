@@ -1,15 +1,8 @@
 
 {
-  "extends": "../tsconfig.app.json",
+  "extends": "../tsconfig.build.json",
   "compilerOptions": {
-    "outDir": "../out-tsc/app",
-    "module": "es2020",
-    "sourceMap": true,
-    "declaration": false,
-    "moduleResolution": "Node",
-    "target": "es6",
-    "allowSyntheticDefaultImports": true,
     "noEmit": false
   },
-  "exclude": ["test.ts", "**/*.spec.ts", "**/*.test.ts", "**/*.stories.ts", "**/*.stories.tsx"]
+  "include": ["."]
 }
