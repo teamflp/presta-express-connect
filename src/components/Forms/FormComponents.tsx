@@ -27,16 +27,16 @@ export const FormInput: React.FC<InputProps> = ({
       </label>
       <div className="relative group">
         {icon && (
-          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-500">
+          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
             {icon}
           </div>
         )}
         <input
           id={id}
           type={inputType}
-          className={`w-full px-4 ${icon ? 'pl-11' : 'pl-4'} py-3 rounded-lg border ${error ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-[#617FD8]'} 
-          shadow-sm transition-all duration-300 focus:outline-none focus:border-[#617FD8] focus:ring-1 
-          bg-white/50 backdrop-blur-sm ${className}`}
+          className={`w-full px-4 ${icon ? 'pl-11' : 'pl-4'} py-3 rounded-lg border border-gray-300 
+          shadow-sm transition-all duration-300 focus:outline-none focus:ring-2 
+          bg-white ${className}`}
           {...props}
         />
         {type === 'password' && (
@@ -49,9 +49,6 @@ export const FormInput: React.FC<InputProps> = ({
             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
           </button>
         )}
-        
-        {/* Focus animation effect */}
-        <span className="absolute inset-x-0 bottom-0 h-0.5 bg-[#617FD8] transform scale-x-0 group-focus-within:scale-x-100 transition-transform origin-left duration-300"></span>
       </div>
       {error && (
         <p className="mt-1.5 text-xs text-red-500 flex items-center">
@@ -82,8 +79,8 @@ export const FormCheckbox: React.FC<CheckboxProps> = ({
           id={id}
           type="checkbox"
           className={`peer appearance-none w-4.5 h-4.5 rounded border border-gray-300 
-          checked:bg-[#617FD8] checked:border-[#617FD8] 
-          focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-[#617FD8]/30
+          checked:bg-indigo-600 checked:border-indigo-600 
+          focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-indigo-500/30
           transition-all duration-200 ${className}`}
           {...props}
         />
@@ -124,9 +121,9 @@ export const FormButton: React.FC<ButtonProps> = ({
   const baseClasses = "px-5 py-3 rounded-lg font-medium text-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 relative overflow-hidden";
   
   const variantClasses = {
-    primary: "bg-[#617FD8] hover:bg-[#516CD8] text-white border border-transparent focus:ring-[#617FD8]/40 shadow-md hover:shadow-lg",
+    primary: "bg-indigo-600 hover:bg-indigo-700 text-white border border-transparent focus:ring-indigo-500/40 shadow-md hover:shadow-lg",
     secondary: "bg-gray-100 hover:bg-gray-200 text-gray-800 border border-transparent focus:ring-gray-300 shadow-sm hover:shadow-md",
-    outline: "bg-transparent hover:bg-gray-50 text-[#617FD8] border border-[#617FD8] focus:ring-[#617FD8]/30 hover:shadow-sm"
+    outline: "bg-transparent hover:bg-gray-50 text-indigo-600 border border-indigo-600 focus:ring-indigo-500/30 hover:shadow-sm"
   };
   
   return (
@@ -165,7 +162,7 @@ export const FormCard: React.FC<FormCardProps> = ({
   subtitle
 }) => {
   return (
-    <div className="w-full max-w-md p-8 space-y-6 bg-white/90 rounded-xl shadow-xl border border-gray-100 backdrop-blur-sm transition-all">
+    <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-xl shadow-xl border border-gray-100 transition-all">
       <div className="text-center space-y-2">
         {typeof title === 'string' ? (
           <h1 className="text-2xl font-bold text-gray-800">{title}</h1>
