@@ -37,10 +37,7 @@ function App() {
             <Route path="/professional-register" element={<ProfessionalRegister />} />
             <Route path="/professional-dashboard" element={<ProtectedRoute element={<ProfessionalDashboard />} />} />
             <Route path="/search" element={<SearchResults />} />
-            <Route
-              path="/testUser"
-              element={<ProtectedRoute element={<TestUsersComponent />} />}
-            />
+            <Route path="/testUser" element={<ProtectedRoute element={<TestUsersComponent />} />}/>
             <Route path="/testProducts" element={<TestProductsComponent />} />
             <Route path="/" element={<Home />} />
             <Route path="/ProductDetails" element={<ProductDetails />} />
