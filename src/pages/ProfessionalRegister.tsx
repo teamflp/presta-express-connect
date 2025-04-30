@@ -5,6 +5,8 @@ import { useAuth } from '../hooks/useAuth';
 import Navbar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
 import { toast } from 'react-hot-toast';
+import { FormInput, FormCheckbox, FormButton, FormCard, FormDivider } from '../components/Forms/FormComponents';
+import { Mail, User, Phone, Lock } from 'lucide-react';
 
 const ProfessionalRegister = () => {
   const [name, setName] = useState('');
@@ -55,158 +57,135 @@ const ProfessionalRegister = () => {
   return (
     <div className="App">
       <Navbar />
-      <div className="py-10 bg-[#FDFAF7]">
-        <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
-          <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg border-t-0 rounded-tr-none">
-            <div className="text-center">
-              <h1 className="text-2xl font-bold text-gray-900">Inscription Professionnelle</h1>
-              <p className="mt-2 text-sm text-gray-600">
-                Créez votre compte professionnel pour offrir vos services
-              </p>
-            </div>
-            
-            {error && (
-              <div className="p-3 text-sm text-white bg-red-500 rounded-md">
-                {error}
-              </div>
-            )}
-            
-            <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                    Nom complet
-                  </label>
-                  <input
+      <div className="py-16 bg-[#FDFAF7]">
+        <div className="flex items-center justify-center">
+          <div className="w-full max-w-2xl">
+            <FormCard 
+              title="Inscription Professionnelle" 
+              subtitle="Créez votre compte professionnel pour offrir vos services"
+            >
+              {error && (
+                <div className="p-3 mb-4 text-sm text-white bg-red-500 rounded-md">
+                  {error}
+                </div>
+              )}
+              
+              <form className="space-y-5" onSubmit={handleSubmit}>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <FormInput
+                    label="Nom complet"
                     id="name"
                     name="name"
                     type="text"
+                    placeholder="Jean Dupont"
                     autoComplete="name"
                     required
-                    className="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#C63E46] focus:border-[#C63E46]"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                    icon={<User size={18} />}
                   />
-                </div>
-                
-                <div>
-                  <label htmlFor="companyName" className="block text-sm font-medium text-gray-700">
-                    Nom de l'entreprise
-                  </label>
-                  <input
+                  
+                  <FormInput
+                    label="Nom de l'entreprise"
                     id="companyName"
                     name="companyName"
                     type="text"
+                    placeholder="Entreprise SARL"
                     required
-                    className="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#C63E46] focus:border-[#C63E46]"
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
                   />
                 </div>
-              </div>
-              
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                  Email professionnel
-                </label>
-                <input
+                
+                <FormInput
+                  label="Email professionnel"
                   id="email"
                   name="email"
                   type="email"
+                  placeholder="contact@entreprise.com"
                   autoComplete="email"
                   required
-                  className="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#C63E46] focus:border-[#C63E46]"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  icon={<Mail size={18} />}
                 />
-              </div>
-              
-              <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-                  Numéro de téléphone
-                </label>
-                <input
+                
+                <FormInput
+                  label="Numéro de téléphone"
                   id="phone"
                   name="phone"
                   type="tel"
+                  placeholder="06 12 34 56 78"
                   autoComplete="tel"
                   required
-                  className="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#C63E46] focus:border-[#C63E46]"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
+                  icon={<Phone size={18} />}
                 />
-              </div>
-              
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                <div>
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                    Mot de passe
-                  </label>
-                  <input
+                
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <FormInput
+                    label="Mot de passe"
                     id="password"
                     name="password"
                     type="password"
+                    placeholder="••••••••"
                     autoComplete="new-password"
                     required
-                    className="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#C63E46] focus:border-[#C63E46]"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    icon={<Lock size={18} />}
                   />
-                </div>
-                
-                <div>
-                  <label htmlFor="confirm-password" className="block text-sm font-medium text-gray-700">
-                    Confirmer le mot de passe
-                  </label>
-                  <input
+                  
+                  <FormInput
+                    label="Confirmer le mot de passe"
                     id="confirm-password"
                     name="confirm-password"
                     type="password"
+                    placeholder="••••••••"
                     autoComplete="new-password"
                     required
-                    className="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#C63E46] focus:border-[#C63E46]"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
+                    icon={<Lock size={18} />}
                   />
                 </div>
-              </div>
-              
-              <div className="flex items-center">
-                <input
+                
+                <FormCheckbox
                   id="agree-terms"
                   name="agree-terms"
-                  type="checkbox"
                   required
-                  className="w-4 h-4 text-[#C63E46] border-gray-300 rounded focus:ring-[#C63E46]"
+                  label={
+                    <span>
+                      J'accepte les <Link to="#" className="text-[#C63E46] hover:underline">conditions d'utilisation</Link> et la <Link to="#" className="text-[#C63E46] hover:underline">politique de confidentialité</Link>
+                    </span>
+                  }
                 />
-                <label htmlFor="agree-terms" className="block ml-2 text-sm text-gray-900">
-                  J'accepte les <a href="#" className="text-[#C63E46]">conditions d'utilisation</a> et la <a href="#" className="text-[#C63E46]">politique de confidentialité</a>
-                </label>
+                
+                <FormButton 
+                  type="submit" 
+                  isLoading={isLoading} 
+                  fullWidth
+                >
+                  S'inscrire comme professionnel
+                </FormButton>
+              </form>
+              
+              <FormDivider text="Ou" />
+              
+              <div className="text-sm text-center text-gray-600">
+                Déjà un compte professionnel?{' '}
+                <Link to="/professional-login" className="font-medium text-[#C63E46] hover:text-[#A33138] transition-colors">
+                  Connectez-vous
+                </Link>
               </div>
               
-              <div>
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-[#C63E46] border border-transparent rounded-md shadow-sm hover:bg-[#A33138] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#C63E46] disabled:opacity-50"
-                >
-                  {isLoading ? 'Inscription en cours...' : 'S\'inscrire comme professionnel'}
-                </button>
+              <div className="pt-4 text-center border-t border-gray-200">
+                <Link to="/register" className="text-sm font-medium text-gray-600 hover:text-[#C63E46] transition-colors">
+                  Vous êtes un particulier? Inscrivez-vous ici
+                </Link>
               </div>
-            </form>
-            
-            <div className="text-sm text-center text-gray-600">
-              Déjà un compte professionnel?{' '}
-              <Link to="/professional-login" className="font-medium text-[#C63E46] hover:text-[#A33138]">
-                Connectez-vous
-              </Link>
-            </div>
-            
-            <div className="pt-4 text-center border-t border-gray-200">
-              <Link to="/register" className="text-sm font-medium text-gray-600 hover:text-[#C63E46]">
-                Vous êtes un particulier? Inscrivez-vous ici
-              </Link>
-            </div>
+            </FormCard>
           </div>
         </div>
       </div>

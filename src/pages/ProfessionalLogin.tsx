@@ -5,6 +5,8 @@ import { useAuth } from '../hooks/useAuth';
 import Navbar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
 import { toast } from 'react-hot-toast';
+import { FormInput, FormCheckbox, FormButton, FormCard, FormDivider } from '../components/Forms/FormComponents';
+import { Mail, Lock } from 'lucide-react';
 
 const ProfessionalLogin = () => {
   const [email, setEmail] = useState('');
@@ -46,99 +48,81 @@ const ProfessionalLogin = () => {
   return (
     <div className="App">
       <Navbar />
-      <div className="py-10 bg-[#FDFAF7]">
+      <div className="py-16 bg-[#FDFAF7]">
         <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
-          <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg border-t-0 rounded-tr-none">
-            <div className="text-center">
-              <h1 className="text-2xl font-bold text-gray-900">Connexion Professionnelle</h1>
-              <p className="mt-2 text-sm text-gray-600">
-                Connectez-vous pour gérer vos services et demandes
-              </p>
-            </div>
-            
+          <FormCard 
+            title="Espace Professionnel" 
+            subtitle="Connectez-vous pour gérer vos services et demandes"
+          >
             {error && (
-              <div className="p-3 text-sm text-white bg-red-500 rounded-md">
+              <div className="p-3 mb-4 text-sm text-white bg-red-500 rounded-md">
                 {error}
               </div>
             )}
             
-            <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                  Email professionnel
-                </label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#C63E46] focus:border-[#C63E46]"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
+            <form className="space-y-5" onSubmit={handleSubmit}>
+              <FormInput
+                label="Email professionnel"
+                id="email"
+                name="email"
+                type="email"
+                placeholder="pro@entreprise.com"
+                autoComplete="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                icon={<Mail size={18} />}
+              />
               
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                  Mot de passe
-                </label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  className="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#C63E46] focus:border-[#C63E46]"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
+              <FormInput
+                label="Mot de passe"
+                id="password"
+                name="password"
+                type="password"
+                placeholder="••••••••"
+                autoComplete="current-password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                icon={<Lock size={18} />}
+              />
               
               <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <input
-                    id="remember-me"
-                    name="remember-me"
-                    type="checkbox"
-                    className="w-4 h-4 text-[#C63E46] border-gray-300 rounded focus:ring-[#C63E46]"
-                  />
-                  <label htmlFor="remember-me" className="block ml-2 text-sm text-gray-900">
-                    Se souvenir de moi
-                  </label>
-                </div>
+                <FormCheckbox
+                  id="remember-me"
+                  name="remember-me"
+                  label="Se souvenir de moi"
+                />
                 
-                <div className="text-sm">
-                  <a href="#" className="font-medium text-[#C63E46] hover:text-[#A33138]">
-                    Mot de passe oublié?
-                  </a>
-                </div>
+                <Link to="#" className="text-sm font-medium text-[#C63E46] hover:text-[#A33138] transition-colors">
+                  Mot de passe oublié?
+                </Link>
               </div>
               
-              <div>
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-[#C63E46] border border-transparent rounded-md shadow-sm hover:bg-[#A33138] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#C63E46] disabled:opacity-50"
-                >
-                  {isLoading ? 'Connexion en cours...' : 'Se connecter'}
-                </button>
-              </div>
+              <FormButton 
+                type="submit" 
+                isLoading={isLoading} 
+                fullWidth
+              >
+                Se connecter
+              </FormButton>
             </form>
+            
+            <FormDivider text="Ou" />
             
             <div className="text-sm text-center text-gray-600">
               Vous n'avez pas de compte professionnel?{' '}
-              <Link to="/professional-register" className="font-medium text-[#C63E46] hover:text-[#A33138]">
+              <Link to="/professional-register" className="font-medium text-[#C63E46] hover:text-[#A33138] transition-colors">
                 Inscrivez-vous
               </Link>
             </div>
             
             <div className="pt-4 text-center border-t border-gray-200">
-              <Link to="/login" className="text-sm font-medium text-gray-600 hover:text-[#C63E46]">
+              <Link to="/login" className="text-sm font-medium text-gray-600 hover:text-[#C63E46] transition-colors">
                 Espace client? Connectez-vous ici
               </Link>
             </div>
-          </div>
+          </FormCard>
         </div>
       </div>
       <Footer />
