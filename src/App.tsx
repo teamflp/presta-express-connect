@@ -21,12 +21,18 @@ import ProfessionalProfile from './pages/ProfessionalProfile';
 import ContactProfessional from './pages/ContactProfessional';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import { AuthProvider } from './hooks/useAuth';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 function App() {
   return (
     <Provider store={store}>
+      <AuthProvider>
         <Router>
           <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/professional-login" element={<ProfessionalLogin />} />
             <Route path="/professional-register" element={<ProfessionalRegister />} />
             <Route path="/professional-dashboard" element={<ProtectedRoute element={<ProfessionalDashboard />} />} />
@@ -49,6 +55,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </Router>
+      </AuthProvider>
     </Provider>
   );
 }

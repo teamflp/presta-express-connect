@@ -1,18 +1,18 @@
-// ProtectedRoute.tsx
+
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useAuth } from '../../hooks/useAuth';
 
 interface ProtectedRouteProps {
   element: JSX.Element;
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ element }) => {
-  const isAuthenticated = useSelector((state: any) => state.auth?.isAuthenticated);
+  const { isAuthenticated } = useAuth();
 
   console.log('isAuthenticated:', isAuthenticated);
 
-  return isAuthenticated ? element : <Navigate to="/auth" />;
+  return isAuthenticated ? element : <Navigate to="/professional-login" />;
 };
 
 export default ProtectedRoute;

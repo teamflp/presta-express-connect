@@ -1,8 +1,9 @@
 
 import { useState, useEffect } from 'react';
 import { Navbar, Nav, Container, Offcanvas } from 'react-bootstrap';
-import { NavLink, useLocation} from 'react-router-dom';
+import { NavLink, useLocation, Link } from 'react-router-dom';
 import '../../../assets/styles/layout/header.css';
+import { useAuth } from '../../../hooks/useAuth';
 
 const NavbarComponent = () => {
   // État pour gérer si l'écran est large ou non
@@ -10,6 +11,9 @@ const NavbarComponent = () => {
 
   // Hook pour obtenir l'emplacement actuel de la page
   const location = useLocation();
+  
+  // Récupérer les données d'authentification
+  const { currentUser, logout } = useAuth();
 
   // État pour déterminer si la navbar doit être stylisée comme scrollée
   const [isNavbarScroll, setIsNavbarScroll] = useState(false);
@@ -52,6 +56,12 @@ const NavbarComponent = () => {
     };
   }, [location.pathname]); // Recalcule l'effet lorsque la page change
 
+  // Fonction de déconnexion
+  const handleLogout = () => {
+    logout();
+    handleOffcanvasClose();
+  };
+
   return (
     <>
       {/* Navbar principale avec classe sticky-top pour le comportement sticky */}
@@ -66,7 +76,21 @@ const NavbarComponent = () => {
           </NavLink>
 
           <div className="d-flex align-items-center">
-            {/* Bouton de recherche pour les grands écrans */}
+            {currentUser ? (
+              <div className="d-none d-lg-flex me-3">
+                <span className="text-nowrap me-3">Bonjour, {currentUser.name}</span>
+                {currentUser.role === 'professional' ? (
+                  <Link to="/professional-dashboard" className="btn btn-sm btn-outline-secondary me-2">Tableau de bord</Link>
+                ) : null}
+                <button onClick={logout} className="btn btn-sm btn-outline-danger">Déconnexion</button>
+              </div>
+            ) : (
+              <div className="d-none d-lg-flex me-3">
+                <Link to="/login" className="btn btn-sm btn-outline-secondary me-2">Connexion</Link>
+                <Link to="/register" className="btn btn-sm btn-primary">Inscription</Link>
+              </div>
+            )}
+            
             {/* Bouton pour afficher le menu mobile */}
             <Navbar.Toggle 
               aria-controls="navbarNavAltMarkup" 
@@ -106,6 +130,34 @@ const NavbarComponent = () => {
             <Nav.Link as={NavLink} to="/contact" onClick={handleOffcanvasClose}>Contact</Nav.Link>
             
             <hr className="my-3" />
+            
+            {currentUser ? (
+              <>
+                <div className="mb-3">
+                  <p className="mb-1 fw-bold">Bonjour, {currentUser.name}</p>
+                  <p className="text-muted small">{currentUser.email}</p>
+                </div>
+                {currentUser.role === 'professional' && (
+                  <Nav.Link as={NavLink} to="/professional-dashboard" onClick={handleOffcanvasClose} className="text-primary">
+                    Tableau de bord
+                  </Nav.Link>
+                )}
+                <button 
+                  onClick={handleLogout} 
+                  className="btn btn-sm btn-outline-danger mt-2"
+                >
+                  Déconnexion
+                </button>
+              </>
+            ) : (
+              <div className="d-flex flex-column gap-2">
+                <Link to="/login" onClick={handleOffcanvasClose} className="btn btn-sm btn-outline-secondary">Connexion</Link>
+                <Link to="/register" onClick={handleOffcanvasClose} className="btn btn-sm btn-primary">Inscription</Link>
+                <div className="mt-2">
+                  <Link to="/professional-login" onClick={handleOffcanvasClose} className="text-muted small d-block">Espace professionnel</Link>
+                </div>
+              </div>
+            )}
           </Nav>
         </Offcanvas.Body>
       </Offcanvas>

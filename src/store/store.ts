@@ -1,7 +1,6 @@
+
 // Configuration du store
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit"
-//import usersReducer, {UsersAppState} from "./features/users/usersSlice"
-//import productsReducer, {ProductsAppState} from "./features/products/productsSlice"
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import authReducer from "./features/Authentification/AuthSlice";
@@ -15,7 +14,9 @@ const persistedReducer = persistReducer(persistConfig, authReducer);
 
 // Exportation du store pour pouvoir l'utiliser dans l'application
 export const store = configureStore({
-    reducer: persistedReducer,
+    reducer: {
+        auth: persistedReducer
+    },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: {
