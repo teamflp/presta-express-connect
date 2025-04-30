@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
@@ -6,7 +5,7 @@ import Navbar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
 import { toast } from 'react-hot-toast';
 import { FormInput, FormCheckbox, FormButton, FormCard, FormDivider } from '../components/Forms/FormComponents';
-import { Mail, Lock, Building } from 'lucide-react';
+import { Mail, Lock, Building, User } from 'lucide-react';
 
 const ProfessionalLogin = () => {
   const [email, setEmail] = useState('');
@@ -146,9 +145,7 @@ const ProfessionalLogin = () => {
                 to="/login" 
                 className="text-sm font-medium text-gray-600 hover:text-[#617FD8] transition-colors flex items-center justify-center"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
+                <User size={16} className="mr-1.5" />
                 Espace client? Connectez-vous ici
               </Link>
             </div>
