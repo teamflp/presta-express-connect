@@ -3,14 +3,10 @@ import './Style.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store/store';
-import { AuthProvider } from './contexts/AuthContext';
 import TestUsersComponent from './store/test/testUsersComponent';
 import TestProductsComponent from './store/test/testProducts';
-import LoginComponent from './components/User/loginComponent';
 import ProtectedRoute from './components/Routes/ProtectedRoute';
 import Home from './pages/Home';
-import Login from './pages/Login';
-import Register from './pages/Register';
 import ProfessionalLogin from './pages/ProfessionalLogin';
 import ProfessionalRegister from './pages/ProfessionalRegister';
 import ProfessionalDashboard from './pages/ProfessionalDashboard';
@@ -29,12 +25,8 @@ import Contact from './pages/Contact';
 function App() {
   return (
     <Provider store={store}>
-      <AuthProvider>
         <Router>
           <Routes>
-            <Route path="/auth" element={<LoginComponent />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
             <Route path="/professional-login" element={<ProfessionalLogin />} />
             <Route path="/professional-register" element={<ProfessionalRegister />} />
             <Route path="/professional-dashboard" element={<ProtectedRoute element={<ProfessionalDashboard />} />} />
@@ -57,7 +49,6 @@ function App() {
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </Router>
-      </AuthProvider>
     </Provider>
   );
 }
