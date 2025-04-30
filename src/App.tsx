@@ -2,7 +2,10 @@
 import './Style.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from './store/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { Toaster } from 'react-hot-toast';
+import store, { persistor } from './store/store';
+import { AuthProvider } from './hooks/useAuth';
 import TestUsersComponent from './store/test/testUsersComponent';
 import TestProductsComponent from './store/test/testProducts';
 import ProtectedRoute from './components/Routes/ProtectedRoute';
@@ -27,29 +30,43 @@ import Register from './pages/Register';
 function App() {
   return (
     <Provider store={store}>
-        <Router>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/professional-login" element={<ProfessionalLogin />} />
-            <Route path="/professional-register" element={<ProfessionalRegister />} />
-            <Route path="/professional-dashboard" element={<ProtectedRoute element={<ProfessionalDashboard />} />} />
-            <Route path="/search" element={<SearchResults />} />
-            <Route path="/testUser" element={<ProtectedRoute element={<TestUsersComponent />} />}/>
-            <Route path="/testProducts" element={<TestProductsComponent />} />
-            <Route path="/" element={<Home />} />
-            <Route path="/ProductDetails" element={<ProductDetails />} />
-            <Route path="/Metiers" element={<Metiers />} />
-            <Route path="/Intervention" element={<DomainesIntervention />} />
-            <Route path="/categories" element={<Categories />} />
-            <Route path="/categories/:id" element={<CategoryDetails />} />
-            <Route path="/professionals/:categoryId/:jobId" element={<ProfessionalsByJob />} />
-            <Route path="/professional/:id" element={<ProfessionalProfile />} />
-            <Route path="/contact-professional/:id" element={<ContactProfessional />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
-        </Router>
+      <PersistGate loading={null} persistor={persistor}>
+        <AuthProvider>
+          <Router>
+            <Toaster 
+              position="top-right"
+              toastOptions={{
+                duration: 3000,
+                style: {
+                  background: '#FDFAF7',
+                  color: '#333',
+                }
+              }}
+            />
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/professional-login" element={<ProfessionalLogin />} />
+              <Route path="/professional-register" element={<ProfessionalRegister />} />
+              <Route path="/professional-dashboard" element={<ProtectedRoute element={<ProfessionalDashboard />} />} />
+              <Route path="/search" element={<SearchResults />} />
+              <Route path="/testUser" element={<ProtectedRoute element={<TestUsersComponent />} />}/>
+              <Route path="/testProducts" element={<TestProductsComponent />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/ProductDetails" element={<ProductDetails />} />
+              <Route path="/Metiers" element={<Metiers />} />
+              <Route path="/Intervention" element={<DomainesIntervention />} />
+              <Route path="/categories" element={<Categories />} />
+              <Route path="/categories/:id" element={<CategoryDetails />} />
+              <Route path="/professionals/:categoryId/:jobId" element={<ProfessionalsByJob />} />
+              <Route path="/professional/:id" element={<ProfessionalProfile />} />
+              <Route path="/contact-professional/:id" element={<ContactProfessional />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+            </Routes>
+          </Router>
+        </AuthProvider>
+      </PersistGate>
     </Provider>
   );
 }

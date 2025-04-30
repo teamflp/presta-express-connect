@@ -6,7 +6,7 @@ import Navbar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
 import { toast } from 'react-hot-toast';
 
-const ProfessionalLogin = () => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -29,7 +29,7 @@ const ProfessionalLogin = () => {
       
       if (success) {
         toast.success('Connexion réussie!');
-        navigate('/professional-dashboard');
+        navigate('/');
       } else {
         setError('Email ou mot de passe incorrect');
         toast.error('Email ou mot de passe incorrect');
@@ -50,9 +50,9 @@ const ProfessionalLogin = () => {
         <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
           <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg border-t-0 rounded-tr-none">
             <div className="text-center">
-              <h1 className="text-2xl font-bold text-gray-900">Connexion Professionnelle</h1>
+              <h1 className="text-2xl font-bold text-gray-900">Connexion</h1>
               <p className="mt-2 text-sm text-gray-600">
-                Connectez-vous pour gérer vos services et demandes
+                Connectez-vous pour trouver les meilleurs artisans
               </p>
             </div>
             
@@ -65,7 +65,7 @@ const ProfessionalLogin = () => {
             <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                  Email professionnel
+                  Email
                 </label>
                 <input
                   id="email"
@@ -127,15 +127,15 @@ const ProfessionalLogin = () => {
             </form>
             
             <div className="text-sm text-center text-gray-600">
-              Vous n'avez pas de compte professionnel?{' '}
-              <Link to="/professional-register" className="font-medium text-[#C63E46] hover:text-[#A33138]">
+              Vous n'avez pas de compte?{' '}
+              <Link to="/register" className="font-medium text-[#C63E46] hover:text-[#A33138]">
                 Inscrivez-vous
               </Link>
             </div>
             
             <div className="pt-4 text-center border-t border-gray-200">
-              <Link to="/login" className="text-sm font-medium text-gray-600 hover:text-[#C63E46]">
-                Espace client? Connectez-vous ici
+              <Link to="/professional-login" className="text-sm font-medium text-gray-600 hover:text-[#C63E46]">
+                Vous êtes un professionnel? Connectez-vous ici
               </Link>
             </div>
           </div>
@@ -146,4 +146,4 @@ const ProfessionalLogin = () => {
   );
 };
 
-export default ProfessionalLogin;
+export default Login;

@@ -6,11 +6,9 @@ import Navbar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
 import { toast } from 'react-hot-toast';
 
-const ProfessionalRegister = () => {
+const Register = () => {
   const [name, setName] = useState('');
-  const [companyName, setCompanyName] = useState('');
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
@@ -22,7 +20,7 @@ const ProfessionalRegister = () => {
     e.preventDefault();
     setError('');
     
-    if (!name || !companyName || !email || !phone || !password || !confirmPassword) {
+    if (!name || !email || !password || !confirmPassword) {
       setError('Tous les champs sont obligatoires');
       return;
     }
@@ -34,11 +32,11 @@ const ProfessionalRegister = () => {
     
     try {
       setIsLoading(true);
-      const success = await register(name, email, password, 'professional');
+      const success = await register(name, email, password, 'client');
       
       if (success) {
         toast.success('Inscription réussie!');
-        navigate('/professional-dashboard');
+        navigate('/');
       } else {
         setError('Une erreur est survenue lors de l\'inscription');
         toast.error('Une erreur est survenue lors de l\'inscription');
@@ -59,9 +57,9 @@ const ProfessionalRegister = () => {
         <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
           <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-lg border-t-0 rounded-tr-none">
             <div className="text-center">
-              <h1 className="text-2xl font-bold text-gray-900">Inscription Professionnelle</h1>
+              <h1 className="text-2xl font-bold text-gray-900">Inscription</h1>
               <p className="mt-2 text-sm text-gray-600">
-                Créez votre compte professionnel pour offrir vos services
+                Créez votre compte pour trouver les meilleurs artisans
               </p>
             </div>
             
@@ -72,42 +70,25 @@ const ProfessionalRegister = () => {
             )}
             
             <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                    Nom complet
-                  </label>
-                  <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    autoComplete="name"
-                    required
-                    className="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#C63E46] focus:border-[#C63E46]"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="companyName" className="block text-sm font-medium text-gray-700">
-                    Nom de l'entreprise
-                  </label>
-                  <input
-                    id="companyName"
-                    name="companyName"
-                    type="text"
-                    required
-                    className="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#C63E46] focus:border-[#C63E46]"
-                    value={companyName}
-                    onChange={(e) => setCompanyName(e.target.value)}
-                  />
-                </div>
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                  Nom complet
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  autoComplete="name"
+                  required
+                  className="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#C63E46] focus:border-[#C63E46]"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
               </div>
               
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                  Email professionnel
+                  Email
                 </label>
                 <input
                   id="email"
@@ -118,22 +99,6 @@ const ProfessionalRegister = () => {
                   className="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#C63E46] focus:border-[#C63E46]"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-                  Numéro de téléphone
-                </label>
-                <input
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  autoComplete="tel"
-                  required
-                  className="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#C63E46] focus:border-[#C63E46]"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
                 />
               </div>
               
@@ -190,21 +155,21 @@ const ProfessionalRegister = () => {
                   disabled={isLoading}
                   className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-[#C63E46] border border-transparent rounded-md shadow-sm hover:bg-[#A33138] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#C63E46] disabled:opacity-50"
                 >
-                  {isLoading ? 'Inscription en cours...' : 'S\'inscrire comme professionnel'}
+                  {isLoading ? 'Inscription en cours...' : 'S\'inscrire'}
                 </button>
               </div>
             </form>
             
             <div className="text-sm text-center text-gray-600">
-              Déjà un compte professionnel?{' '}
-              <Link to="/professional-login" className="font-medium text-[#C63E46] hover:text-[#A33138]">
+              Déjà un compte?{' '}
+              <Link to="/login" className="font-medium text-[#C63E46] hover:text-[#A33138]">
                 Connectez-vous
               </Link>
             </div>
             
             <div className="pt-4 text-center border-t border-gray-200">
-              <Link to="/register" className="text-sm font-medium text-gray-600 hover:text-[#C63E46]">
-                Vous êtes un particulier? Inscrivez-vous ici
+              <Link to="/professional-register" className="text-sm font-medium text-gray-600 hover:text-[#C63E46]">
+                Vous êtes un professionnel? Inscrivez-vous ici
               </Link>
             </div>
           </div>
@@ -215,4 +180,4 @@ const ProfessionalRegister = () => {
   );
 };
 
-export default ProfessionalRegister;
+export default Register;

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Navbar, Nav, Container, Offcanvas } from 'react-bootstrap';
 import { NavLink, useLocation } from 'react-router-dom';
 import '../../../assets/styles/layout/header.css';
+import { useAuth } from '../../../hooks/useAuth';
 
 const NavbarComponent = () => {
   // État pour gérer si l'écran est large ou non
@@ -10,6 +11,9 @@ const NavbarComponent = () => {
 
   // Hook pour obtenir l'emplacement actuel de la page
   const location = useLocation();
+  
+  // Utilisation du hook d'authentification
+  const { isAuthenticated, user, logoutUser } = useAuth();
 
   // État pour déterminer si la navbar doit être stylisée comme scrollée
   const [isNavbarScroll, setIsNavbarScroll] = useState(false);
@@ -84,6 +88,33 @@ const NavbarComponent = () => {
               <Nav.Link as={NavLink} className="nav-link" to="/about">A propos</Nav.Link>
               <Nav.Link as={NavLink} className="nav-link" to="/contact">Contact</Nav.Link>
             </Nav>
+            <Nav>
+              {isAuthenticated ? (
+                <div className="d-flex align-items-center">
+                  {user?.userType === 'professional' ? (
+                    <Nav.Link as={NavLink} className="nav-link" to="/professional-dashboard">
+                      Mon Espace Pro
+                    </Nav.Link>
+                  ) : (
+                    <Nav.Link as={NavLink} className="nav-link" to="/user-dashboard">
+                      Mon Compte
+                    </Nav.Link>
+                  )}
+                  <Nav.Link className="nav-link" onClick={logoutUser}>
+                    Déconnexion
+                  </Nav.Link>
+                </div>
+              ) : (
+                <div className="d-flex">
+                  <Nav.Link as={NavLink} className="nav-link" to="/login">
+                    Connexion
+                  </Nav.Link>
+                  <Nav.Link as={NavLink} className="nav-link" to="/professional-login">
+                    Espace Pro
+                  </Nav.Link>
+                </div>
+              )}
+            </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
@@ -105,6 +136,32 @@ const NavbarComponent = () => {
             <Nav.Link as={NavLink} to="/contact" onClick={handleOffcanvasClose}>Contact</Nav.Link>
             
             <hr className="my-3" />
+            
+            {isAuthenticated ? (
+              <>
+                {user?.userType === 'professional' ? (
+                  <Nav.Link as={NavLink} to="/professional-dashboard" onClick={handleOffcanvasClose}>
+                    Mon Espace Pro
+                  </Nav.Link>
+                ) : (
+                  <Nav.Link as={NavLink} to="/user-dashboard" onClick={handleOffcanvasClose}>
+                    Mon Compte
+                  </Nav.Link>
+                )}
+                <Nav.Link onClick={() => { logoutUser(); handleOffcanvasClose(); }}>
+                  Déconnexion
+                </Nav.Link>
+              </>
+            ) : (
+              <>
+                <Nav.Link as={NavLink} to="/login" onClick={handleOffcanvasClose}>
+                  Connexion
+                </Nav.Link>
+                <Nav.Link as={NavLink} to="/professional-login" onClick={handleOffcanvasClose}>
+                  Espace Pro
+                </Nav.Link>
+              </>
+            )}
           </Nav>
         </Offcanvas.Body>
       </Offcanvas>
