@@ -11,6 +11,9 @@ import ProtectedRoute from './components/Routes/ProtectedRoute';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ProfessionalLogin from './pages/ProfessionalLogin';
+import ProfessionalRegister from './pages/ProfessionalRegister';
+import ProfessionalDashboard from './pages/ProfessionalDashboard';
 import SearchResults from './pages/SearchResults';
 import Metiers from './pages/ArtisanMetiers';
 import ProductDetails from './pages/ProductDetails';
@@ -32,6 +35,9 @@ function App() {
             <Route path="/auth" element={<LoginComponent />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/professional-login" element={<ProfessionalLogin />} />
+            <Route path="/professional-register" element={<ProfessionalRegister />} />
+            <Route path="/professional-dashboard" element={<ProtectedRoute element={<ProfessionalDashboard />} />} />
             <Route path="/search" element={<SearchResults />} />
             <Route
               path="/testUser"
