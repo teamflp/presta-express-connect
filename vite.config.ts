@@ -14,7 +14,8 @@ export default defineConfig(({ mode }) => ({
   ].filter(Boolean),
   server: {
     port: 8080,
-    host: "::"
+    host: "::",
+    allowedHosts: ["86882ed0-f7b6-4ebc-85b5-bb6e959f3cf1.lovableproject.com"]
   },
   build: {
     outDir: 'dist',
