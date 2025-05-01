@@ -35,7 +35,7 @@ export const FormInput: React.FC<InputProps> = ({
           id={id}
           type={inputType}
           className={`w-full px-4 ${icon ? 'pl-11' : 'pl-4'} py-3 rounded-lg border border-gray-300 
-          shadow-sm transition-all duration-300 focus:outline-none focus:ring-2 
+          shadow-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-opacity-50
           bg-white ${className}`}
           {...props}
         />
@@ -79,8 +79,8 @@ export const FormCheckbox: React.FC<CheckboxProps> = ({
           id={id}
           type="checkbox"
           className={`appearance-none w-5 h-5 rounded border border-gray-300 
-          checked:bg-[#C63E46] checked:border-[#C63E46] 
-          focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-[#C63E46]/30
+          checked:bg-primary checked:border-primary 
+          focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-primary/30
           transition-all duration-200 ${className}`}
           {...props}
         />
@@ -121,9 +121,9 @@ export const FormButton: React.FC<ButtonProps> = ({
   const baseClasses = "px-5 py-3 rounded-lg font-medium text-sm transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 relative overflow-hidden";
   
   const variantClasses = {
-    primary: "bg-[#C63E46] hover:bg-[#A33138] text-white border border-transparent focus:ring-[#C63E46]/40 shadow-md hover:shadow-lg",
+    primary: "bg-primary hover:bg-primary-hover text-white border border-transparent focus:ring-primary/40 shadow-md hover:shadow-lg",
     secondary: "bg-gray-100 hover:bg-gray-200 text-gray-800 border border-transparent focus:ring-gray-300 shadow-sm hover:shadow-md",
-    outline: "bg-transparent hover:bg-gray-50 text-[#C63E46] border border-[#C63E46] focus:ring-[#C63E46]/30 hover:shadow-sm"
+    outline: "bg-transparent hover:bg-gray-50 text-primary border border-primary focus:ring-primary/30 hover:shadow-sm"
   };
   
   return (

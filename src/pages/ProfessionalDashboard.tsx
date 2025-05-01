@@ -1,156 +1,320 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import Navbar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
+import { User, Calendar, FileText, Bell, Settings, LogOut, Home, Users } from 'lucide-react';
 
 const ProfessionalDashboard = () => {
-  const { currentUser, logout } = useAuth();
+  const { user, logoutUser } = useAuth();
   const navigate = useNavigate();
 
   // Si l'utilisateur n'est pas connecté, rediriger vers la page de connexion
-  React.useEffect(() => {
-    if (!currentUser) {
+  useEffect(() => {
+    if (!user) {
       navigate('/professional-login');
     }
-  }, [currentUser, navigate]);
+  }, [user, navigate]);
 
   const handleLogout = () => {
-    logout();
+    logoutUser();
     navigate('/professional-login');
   };
 
-  if (!currentUser) return null;
+  if (!user) return null;
 
   return (
-    <div className="App">
+    <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
-      <div className="py-10 bg-[#FDFAF7]">
+      <div className="flex-grow py-6 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row gap-8">
-            <div className="w-full md:w-1/4">
-              <div className="bg-white p-6 rounded-lg shadow-md border-t-0 rounded-tr-none mb-6">
-                <div className="text-center">
-                  <div className="w-24 h-24 mx-auto bg-gray-200 rounded-full flex items-center justify-center mb-4">
-                    <span className="text-2xl font-bold text-gray-500">
-                      {currentUser.name.charAt(0).toUpperCase()}
-                    </span>
+          <div className="flex flex-col md:flex-row gap-6">
+            {/* Sidebar */}
+            <div className="w-full md:w-1/4 lg:w-1/5">
+              <div className="bg-white rounded-xl shadow-md overflow-hidden">
+                <div className="p-6 bg-gradient-to-r from-primary to-primary-hover text-white">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center flex-shrink-0">
+                      <span className="text-2xl font-bold text-primary">
+                        {user.name ? user.name.charAt(0).toUpperCase() : "P"}
+                      </span>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold">{user.name || "Professionnel"}</h3>
+                      <p className="text-sm text-white/80">{user.email}</p>
+                      <span className="inline-flex items-center px-2 py-1 mt-2 text-xs font-medium rounded-full bg-white/20">
+                        Artisan Pro
+                      </span>
+                    </div>
                   </div>
-                  <h3 className="text-xl font-semibold">{currentUser.name}</h3>
-                  <p className="text-gray-500">{currentUser.email}</p>
                 </div>
                 
-                <div className="mt-6 border-t pt-4">
-                  <ul className="space-y-2">
+                <nav className="p-4">
+                  <ul className="space-y-1">
                     <li>
-                      <button className="w-full text-left px-4 py-2 bg-[#C63E46] text-white rounded-md">
-                        Tableau de bord
+                      <button className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg bg-primary/10 text-primary font-medium">
+                        <Home size={18} />
+                        <span>Tableau de bord</span>
                       </button>
                     </li>
                     <li>
-                      <button className="w-full text-left px-4 py-2 hover:bg-gray-100 rounded-md">
-                        Mes services
+                      <button className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors">
+                        <FileText size={18} />
+                        <span>Mes services</span>
                       </button>
                     </li>
                     <li>
-                      <button className="w-full text-left px-4 py-2 hover:bg-gray-100 rounded-md">
-                        Demandes reçues
+                      <button className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors">
+                        <Bell size={18} />
+                        <span>Demandes reçues</span>
+                        <span className="ml-auto bg-primary text-white text-xs font-bold px-2 py-1 rounded-full">5</span>
                       </button>
                     </li>
                     <li>
-                      <button className="w-full text-left px-4 py-2 hover:bg-gray-100 rounded-md">
-                        Profil
+                      <button className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors">
+                        <Calendar size={18} />
+                        <span>Planning</span>
                       </button>
                     </li>
                     <li>
+                      <button className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors">
+                        <Users size={18} />
+                        <span>Clients</span>
+                      </button>
+                    </li>
+                    <li>
+                      <button className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors">
+                        <User size={18} />
+                        <span>Mon profil</span>
+                      </button>
+                    </li>
+                    <li>
+                      <button className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors">
+                        <Settings size={18} />
+                        <span>Paramètres</span>
+                      </button>
+                    </li>
+                    <li className="pt-4 mt-4 border-t border-gray-100">
                       <button
                         onClick={handleLogout}
-                        className="w-full text-left px-4 py-2 hover:bg-gray-100 text-red-500 rounded-md"
+                        className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-red-500 hover:bg-red-50 transition-colors"
                       >
-                        Déconnexion
+                        <LogOut size={18} />
+                        <span>Déconnexion</span>
                       </button>
                     </li>
                   </ul>
-                </div>
+                </nav>
               </div>
             </div>
             
-            <div className="w-full md:w-3/4">
-              <div className="bg-white p-6 rounded-lg shadow-md border-t-0 rounded-tr-none mb-6">
-                <h2 className="text-2xl font-bold mb-6">Tableau de bord</h2>
-                
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                  <div className="bg-[#FDFAF7] p-4 rounded-lg border border-gray-200">
-                    <h4 className="font-semibold text-gray-700">Demandes en attente</h4>
-                    <p className="text-2xl font-bold text-[#C63E46]">5</p>
+            {/* Main Content */}
+            <div className="w-full md:w-3/4 lg:w-4/5 space-y-6">
+              {/* Header */}
+              <div className="bg-white p-6 rounded-xl shadow-md">
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+                  <div>
+                    <h2 className="text-2xl font-bold text-gray-800">Bonjour, {user.name || "Artisan"}</h2>
+                    <p className="text-gray-500">Bienvenue dans votre espace professionnel</p>
                   </div>
-                  <div className="bg-[#FDFAF7] p-4 rounded-lg border border-gray-200">
-                    <h4 className="font-semibold text-gray-700">Projets en cours</h4>
-                    <p className="text-2xl font-bold text-[#C63E46]">3</p>
-                  </div>
-                  <div className="bg-[#FDFAF7] p-4 rounded-lg border border-gray-200">
-                    <h4 className="font-semibold text-gray-700">Projets terminés</h4>
-                    <p className="text-2xl font-bold text-[#C63E46]">12</p>
+                  <div className="mt-4 md:mt-0 flex space-x-2">
+                    <button className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                      Voir mon profil public
+                    </button>
+                    <button className="px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary-hover transition-colors">
+                      + Ajouter un service
+                    </button>
                   </div>
                 </div>
-                
-                <h3 className="text-xl font-semibold mb-4">Dernières demandes</h3>
+              </div>
+              
+              {/* Stats */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow border-l-4 border-primary">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-gray-500">Demandes en attente</p>
+                      <p className="text-3xl font-bold text-gray-800">5</p>
+                    </div>
+                    <div className="p-3 bg-primary/10 rounded-lg">
+                      <Bell size={24} className="text-primary" />
+                    </div>
+                  </div>
+                  <div className="mt-4 flex items-center text-sm">
+                    <span className="text-green-500 flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                      </svg>
+                      +20%
+                    </span>
+                    <span className="text-gray-500 ml-2">depuis le mois dernier</span>
+                  </div>
+                </div>
+                <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow border-l-4 border-blue-500">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-gray-500">Projets en cours</p>
+                      <p className="text-3xl font-bold text-gray-800">3</p>
+                    </div>
+                    <div className="p-3 bg-blue-500/10 rounded-lg">
+                      <Calendar size={24} className="text-blue-500" />
+                    </div>
+                  </div>
+                  <div className="mt-4 flex items-center text-sm">
+                    <span className="text-green-500 flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                      </svg>
+                      +12%
+                    </span>
+                    <span className="text-gray-500 ml-2">depuis le mois dernier</span>
+                  </div>
+                </div>
+                <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow border-l-4 border-green-500">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-gray-500">Projets terminés</p>
+                      <p className="text-3xl font-bold text-gray-800">12</p>
+                    </div>
+                    <div className="p-3 bg-green-500/10 rounded-lg">
+                      <FileText size={24} className="text-green-500" />
+                    </div>
+                  </div>
+                  <div className="mt-4 flex items-center text-sm">
+                    <span className="text-green-500 flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                      </svg>
+                      +35%
+                    </span>
+                    <span className="text-gray-500 ml-2">depuis le mois dernier</span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Recent Requests */}
+              <div className="bg-white rounded-xl shadow-md overflow-hidden">
+                <div className="px-6 py-4 bg-gray-50 border-b border-gray-200">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-semibold text-gray-800">Dernières demandes</h3>
+                    <button className="text-primary hover:text-primary-hover text-sm font-medium">Voir tout</button>
+                  </div>
+                </div>
                 <div className="overflow-x-auto">
-                  <table className="min-w-full bg-white">
-                    <thead>
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <thead className="bg-gray-50">
                       <tr>
-                        <th className="py-3 px-4 text-left border-b">Client</th>
-                        <th className="py-3 px-4 text-left border-b">Service</th>
-                        <th className="py-3 px-4 text-left border-b">Date</th>
-                        <th className="py-3 px-4 text-left border-b">Statut</th>
-                        <th className="py-3 px-4 text-left border-b">Actions</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Service</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td className="py-3 px-4 border-b">Martin Dupont</td>
-                        <td className="py-3 px-4 border-b">Plomberie</td>
-                        <td className="py-3 px-4 border-b">15/04/2025</td>
-                        <td className="py-3 px-4 border-b">
-                          <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs">
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      <tr className="hover:bg-gray-50 transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <div className="h-10 w-10 rounded-full bg-gray-200 flex-shrink-0 flex items-center justify-center text-gray-500">M</div>
+                            <div className="ml-4">
+                              <div className="text-sm font-medium text-gray-900">Martin Dupont</div>
+                              <div className="text-sm text-gray-500">martin@example.com</div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">Plomberie</div>
+                          <div className="text-xs text-gray-500">Installation sanitaire</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">15/04/2025</div>
+                          <div className="text-xs text-gray-500">14:30</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                             En attente
                           </span>
                         </td>
-                        <td className="py-3 px-4 border-b">
-                          <button className="text-blue-500 hover:underline mr-3">Voir</button>
-                          <button className="text-green-500 hover:underline">Accepter</button>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm">
+                          <div className="flex space-x-2">
+                            <button className="text-blue-600 hover:text-blue-800">
+                              Voir
+                            </button>
+                            <button className="text-green-600 hover:text-green-800">
+                              Accepter
+                            </button>
+                          </div>
                         </td>
                       </tr>
-                      <tr>
-                        <td className="py-3 px-4 border-b">Sophie Martin</td>
-                        <td className="py-3 px-4 border-b">Électricité</td>
-                        <td className="py-3 px-4 border-b">14/04/2025</td>
-                        <td className="py-3 px-4 border-b">
-                          <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs">
+                      <tr className="hover:bg-gray-50 transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <div className="h-10 w-10 rounded-full bg-gray-200 flex-shrink-0 flex items-center justify-center text-gray-500">S</div>
+                            <div className="ml-4">
+                              <div className="text-sm font-medium text-gray-900">Sophie Martin</div>
+                              <div className="text-sm text-gray-500">sophie@example.com</div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">Électricité</div>
+                          <div className="text-xs text-gray-500">Installation tableau</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">14/04/2025</div>
+                          <div className="text-xs text-gray-500">10:15</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                             En attente
                           </span>
                         </td>
-                        <td className="py-3 px-4 border-b">
-                          <button className="text-blue-500 hover:underline mr-3">Voir</button>
-                          <button className="text-green-500 hover:underline">Accepter</button>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm">
+                          <div className="flex space-x-2">
+                            <button className="text-blue-600 hover:text-blue-800">
+                              Voir
+                            </button>
+                            <button className="text-green-600 hover:text-green-800">
+                              Accepter
+                            </button>
+                          </div>
                         </td>
                       </tr>
-                      <tr>
-                        <td className="py-3 px-4 border-b">Lucas Petit</td>
-                        <td className="py-3 px-4 border-b">Menuiserie</td>
-                        <td className="py-3 px-4 border-b">13/04/2025</td>
-                        <td className="py-3 px-4 border-b">
-                          <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">
+                      <tr className="hover:bg-gray-50 transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <div className="h-10 w-10 rounded-full bg-gray-200 flex-shrink-0 flex items-center justify-center text-gray-500">L</div>
+                            <div className="ml-4">
+                              <div className="text-sm font-medium text-gray-900">Lucas Petit</div>
+                              <div className="text-sm text-gray-500">lucas@example.com</div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">Menuiserie</div>
+                          <div className="text-xs text-gray-500">Installation portes</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">13/04/2025</div>
+                          <div className="text-xs text-gray-500">09:00</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                             Accepté
                           </span>
                         </td>
-                        <td className="py-3 px-4 border-b">
-                          <button className="text-blue-500 hover:underline">Voir</button>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm">
+                          <button className="text-blue-600 hover:text-blue-800">
+                            Voir
+                          </button>
                         </td>
                       </tr>
                     </tbody>
                   </table>
+                </div>
+                <div className="px-6 py-3 bg-gray-50 border-t border-gray-200 text-center">
+                  <button className="text-sm text-gray-500 hover:text-gray-700">Charger plus</button>
                 </div>
               </div>
             </div>

@@ -15,4 +15,32 @@ export const fetchArtisanDetails = async (id: string | number) => {
   return response.data;
 };
 
-// Ajoutez d'autres appels API selon les besoins.
+export const fetchServicesByCategory = async (categoryId: number) => {
+  const response = await api.get(`/categories/${categoryId}/services`);
+  return response.data;
+};
+
+export const fetchProfessionalsByJob = async (jobId: number) => {
+  const response = await api.get(`/jobs/${jobId}/professionals`);
+  return response.data;
+};
+
+export const contactProfessional = async (professionalId: number, contactData: {
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+}) => {
+  const response = await api.post(`/professionals/${professionalId}/contact`, contactData);
+  return response.data;
+};
+
+export const fetchUserDashboardData = async (userId: string) => {
+  const response = await api.get(`/users/${userId}/dashboard`);
+  return response.data;
+};
+
+export const updateProfessionalProfile = async (userId: string, profileData: any) => {
+  const response = await api.put(`/professionals/${userId}`, profileData);
+  return response.data;
+};

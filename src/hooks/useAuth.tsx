@@ -1,7 +1,7 @@
 
 import { useState, useEffect, createContext, useContext, ReactNode } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginSuccess, logout } from '../store/features/Authentification/AuthSlice';
+import { loginSuccess, logout as logoutAction } from '../store/features/Authentification/AuthSlice';
 import { RootState } from '../store/store';
 
 // Interface pour le contexte d'authentification
@@ -56,6 +56,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         
         const user = {
           id: Math.random().toString(36).substr(2, 9),
+          name: email.split('@')[0],
           email,
           userType,
         };
@@ -106,7 +107,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logoutUser = () => {
     localStorage.removeItem('user');
     setUser(null);
-    dispatch(logout());
+    dispatch(logoutAction());
   };
 
   return (

@@ -6,7 +6,7 @@ import Navbar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
 import { toast } from 'react-hot-toast';
 import { FormInput, FormCheckbox, FormButton } from '../components/Forms/FormComponents';
-import { Mail, Lock, Building, User } from 'lucide-react';
+import { Mail, Lock, User } from 'lucide-react';
 
 const ProfessionalLogin = () => {
   const [email, setEmail] = useState('');
@@ -52,18 +52,22 @@ const ProfessionalLogin = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
-      <div className="flex-grow flex items-center justify-center bg-gradient-to-b from-gray-50 to-gray-100 px-4 py-16 sm:py-24">
+      
+      <div className="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-auth-pattern">
         <div className="w-full max-w-md">
-          <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+          <div className="bg-white rounded-2xl shadow-form p-8 border border-gray-100 backdrop-blur-sm">
             <div className="text-center mb-8">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-6">
+                <User size={32} className="text-primary" />
+              </div>
               <h1 className="text-3xl font-bold text-gray-800 mb-2">Espace Professionnel</h1>
-              <p className="text-gray-600">Connectez-vous pour gérer vos services et demandes</p>
+              <p className="text-gray-600">Connectez-vous pour gérer vos services</p>
             </div>
             
             {error && (
-              <div className="p-4 mb-6 text-sm text-white bg-red-500 rounded-lg shadow-lg animate-fade-in flex items-center">
+              <div className="p-4 mb-6 text-sm text-white bg-primary rounded-lg shadow-lg animate-pulse flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                 </svg>
@@ -84,7 +88,7 @@ const ProfessionalLogin = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 icon={<Mail size={20} className="text-gray-500" />}
                 aria-label="Adresse email professionnelle"
-                className="focus:ring-blue-500 focus:border-blue-500"
+                className="focus:ring-primary focus:border-primary"
               />
               
               <FormInput
@@ -99,7 +103,7 @@ const ProfessionalLogin = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 icon={<Lock size={20} className="text-gray-500" />}
                 aria-label="Mot de passe"
-                className="focus:ring-blue-500 focus:border-blue-500"
+                className="focus:ring-primary focus:border-primary"
               />
               
               <div className="flex items-center justify-between">
@@ -109,7 +113,7 @@ const ProfessionalLogin = () => {
                   label="Se souvenir de moi"
                 />
                 
-                <Link to="#" className="text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors">
+                <Link to="#" className="text-sm font-medium text-primary hover:text-primary-hover transition-colors">
                   Mot de passe oublié?
                 </Link>
               </div>
@@ -119,7 +123,7 @@ const ProfessionalLogin = () => {
                 isLoading={isLoading} 
                 fullWidth
                 disabled={!formValid}
-                className={`mt-6 bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 border-transparent ${!formValid && !isLoading ? 'opacity-60 cursor-not-allowed' : ''}`}
+                className={`mt-6 bg-primary hover:bg-primary-hover focus:ring-primary-light ${!formValid && !isLoading ? 'opacity-60 cursor-not-allowed' : ''}`}
               >
                 Se connecter
               </FormButton>
@@ -149,15 +153,22 @@ const ProfessionalLogin = () => {
             <div className="pt-5 text-center border-t border-gray-200 mt-8">
               <Link 
                 to="/login" 
-                className="inline-flex items-center text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors"
+                className="inline-flex items-center text-sm font-medium text-gray-600 hover:text-primary transition-colors"
               >
                 <User size={16} className="mr-1.5" />
                 Espace client? Connectez-vous ici
               </Link>
             </div>
           </div>
+
+          <div className="mt-8 text-center">
+            <p className="text-sm text-gray-500">
+              © 2025 Presta-Express | Tous droits réservés
+            </p>
+          </div>
         </div>
       </div>
+      
       <Footer />
     </div>
   );
