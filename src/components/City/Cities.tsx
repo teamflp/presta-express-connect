@@ -1,4 +1,4 @@
-import React from 'react';
+
 import cities from '../../assets/tableaux/cityData'; // Importation des données depuis cityData.tsx
 import City from './City'; // Importation du composant City depuis City.tsx
 
@@ -20,6 +20,3 @@ function Cities() {
 }
 
 export default Cities;
-
-
-

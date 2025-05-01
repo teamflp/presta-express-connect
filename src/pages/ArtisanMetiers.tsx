@@ -1,5 +1,4 @@
 
-import React from 'react';
 import LetterMetiersWithList from '../components/ArtisanMetiers/ListMetiers';
 import FaqAccordion from '../components/FAQ/Faqs';
 import Navbar from '../../src/components/Header/partials/NavBar';

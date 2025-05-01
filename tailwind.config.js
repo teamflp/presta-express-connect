@@ -3,7 +3,7 @@
 export default {
     content: [
         "./index.html",
-        "./src/**/*.{js,ts,jsx,tsx}",  // Add this to detect Tailwind classes in all src files
+        "./src/**/*.{js,ts,jsx,tsx}",
     ],
     theme: {
         extend: {
@@ -15,8 +15,8 @@ export default {
                 background: "#FDFAF7",
                 light: "#f8f9fa",
                 dark: "#212529",
-                white: "#ffffff", // Adding white explicitly
-                black: "#000000", // Adding black explicitly
+                white: "#ffffff",
+                black: "#000000",
             },
             boxShadow: {
                 "card-hover": "0 10px 20px rgba(0, 0, 0, 0.1)",

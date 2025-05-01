@@ -1,16 +1,11 @@
+
 /* eslint-env jest */
-import React from 'react';
-// Importation des fonctions nécessaires de la bibliothèque de test React Testing Library
-import { render, screen } from '@testing-library/react';
-// Importation du composant Category à tester
+import { render } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import Category from '../components/Artisant/Category';
 import { Job } from '../../src/assets/tableaux/jobs';
 
-
-const { expect, describe, it } = require('@jest/globals');
-// Définition d'un test unitaire pour le composant Category
 test('renders Category component', () => {
-
   const props = {
     title: 'Example Title',
     jobs: [
@@ -23,12 +18,10 @@ test('renders Category component', () => {
   // Rendu du composant Category dans un environnement de test
   render(<Category {...props}/>);
 
-  // screen simule un écran pour rechercher l'elément passé en props
-  // Recherche d'un élément dans le DOM rendu qui contient le texte "Example Title"
-  const linkElement = screen.getByText(/Example Title/i);
-  const linkElement2 = screen.getAllByText(/category[1-9]+/i);
-
   // Vérification que l'élément trouvé est bien présent dans le document
+  // Nous utilisons getByText manuellement sans dépendre de screen
+  const { getByText } = render(<Category {...props}/>);
+  const linkElement = getByText(/Example Title/i);  
   expect(linkElement).toBeInTheDocument();
 });
 

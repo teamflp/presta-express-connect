@@ -1,7 +1,5 @@
 
-import React from 'react';
-import { useState } from 'react';
-import { CSSProperties } from 'react';
+import { useState, CSSProperties } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import Background from '../../assets/images/lyonImage.jpg';
 import { Mail } from 'lucide-react';

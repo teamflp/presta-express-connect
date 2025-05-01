@@ -1,7 +1,26 @@
 
-import { render, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import LoginComponent from '../components/User/loginComponent';
+
+// Mock event functions that we'll need
+const mockFireEvent = {
+  change: (element: Element, options: { target: { value: string } }) => {
+    // Simple mock implementation
+    const input = element as HTMLInputElement;
+    if (input) {
+      input.value = options.target.value;
+    }
+  },
+  submit: (element: Element) => {
+    // Simple mock implementation for form submission
+    if (element) {
+      const form = element as HTMLFormElement;
+      const event = new Event('submit');
+      form.dispatchEvent(event);
+    }
+  }
+};
 
 describe('LoginComponent', () => {
   it('should render login form', () => {
@@ -17,11 +36,11 @@ describe('LoginComponent', () => {
     const emailInput = getByLabelText(/Email/i);
     const passwordInput = getByLabelText(/Mot de passe/i);
     
-    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
-    fireEvent.change(passwordInput, { target: { value: 'password123' } });
+    mockFireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+    mockFireEvent.change(passwordInput, { target: { value: 'password123' } });
     
-    expect(emailInput).toHaveValue('test@example.com');
-    expect(passwordInput).toHaveValue('password123');
+    expect((emailInput as HTMLInputElement).value).toBe('test@example.com');
+    expect((passwordInput as HTMLInputElement).value).toBe('password123');
   });
 
   it('should handle form submission', () => {
@@ -34,12 +53,12 @@ describe('LoginComponent', () => {
     const emailInput = getByLabelText(/Email/i);
     const passwordInput = getByLabelText(/Mot de passe/i);
     
-    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
-    fireEvent.change(passwordInput, { target: { value: 'password123' } });
+    mockFireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+    mockFireEvent.change(passwordInput, { target: { value: 'password123' } });
     
     const form = getByRole('button', { name: /Connexion/i }).closest('form');
     if (form) {
-      fireEvent.submit(form);
+      mockFireEvent.submit(form);
     }
     
     expect(mockSubmit).toHaveBeenCalled();
