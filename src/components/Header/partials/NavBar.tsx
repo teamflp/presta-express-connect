@@ -1,171 +1,164 @@
-
 import { useState, useEffect } from 'react';
 import { Navbar, Nav, Container, Offcanvas } from 'react-bootstrap';
 import { NavLink, useLocation } from 'react-router-dom';
-import '../../../assets/styles/layout/header.css';
-import { useAuth } from '../../../hooks/useAuth';
+import '../../../assets/styles/layout/header.css'; // Assurez-vous que ce chemin est correct
+import { useAuth } from '../../../hooks/useAuth'; // Assurez-vous que ce chemin est correct
 
 const NavbarComponent = () => {
-  // État pour gérer si l'écran est large ou non
-  const [setIsLargeScreen] = useState(window.innerWidth >= 992);
+  // Note: L'état isLargeScreen n'était pas utilisé, je le commente ou vous pouvez le supprimer
+  // const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992); 
 
-  // Hook pour obtenir l'emplacement actuel de la page
   const location = useLocation();
-  
-  // Utilisation du hook d'authentification
   const { isAuthenticated, user, logoutUser } = useAuth();
-
-  // État pour déterminer si la navbar doit être stylisée comme scrollée
   const [isNavbarScroll, setIsNavbarScroll] = useState(false);
-
-  // État pour gérer le menu mobile
   const [showOffcanvas, setShowOffcanvas] = useState(false);
-  
+
   const handleOffcanvasClose = () => setShowOffcanvas(false);
   const handleOffcanvasShow = () => setShowOffcanvas(true);
-  
-  useEffect(() => {
-    // Fonction pour mettre à jour l'état lorsque la taille de l'écran change
-    const handleResize = () => {
-      // @ts-ignore
-      setIsLargeScreen(window.innerWidth >= 992);
-    };
 
-    // Fonction pour ajouter ou supprimer la classe 'navbar-scroll' en fonction du défilement
+  useEffect(() => {
+    // Note: La fonction handleResize n'était pas utilisée correctement avec setIsLargeScreen
+    // Si vous en avez besoin, assurez-vous que setIsLargeScreen est bien utilisé
+    // const handleResize = () => {
+    //   setIsLargeScreen(window.innerWidth >= 992);
+    // };
+
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsNavbarScroll(true); // Ajoute la classe si le scroll dépasse 50px
-      } else if (location.pathname === '/') {
-        setIsNavbarScroll(false); // Supprime la classe si on est sur la page Home et scroll < 50px
+      // Logique de scroll simplifiée : applique si scroll > 50 OU si on n'est pas sur la Home
+      if (window.scrollY > 50 || location.pathname !== '/') {
+        setIsNavbarScroll(true);
+      } else {
+        setIsNavbarScroll(false);
       }
     };
 
-    // Ajoute les écouteurs d'événements pour le défilement et le redimensionnement de la fenêtre
+    // Appeler handleScroll une fois au montage pour définir l'état initial
+    handleScroll();
+
     window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleResize);
+    // window.addEventListener('resize', handleResize); // Ajoutez si vous réactivez isLargeScreen
 
-    // Définit la classe navbar-scroll si l'utilisateur n'est pas sur la page Home
-    if (location.pathname !== '/') {
-      setIsNavbarScroll(true);
-    }
-
-    // Nettoie les écouteurs d'événements lorsque le composant est démonté
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
+      // window.removeEventListener('resize', handleResize); // Ajoutez si vous réactivez isLargeScreen
     };
-  }, [location.pathname]); // Recalcule l'effet lorsque la page change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]); // Déclenché seulement au changement de page
 
   return (
-    <>
-      {/* Navbar principale avec classe sticky-top pour le comportement sticky */}
-      <Navbar 
-        expand="lg" 
-        className={`navbar sticky-top ${isNavbarScroll ? 'navbar-scroll' : ''} ${location.pathname === '/' ? 'navbar-home' : ''}`}
-      >
-        <Container>
-          <NavLink to="/" className="navbar-brand fw-bold d-flex align-items-center">
-            <span className="brand-artisan">PRESTA</span>
-            <span className="brand-express">EXPRESS</span>
-          </NavLink>
+      <>
+        {/* Navbar principale */}
+        <Navbar
+            expand="lg" // Garde le point de rupture du *toggle* à lg, mais on contrôle le collapse différemment
+            className={`navbar sticky-top ${isNavbarScroll ? 'navbar-scroll' : ''} ${location.pathname === '/' && !isNavbarScroll ? 'navbar-home' : ''}`} // Simplifié la logique de classe
+            // Ajout de la gestion du thème sombre si nécessaire (exemple)
+            // data-bs-theme={isNavbarScroll ? "light" : "dark"} // Exemple pour Bootstrap 5.3+
+        >
+          <Container>
+            {/* Brand */}
+            <NavLink to="/" className="navbar-brand fw-bold d-flex align-items-center">
+              <span className="brand-artisan">PRESTA</span>
+              <span className="brand-express">EXPRESS</span>
+            </NavLink>
 
-          <div className="d-flex align-items-center">
-            {/* Bouton pour afficher le menu mobile */}
-            <Navbar.Toggle 
-              aria-controls="navbarNavAltMarkup" 
-              onClick={handleOffcanvasShow} 
-              className="navbar-toggler-custom"
-            >
-            </Navbar.Toggle>
-          </div>
+            {/* Toggle pour mobile (toujours basé sur expand="lg") */}
+            <Navbar.Toggle
+                aria-controls="navbarNavAltMarkup"
+                onClick={handleOffcanvasShow}
+                className="navbar-toggler-custom d-lg-none" // Assurez-vous qu'il se cache sur lg
+            />
 
-          {/* Navbar pour les grands écrans */}
-          <Navbar.Collapse id="navbarNavAltMarkup" className="d-none d-lg-flex">
-            <Nav className="me-auto">
-              <Nav.Link as={NavLink} className="nav-link" to="/">Accueil</Nav.Link>
-              <Nav.Link as={NavLink} className="nav-link" to="/Metiers">Métiers</Nav.Link>
-              <Nav.Link as={NavLink} className="nav-link" to="/Intervention">Domaines</Nav.Link>
-              <Nav.Link as={NavLink} className="nav-link" to="/about">A propos</Nav.Link>
-              <Nav.Link as={NavLink} className="nav-link" to="/contact">Contact</Nav.Link>
-            </Nav>
-            <Nav>
+            {/* Liens pour Desktop - MODIFICATION ICI */}
+            <Navbar.Collapse id="navbarNavAltMarkup" className="d-none d-md-flex"> {/* Changé de d-lg-flex à d-md-flex */}
+              {/* Liens de navigation principaux */}
+              <Nav className="me-auto">
+                <Nav.Link as={NavLink} className="nav-link" to="/">Accueil</Nav.Link>
+                <Nav.Link as={NavLink} className="nav-link" to="/Metiers">Métiers</Nav.Link>
+                <Nav.Link as={NavLink} className="nav-link" to="/Intervention">Domaines</Nav.Link>
+                <Nav.Link as={NavLink} className="nav-link" to="/about">A propos</Nav.Link>
+                <Nav.Link as={NavLink} className="nav-link" to="/contact">Contact</Nav.Link>
+              </Nav>
+              {/* Liens utilisateur/authentification */}
+              <Nav>
+                {isAuthenticated ? (
+                    <div className="d-flex align-items-center">
+                      {user?.userType === 'professional' ? (
+                          <Nav.Link as={NavLink} className="nav-link" to="/professional-dashboard">
+                            Mon Espace Pro
+                          </Nav.Link>
+                      ) : (
+                          <Nav.Link as={NavLink} className="nav-link" to="/user-dashboard">
+                            Mon Compte
+                          </Nav.Link>
+                      )}
+                      <Nav.Link className="nav-link" onClick={logoutUser} style={{ cursor: 'pointer' }}> {/* Ajout style curseur */}
+                        Déconnexion
+                      </Nav.Link>
+                    </div>
+                ) : (
+                    <div className="d-flex">
+                      <Nav.Link as={NavLink} className="nav-link" to="/login">
+                        Connexion
+                      </Nav.Link>
+                      <Nav.Link as={NavLink} className="nav-link" to="/professional-login">
+                        Espace Pro
+                      </Nav.Link>
+                    </div>
+                )}
+              </Nav>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
+
+        {/* Menu Offcanvas pour Mobile */}
+        <Offcanvas show={showOffcanvas} onHide={handleOffcanvasClose} placement="end" className="mobile-menu d-lg-none"> {/* Assurez-vous qu'il se cache sur lg */}
+          <Offcanvas.Header closeButton>
+            <Offcanvas.Title className="d-flex align-items-center">
+              <span className="brand-artisan">PRESTA</span>
+              <span className="brand-express">EXPRESS</span>
+            </Offcanvas.Title>
+          </Offcanvas.Header>
+          <Offcanvas.Body>
+            <Nav className="flex-column">
+              {/* Liens du menu mobile */}
+              <Nav.Link as={NavLink} to="/" onClick={handleOffcanvasClose}>Accueil</Nav.Link>
+              <Nav.Link as={NavLink} to="/Metiers" onClick={handleOffcanvasClose}>Métiers</Nav.Link>
+              <Nav.Link as={NavLink} to="/Intervention" onClick={handleOffcanvasClose}>Domaines</Nav.Link>
+              <Nav.Link as={NavLink} to="/about" onClick={handleOffcanvasClose}>A propos</Nav.Link>
+              <Nav.Link as={NavLink} to="/contact" onClick={handleOffcanvasClose}>Contact</Nav.Link>
+
+              <hr className="my-3" />
+
+              {/* Liens utilisateur/auth mobile */}
               {isAuthenticated ? (
-                <div className="d-flex align-items-center">
-                  {user?.userType === 'professional' ? (
-                    <Nav.Link as={NavLink} className="nav-link" to="/professional-dashboard">
-                      Mon Espace Pro
+                  <>
+                    {user?.userType === 'professional' ? (
+                        <Nav.Link as={NavLink} to="/professional-dashboard" onClick={handleOffcanvasClose}>
+                          Mon Espace Pro
+                        </Nav.Link>
+                    ) : (
+                        <Nav.Link as={NavLink} to="/user-dashboard" onClick={handleOffcanvasClose}>
+                          Mon Compte
+                        </Nav.Link>
+                    )}
+                    <Nav.Link onClick={() => { logoutUser(); handleOffcanvasClose(); }} style={{ cursor: 'pointer' }}> {/* Ajout style curseur */}
+                      Déconnexion
                     </Nav.Link>
-                  ) : (
-                    <Nav.Link as={NavLink} className="nav-link" to="/user-dashboard">
-                      Mon Compte
-                    </Nav.Link>
-                  )}
-                  <Nav.Link className="nav-link" onClick={logoutUser}>
-                    Déconnexion
-                  </Nav.Link>
-                </div>
+                  </>
               ) : (
-                <div className="d-flex">
-                  <Nav.Link as={NavLink} className="nav-link" to="/login">
-                    Connexion
-                  </Nav.Link>
-                  <Nav.Link as={NavLink} className="nav-link" to="/professional-login">
-                    Espace Pro
-                  </Nav.Link>
-                </div>
+                  <>
+                    <Nav.Link as={NavLink} to="/login" onClick={handleOffcanvasClose}>
+                      Connexion
+                    </Nav.Link>
+                    <Nav.Link as={NavLink} to="/professional-login" onClick={handleOffcanvasClose}>
+                      Espace Pro
+                    </Nav.Link>
+                  </>
               )}
             </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-
-      {/* Menu mobile avec Offcanvas */}
-      <Offcanvas show={showOffcanvas} onHide={handleOffcanvasClose} placement="end" className="mobile-menu">
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title className="d-flex align-items-center">
-            <span className="brand-artisan">PRESTA</span>
-            <span className="brand-express">EXPRESS</span>
-          </Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body>
-          <Nav className="flex-column">
-            <Nav.Link as={NavLink} to="/" onClick={handleOffcanvasClose}>Accueil</Nav.Link>
-            <Nav.Link as={NavLink} to="/Metiers" onClick={handleOffcanvasClose}>Métiers</Nav.Link>
-            <Nav.Link as={NavLink} to="/Intervention" onClick={handleOffcanvasClose}>Domaines</Nav.Link>
-            <Nav.Link as={NavLink} to="/about" onClick={handleOffcanvasClose}>A propos</Nav.Link>
-            <Nav.Link as={NavLink} to="/contact" onClick={handleOffcanvasClose}>Contact</Nav.Link>
-            
-            <hr className="my-3" />
-            
-            {isAuthenticated ? (
-              <>
-                {user?.userType === 'professional' ? (
-                  <Nav.Link as={NavLink} to="/professional-dashboard" onClick={handleOffcanvasClose}>
-                    Mon Espace Pro
-                  </Nav.Link>
-                ) : (
-                  <Nav.Link as={NavLink} to="/user-dashboard" onClick={handleOffcanvasClose}>
-                    Mon Compte
-                  </Nav.Link>
-                )}
-                <Nav.Link onClick={() => { logoutUser(); handleOffcanvasClose(); }}>
-                  Déconnexion
-                </Nav.Link>
-              </>
-            ) : (
-              <>
-                <Nav.Link as={NavLink} to="/login" onClick={handleOffcanvasClose}>
-                  Connexion
-                </Nav.Link>
-                <Nav.Link as={NavLink} to="/professional-login" onClick={handleOffcanvasClose}>
-                  Espace Pro
-                </Nav.Link>
-              </>
-            )}
-          </Nav>
-        </Offcanvas.Body>
-      </Offcanvas>
-    </>
+          </Offcanvas.Body>
+        </Offcanvas>
+      </>
   );
 };
 

@@ -1,5 +1,6 @@
 
 /* Import all CSS files */
+@import "tailwindcss";
 @import './components/buttons.css';
 @import './components/cards.css';
 @import './components/forms.css';
