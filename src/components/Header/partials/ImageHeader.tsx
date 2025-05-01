@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import Background from '../../../assets/images/lyon.jpg';
 import { ExternalLink } from 'lucide-react';
@@ -7,22 +7,10 @@ import LocationSearchBar from './LocationSearchBar';
 
 function ImageHeader() {
     const [clicked, setClicked] = useState(false);
-    const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
 
     const handleClick = () => {
         setClicked(!clicked);
     };
-
-    useEffect(() => {
-        const handleResize = () => {
-            setIsLargeScreen(window.innerWidth >= 992);
-        };
-
-        window.addEventListener('resize', handleResize);
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
 
     const backgroundStyle = {
         backgroundColor: 'rgba(0, 0, 0, 0.65)',

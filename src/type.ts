@@ -1,5 +1,6 @@
+
 // types.ts
-import { RootState } from './store/store'; // Assurez-vous que le chemin est correct
+import { store } from './store/store'; // Fixed import - removed RootState import and imported store
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;

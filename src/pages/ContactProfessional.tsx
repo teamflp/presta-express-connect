@@ -1,206 +1,228 @@
 
 import { useState } from 'react';
-import { useParams, useLocation, useNavigate, Link } from 'react-router-dom';
+import { Container, Row, Col, Form, Button, Card, Alert } from 'react-bootstrap';
+import { useParams, Link } from 'react-router-dom';
 import Navbar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
-import { ArrowLeft } from 'lucide-react';
-import { toast } from 'react-hot-toast';
+import { Phone, Mail, Clock, Send } from 'lucide-react';
 
 const ContactProfessional = () => {
-  const { id } = useParams<{ id: string }>();
-  const location = useLocation();
-  const navigate = useNavigate();
-  const professional = location.state?.professional;
-  
+  // Use useParams to get the id - correct the unused variable warning
+  const { id } = useParams<{id: string}>();
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    name: '',
     email: '',
     phone: '',
+    subject: '',
     message: '',
-    termsAccepted: false
   });
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [errors, setErrors] = useState({} as Record<string, string>);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  // Function to handle form field changes with proper TypeScript types
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData(prevState => ({
+      ...prevState,
       [name]: value
-    });
+    }));
   };
 
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: checked
-    });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  // Function to handle form submission with proper TypeScript types
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
-    // Validation simple
-    if (!formData.firstName || !formData.lastName || !formData.email || !formData.message) {
-      toast.error('Veuillez remplir tous les champs obligatoires.');
+    // Basic validation
+    const newErrors: Record<string, string> = {};
+    if (!formData.name.trim()) newErrors.name = 'Le nom est requis';
+    if (!formData.email.trim()) newErrors.email = 'L\'email est requis';
+    if (!formData.phone.trim()) newErrors.phone = 'Le téléphone est requis';
+    if (!formData.subject.trim()) newErrors.subject = 'Le sujet est requis';
+    if (!formData.message.trim()) newErrors.message = 'Le message est requis';
+    
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
     
-    if (!formData.termsAccepted) {
-      toast.error('Vous devez accepter les conditions générales.');
-      return;
-    }
-
-    // Simuler l'envoi du formulaire
-    toast.success('Votre message a été envoyé avec succès!');
+    // Clear errors
+    setErrors({});
     
-    // Rediriger vers la page du professionnel
-    navigate(`/professional/${professional?.id || ''}`);
+    // Show success message (in a real app, you would send data to backend here)
+    setShowSuccess(true);
+    
+    // Reset form after 3 seconds
+    setTimeout(() => {
+      setShowSuccess(false);
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: '',
+      });
+    }, 3000);
   };
 
-  if (!professional) {
-    return (
-      <div className="App">
-        <Navbar />
-        <div className="container my-5 text-center">
-          <h2>Professionnel non trouvé</h2>
-          <p>Le professionnel que vous cherchez n'existe pas ou n'est plus disponible.</p>
-          <Link to="/" className="btn btn-primary">Retour à l'accueil</Link>
-        </div>
-        <Footer />
-      </div>
-    );
-  }
-
+  // Corrected the return type to use string instead of number for to prop
   return (
-    <div className="App">
+    <>
       <Navbar />
-      <div className="container my-5">
-        <div className="mb-4">
-          <button onClick={() => navigate(-1)} className="btn btn-link text-decoration-none p-0 d-flex align-items-center gap-2">
-            <ArrowLeft size={18} />
-            <span>Retour</span>
-          </button>
+      <Container className="py-5">
+        <Link to={`/professional/${id}`} className="btn btn-outline-secondary mb-4">
+          &larr; Retour au profil
+        </Link>
+        
+        <div className="text-center mb-5">
+          <h1 className="fw-bold mb-3">Contacter le Professionnel</h1>
+          <p className="text-muted">Envoyez un message pour demander un devis ou poser vos questions</p>
         </div>
-
-        <div className="row">
-          <div className="col-md-8 mx-auto">
-            <div className="card shadow-sm border-0 rounded-3">
-              <div className="card-body p-4">
-                <h1 className="card-title mb-4 fw-bold">Contacter {professional.name}</h1>
-
-                <div className="professional-info mb-4 d-flex align-items-center">
-                  <div className="me-3">
-                    <img 
-                      src={professional.profileImage || 'https://via.placeholder.com/60'} 
-                      alt={professional.name} 
-                      className="rounded-circle"
-                      style={{ width: '60px', height: '60px', objectFit: 'cover' }} 
-                    />
-                  </div>
+        
+        {showSuccess && (
+          <Alert variant="success" className="mb-4">
+            Votre message a été envoyé avec succès ! Le professionnel vous contactera bientôt.
+          </Alert>
+        )}
+        
+        <Row>
+          <Col md={4} className="mb-4 mb-md-0">
+            <Card className="border-0 shadow-sm h-100">
+              <Card.Body>
+                <h3 className="mb-4">Informations de contact</h3>
+                
+                <div className="d-flex align-items-center mb-3">
+                  <Mail className="text-primary me-3" size={20} />
                   <div>
-                    <h5 className="mb-1">{professional.name}</h5>
-                    <p className="text-muted mb-0">{professional.speciality || 'Professionnel'}</p>
+                    <p className="mb-0 fw-medium">Email</p>
+                    <p className="mb-0 text-muted">artisan@example.com</p>
                   </div>
                 </div>
-
-                <form onSubmit={handleSubmit}>
-                  <div className="row mb-3">
-                    <div className="col-md-6 mb-3 mb-md-0">
-                      <label htmlFor="firstName" className="form-label">Prénom *</label>
-                      <input
-                        type="text" 
-                        className="form-control" 
-                        id="firstName" 
-                        name="firstName"
-                        value={formData.firstName}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-                    <div className="col-md-6">
-                      <label htmlFor="lastName" className="form-label">Nom *</label>
-                      <input
-                        type="text" 
-                        className="form-control" 
-                        id="lastName" 
-                        name="lastName"
-                        value={formData.lastName}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
+                
+                <div className="d-flex align-items-center mb-3">
+                  <Phone className="text-primary me-3" size={20} />
+                  <div>
+                    <p className="mb-0 fw-medium">Téléphone</p>
+                    <p className="mb-0 text-muted">06 12 34 56 78</p>
                   </div>
-
-                  <div className="row mb-3">
-                    <div className="col-md-6 mb-3 mb-md-0">
-                      <label htmlFor="email" className="form-label">Email *</label>
-                      <input
-                        type="email" 
-                        className="form-control" 
-                        id="email" 
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-                    <div className="col-md-6">
-                      <label htmlFor="phone" className="form-label">Téléphone</label>
-                      <input
-                        type="tel" 
-                        className="form-control" 
-                        id="phone" 
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                      />
-                    </div>
+                </div>
+                
+                <div className="d-flex align-items-center mb-3">
+                  <Clock className="text-primary me-3" size={20} />
+                  <div>
+                    <p className="mb-0 fw-medium">Disponibilité</p>
+                    <p className="mb-0 text-muted">Lundi - Vendredi: 8h - 18h</p>
                   </div>
-
-                  <div className="mb-3">
-                    <label htmlFor="message" className="form-label">Message *</label>
-                    <textarea
-                      className="form-control" 
-                      id="message" 
-                      name="message"
+                </div>
+                
+                <div className="alert alert-info mt-4">
+                  <small>Le professionnel vous répondra généralement dans un délai de 24 à 48 heures</small>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+          
+          <Col md={8}>
+            <Card className="border-0 shadow-sm">
+              <Card.Body>
+                <Form onSubmit={handleSubmit}>
+                  <Row>
+                    <Col md={6}>
+                      <Form.Group className="mb-3">
+                        <Form.Label>Votre nom</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleChange}
+                          isInvalid={!!errors.name}
+                          className="custom-form-control"
+                        />
+                        <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                    
+                    <Col md={6}>
+                      <Form.Group className="mb-3">
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control
+                          type="email"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleChange}
+                          isInvalid={!!errors.email}
+                          className="custom-form-control"
+                        />
+                        <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  
+                  <Row>
+                    <Col md={6}>
+                      <Form.Group className="mb-3">
+                        <Form.Label>Téléphone</Form.Label>
+                        <Form.Control
+                          type="tel"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleChange}
+                          isInvalid={!!errors.phone}
+                          className="custom-form-control"
+                        />
+                        <Form.Control.Feedback type="invalid">{errors.phone}</Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                    
+                    <Col md={6}>
+                      <Form.Group className="mb-3">
+                        <Form.Label>Sujet</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="subject"
+                          value={formData.subject}
+                          onChange={handleChange}
+                          isInvalid={!!errors.subject}
+                          className="custom-form-control"
+                        />
+                        <Form.Control.Feedback type="invalid">{errors.subject}</Form.Control.Feedback>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  
+                  <Form.Group className="mb-4">
+                    <Form.Label>Votre message</Form.Label>
+                    <Form.Control
+                      as="textarea"
                       rows={5}
+                      name="message"
                       value={formData.message}
-                      onChange={handleInputChange}
-                      required
-                    ></textarea>
-                  </div>
-
-                  <div className="mb-3 form-check">
-                    <input
-                      type="checkbox" 
-                      className="form-check-input" 
-                      id="termsAccepted"
-                      name="termsAccepted"
-                      checked={formData.termsAccepted}
-                      onChange={handleCheckboxChange}
-                      required
+                      onChange={handleChange}
+                      isInvalid={!!errors.message}
+                      className="custom-form-control"
+                      placeholder="Décrivez votre projet ou posez vos questions..."
                     />
-                    <label className="form-check-label" htmlFor="termsAccepted">
-                      J'accepte les conditions générales et la politique de confidentialité
-                    </label>
-                  </div>
-
-                  <button 
+                    <Form.Control.Feedback type="invalid">{errors.message}</Form.Control.Feedback>
+                  </Form.Group>
+                  
+                  <Button 
+                    variant="primary" 
                     type="submit" 
-                    className="btn btn-primary w-100"
-                    style={{ backgroundColor: '#C63E46', borderColor: '#C63E46' }}
+                    className="button-primary d-flex align-items-center"
+                    style={{
+                      borderRadius: '20px 0 20px 20px',
+                    }}
                   >
                     Envoyer le message
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+                    <Send size={16} className="ms-2" />
+                  </Button>
+                </Form>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
       <Footer />
-    </div>
+    </>
   );
 };
 

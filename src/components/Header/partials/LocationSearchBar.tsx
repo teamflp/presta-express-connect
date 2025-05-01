@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { MapPin, Compass } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
