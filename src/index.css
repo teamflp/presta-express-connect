@@ -1,3 +1,6 @@
+
+@tailwind base;
+@tailwind components;
 @tailwind utilities;
 
 :root{
@@ -5,4 +8,3 @@
     --bg-color1 : #FDFAF7;
     --red-element-color : #C63E46;
 }
-

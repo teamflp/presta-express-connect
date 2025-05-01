@@ -1,5 +1,4 @@
 
-import React from 'react';
 import { Routes as ReactRoutes, Route } from 'react-router-dom';
 import TestUsersComponent from '../store/test/testUsersComponent';
 import TestProductsComponent from '../store/test/testProducts';
