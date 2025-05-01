@@ -1,5 +1,32 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root{
     --box-shadow-color : rgba(0, 0, 0, 0.027);
     --bg-color1 : #FDFAF7;
     --red-element-color : #C63E46;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white px-4 py-2 rounded hover:bg-primary-hover transition-all duration-300 shadow-sm hover:shadow-md;
+  }
+  
+  .btn-secondary {
+    @apply bg-transparent border border-primary text-secondary px-4 py-2 rounded hover:bg-primary hover:text-white transition-all duration-300 shadow-sm hover:shadow-md;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover;
+  }
+  
+  .title1 {
+    @apply text-[clamp(22px,3vw,42px)] font-bold mb-6 text-gray-800;
+  }
+  
+  .title2 {
+    @apply text-[clamp(16px,3vw,28px)] font-semibold text-gray-700;
+  }
 }
