@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import { useState } from 'react';
 import domaines from '../../assets/tableaux/domaines';
 import PaginationComponent from '../Pagination/PaginationComponent';
 
@@ -16,9 +15,6 @@ function DomainFilter() {
 
   // État pour le type d'affichage
   const [viewMode, setViewMode] = useState<'list' | 'map'>('list');
-
-  // État pour le domaine sélectionné
-  const [selectedDomaine, setSelectedDomaine] = useState<number | null>(null);
 
   // Fonction de filtrage
   const handleFilter = () => {
@@ -57,7 +53,8 @@ function DomainFilter() {
 
   // Gestion des clics pour la carte
   const handleDomaineSelect = (id: number) => {
-    setSelectedDomaine(id);
+    // We keep this function but don't use selectedDomaine state anymore
+    console.log("Selected domain:", id);
   };
 
   // Styles des boutons

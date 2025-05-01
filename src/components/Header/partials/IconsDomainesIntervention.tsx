@@ -1,7 +1,7 @@
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import domaines from '../../../assets/tableaux/domaines';
-import { Wrench, Home, Building, ShoppingCart, HeartPulse, Scale, Car, Users, FileText } from 'lucide-react';
+import { Wrench, Home, Building, HeartPulse, Scale, Car, FileText } from 'lucide-react';
 
 function IconsDomainesIntervention() {
   return (

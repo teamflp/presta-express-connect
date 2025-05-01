@@ -1,8 +1,8 @@
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 // Fonction qui génère une liste de métiers factices basée sur une lettre donnée
-function metierFixtures(letter) {
+function metierFixtures(letter: string) {
     const metiers = [];
     // Créer 100 métiers en ajoutant un index à la lettre donnée
     for (let index = 1; index <= 100; index++) {

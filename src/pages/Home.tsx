@@ -1,7 +1,6 @@
 
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
-import Cities from '../components/City/Cities';
 import FaqAccordion from '../components/FAQ/Faqs';
 import Infos from '../components/Newsletter/Infos';
 import Newsletter from '../components/Newsletter/Newsletter';
@@ -11,7 +10,6 @@ import ArtisanByLetter from '../components/SectionProf/ArtisanByLetter';
 import CategoriesArtisans from '../components/Artisant/CategoriesArtisans';
 import RegistrationArtisan from '../components/SectionProf/RegistrationArtisan';
 import City from '../components/City/City';
-
 
 function Home() {
   return (
@@ -58,4 +56,3 @@ function Home() {
 }
 
 export default Home;
-

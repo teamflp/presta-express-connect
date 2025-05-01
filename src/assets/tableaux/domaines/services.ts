@@ -2,7 +2,6 @@
 import { Domaine } from '../types/domaineTypes';
 import IconLegal from '../../icons/IconLegal.svg';
 import IconSecurity from '../../icons/IconSecurity.svg';
-import IconKey from '../../icons/IconKey.svg';
 
 const servicesDomaines: Domaine[] = [
   {

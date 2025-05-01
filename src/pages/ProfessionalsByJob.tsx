@@ -1,29 +1,49 @@
-import React, { useState, useEffect } from 'react';
+
+import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Star, MapPin, Phone, UserRound, Mail } from 'lucide-react';
+import { ArrowLeft, Star, MapPin, Phone, Mail } from 'lucide-react';
 import Navbar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
 import products from '../assets/tableaux/productData';
 import jobs from '../assets/tableaux/jobs';
+
+interface Professional {
+  id: number;
+  name: string;
+  rating: string;
+  speciality: string;
+  experience: number;
+  profileImage: string;
+  phone: string;
+  address: string;
+  descriptif: string;
+  image: string;
+  image1: string;
+  image2: string;
+  image3: string;
+  image4: string;
+  location: string;
+}
+
 const ProfessionalsByJob = () => {
-  const {
-    categoryId,
-    jobId
-  } = useParams();
+  const { categoryId, jobId } = useParams<{ categoryId?: string, jobId?: string }>();
   const numCategoryId = categoryId ? parseInt(categoryId) : 0;
   const numJobId = jobId ? parseInt(jobId) : 0;
   const navigate = useNavigate();
-  const [professionals, setProfessionals] = useState([]);
-  const [job, setJob] = useState(null);
+  const [professionals, setProfessionals] = useState<Professional[]>([]);
+  const [job, setJob] = useState<any>(null); // We'll use any for now as we don't have the exact Job interface
   const [isLoading, setIsLoading] = useState(true);
 
   // Noms fictifs pour les professionnels
   const fictionalNames = ["Thomas Martin", "Sophie Dubois", "Jean Lefebvre", "Marie Lambert", "Pierre Dupont", "Claire Bernard", "Lucas Moreau", "Camille Richard", "Antoine Leroy", "Julie Laurent"];
+
   useEffect(() => {
     // Récupération des informations du métier
     if (numCategoryId && numJobId && jobs[numCategoryId]) {
       const foundJob = jobs[numCategoryId].find(j => j.id === numJobId);
-      setJob(foundJob);
+      if (foundJob) {
+        setJob(foundJob);
+      }
     }
 
     // Simulation d'une requête API pour récupérer les professionnels
@@ -56,21 +76,25 @@ const ProfessionalsByJob = () => {
     };
     fetchProfessionals();
   }, [numCategoryId, numJobId, job?.name]);
-  const handleViewProfile = professionalId => {
+
+  const handleViewProfile = (professionalId: number) => {
     navigate(`/professional/${professionalId}`, {
       state: {
         professional: professionals.find(p => p.id === professionalId)
       }
     });
   };
-  const handleContact = professionalId => {
+
+  const handleContact = (professionalId: number) => {
     navigate(`/contact-professional/${professionalId}`, {
       state: {
         professional: professionals.find(p => p.id === professionalId)
       }
     });
   };
-  return <div className="App">
+
+  return (
+    <div className="App">
       <Navbar />
       <div className="container my-5">
         <div className="mb-4">
@@ -85,12 +109,16 @@ const ProfessionalsByJob = () => {
           <p className="text-muted">Découvrez les meilleurs professionnels pour vos projets de {job?.name}</p>
         </div>
 
-        {isLoading ? <div className="d-flex justify-content-center my-5">
+        {isLoading ? (
+          <div className="d-flex justify-content-center my-5">
             <div className="spinner-border text-primary" role="status">
               <span className="visually-hidden">Chargement...</span>
             </div>
-          </div> : professionals.length > 0 ? <div className="row g-4">
-            {professionals.map(professional => <div key={professional.id} className="col-md-6 col-lg-4">
+          </div>
+        ) : professionals.length > 0 ? (
+          <div className="row g-4">
+            {professionals.map(professional => (
+              <div key={professional.id} className="col-md-6 col-lg-4">
                 <div className="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
                   <div className="card-body p-4">
                     <div className="d-flex mb-3">
@@ -129,9 +157,9 @@ const ProfessionalsByJob = () => {
                     
                     <div className="d-grid gap-2">
                       <button className="btn btn-primary" style={{
-                  backgroundColor: '#C63E46',
-                  borderColor: '#C63E46'
-                }} onClick={() => handleContact(professional.id)}>
+                        backgroundColor: '#C63E46',
+                        borderColor: '#C63E46'
+                      }} onClick={() => handleContact(professional.id)}>
                         Contacter
                       </button>
                       <button className="btn btn-outline-secondary" onClick={() => handleViewProfile(professional.id)}>
@@ -140,12 +168,18 @@ const ProfessionalsByJob = () => {
                     </div>
                   </div>
                 </div>
-              </div>)}
-          </div> : <div className="alert alert-info">
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="alert alert-info">
             Aucun professionnel trouvé pour ce métier. Veuillez essayer une autre recherche.
-          </div>}
+          </div>
+        )}
       </div>
       <Footer />
-    </div>;
+    </div>
+  );
 };
+
 export default ProfessionalsByJob;

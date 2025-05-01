@@ -1,38 +1,61 @@
 
-import React, { useState } from 'react';
-import { useParams, useLocation, Link } from 'react-router-dom';
-import { ArrowLeft, MapPin, Phone, Mail, Send } from 'lucide-react';
+import { useState } from 'react';
+import { useParams, useLocation, useNavigate, Link } from 'react-router-dom';
 import Navbar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
+import { ArrowLeft } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 
 const ContactProfessional = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const location = useLocation();
+  const navigate = useNavigate();
   const professional = location.state?.professional;
-
+  
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
     phone: '',
-    subject: '',
-    message: ''
+    message: '',
+    termsAccepted: false
   });
-  const [formSubmitted, setFormSubmitted] = useState(false);
 
-  const handleChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
+    setFormData({
+      ...formData,
       [name]: value
-    }));
+    });
   };
 
-  const handleSubmit = (e) => {
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target;
+    setFormData({
+      ...formData,
+      [name]: checked
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulation d'envoi du formulaire
-    setTimeout(() => {
-      setFormSubmitted(true);
-    }, 1000);
+    
+    // Validation simple
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.message) {
+      toast.error('Veuillez remplir tous les champs obligatoires.');
+      return;
+    }
+    
+    if (!formData.termsAccepted) {
+      toast.error('Vous devez accepter les conditions générales.');
+      return;
+    }
+
+    // Simuler l'envoi du formulaire
+    toast.success('Votre message a été envoyé avec succès!');
+    
+    // Rediriger vers la page du professionnel
+    navigate(`/professional/${professional?.id || ''}`);
   };
 
   if (!professional) {
@@ -41,8 +64,8 @@ const ContactProfessional = () => {
         <Navbar />
         <div className="container my-5 text-center">
           <h2>Professionnel non trouvé</h2>
-          <p>Les informations de ce professionnel ne sont pas disponibles.</p>
-          <Link to="/" className="btn btn-primary mt-3">Retour à l'accueil</Link>
+          <p>Le professionnel que vous cherchez n'existe pas ou n'est plus disponible.</p>
+          <Link to="/" className="btn btn-primary">Retour à l'accueil</Link>
         </div>
         <Footer />
       </div>
@@ -54,145 +77,123 @@ const ContactProfessional = () => {
       <Navbar />
       <div className="container my-5">
         <div className="mb-4">
-          <Link to={-1} className="text-decoration-none d-flex align-items-center gap-2">
+          <button onClick={() => navigate(-1)} className="btn btn-link text-decoration-none p-0 d-flex align-items-center gap-2">
             <ArrowLeft size={18} />
             <span>Retour</span>
-          </Link>
+          </button>
         </div>
 
-        <h1 className="mb-4 title1">Contacter {professional.name}</h1>
-        
         <div className="row">
-          <div className="col-lg-8">
-            {formSubmitted ? (
-              <div className="card border-0 shadow-sm">
-                <div className="card-body text-center p-5">
-                  <div className="mb-4">
-                    <Send size={50} className="text-success" />
+          <div className="col-md-8 mx-auto">
+            <div className="card shadow-sm border-0 rounded-3">
+              <div className="card-body p-4">
+                <h1 className="card-title mb-4 fw-bold">Contacter {professional.name}</h1>
+
+                <div className="professional-info mb-4 d-flex align-items-center">
+                  <div className="me-3">
+                    <img 
+                      src={professional.profileImage || 'https://via.placeholder.com/60'} 
+                      alt={professional.name} 
+                      className="rounded-circle"
+                      style={{ width: '60px', height: '60px', objectFit: 'cover' }} 
+                    />
                   </div>
-                  <h3 className="mb-3">Message envoyé avec succès !</h3>
-                  <p className="mb-4">Votre demande a été transmise à {professional.name}. Il vous contactera dans les plus brefs délais.</p>
-                  <Link to="/" className="btn btn-primary" style={{backgroundColor: '#C63E46', borderColor: '#C63E46'}}>
-                    Retour à l'accueil
-                  </Link>
+                  <div>
+                    <h5 className="mb-1">{professional.name}</h5>
+                    <p className="text-muted mb-0">{professional.speciality || 'Professionnel'}</p>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <div className="professional-contact-form">
-                <h4 className="mb-4">Envoyez un message à {professional.name}</h4>
+
                 <form onSubmit={handleSubmit}>
                   <div className="row mb-3">
                     <div className="col-md-6 mb-3 mb-md-0">
-                      <label htmlFor="name" className="form-label">Votre nom</label>
+                      <label htmlFor="firstName" className="form-label">Prénom *</label>
                       <input
-                        type="text"
-                        className="form-control"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
+                        type="text" 
+                        className="form-control" 
+                        id="firstName" 
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleInputChange}
                         required
                       />
                     </div>
                     <div className="col-md-6">
-                      <label htmlFor="email" className="form-label">Votre email</label>
+                      <label htmlFor="lastName" className="form-label">Nom *</label>
                       <input
-                        type="email"
-                        className="form-control"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
+                        type="text" 
+                        className="form-control" 
+                        id="lastName" 
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleInputChange}
                         required
                       />
                     </div>
                   </div>
-                  <div className="mb-3">
-                    <label htmlFor="phone" className="form-label">Votre téléphone</label>
-                    <input
-                      type="tel"
-                      className="form-control"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      required
-                    />
+
+                  <div className="row mb-3">
+                    <div className="col-md-6 mb-3 mb-md-0">
+                      <label htmlFor="email" className="form-label">Email *</label>
+                      <input
+                        type="email" 
+                        className="form-control" 
+                        id="email" 
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <label htmlFor="phone" className="form-label">Téléphone</label>
+                      <input
+                        type="tel" 
+                        className="form-control" 
+                        id="phone" 
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                      />
+                    </div>
                   </div>
+
                   <div className="mb-3">
-                    <label htmlFor="subject" className="form-label">Sujet</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="subject"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <label htmlFor="message" className="form-label">Votre message</label>
+                    <label htmlFor="message" className="form-label">Message *</label>
                     <textarea
-                      className="form-control"
-                      id="message"
+                      className="form-control" 
+                      id="message" 
                       name="message"
                       rows={5}
                       value={formData.message}
-                      onChange={handleChange}
+                      onChange={handleInputChange}
                       required
                     ></textarea>
                   </div>
+
+                  <div className="mb-3 form-check">
+                    <input
+                      type="checkbox" 
+                      className="form-check-input" 
+                      id="termsAccepted"
+                      name="termsAccepted"
+                      checked={formData.termsAccepted}
+                      onChange={handleCheckboxChange}
+                      required
+                    />
+                    <label className="form-check-label" htmlFor="termsAccepted">
+                      J'accepte les conditions générales et la politique de confidentialité
+                    </label>
+                  </div>
+
                   <button 
                     type="submit" 
-                    className="btn btn-primary w-100" 
-                    style={{backgroundColor: '#C63E46', borderColor: '#C63E46'}}
+                    className="btn btn-primary w-100"
+                    style={{ backgroundColor: '#C63E46', borderColor: '#C63E46' }}
                   >
-                    Envoyer
+                    Envoyer le message
                   </button>
                 </form>
-              </div>
-            )}
-          </div>
-          
-          <div className="col-lg-4">
-            <div className="contact-info-card mb-4">
-              <div className="d-flex align-items-center mb-3">
-                <div className="profile-image-container-small">
-                  <img 
-                    src={professional.profileImage} 
-                    alt={professional.name} 
-                    className="profile-image" 
-                  />
-                </div>
-                <div className="ms-3">
-                  <h5 className="mb-1">{professional.name}</h5>
-                  <p className="text-muted mb-0">{professional.speciality}</p>
-                </div>
-              </div>
-              <div className="contact-info-item">
-                <MapPin size={20} />
-                <span>{professional.address}, {professional.location}</span>
-              </div>
-              <div className="contact-info-item">
-                <Phone size={20} />
-                <span>{professional.phone}</span>
-              </div>
-              <div className="contact-info-item">
-                <Mail size={20} />
-                <span>{professional.name.toLowerCase().replace(' ', '.')}@example.com</span>
-              </div>
-            </div>
-            
-            <div className="card border-0 shadow-sm">
-              <div className="card-body">
-                <h5 className="mb-3">Pourquoi contacter ce professionnel ?</h5>
-                <ul className="list-unstyled">
-                  <li className="mb-2">✓ {professional.experience} ans d'expérience</li>
-                  <li className="mb-2">✓ Note de {professional.rating}/5</li>
-                  <li className="mb-2">✓ Interventions rapides</li>
-                  <li>✓ Devis gratuit</li>
-                </ul>
               </div>
             </div>
           </div>

@@ -1,25 +1,33 @@
 
-import React from 'react';
-import { useParams, useLocation, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Star, MapPin, Phone, Mail, Calendar, Award, Briefcase } from 'lucide-react';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
+import { ArrowLeft, Star, MapPin, Phone, Mail, Calendar, Briefcase, Clock, CheckCircle } from 'lucide-react';
 
 const ProfessionalProfile = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const location = useLocation();
   const navigate = useNavigate();
   const professional = location.state?.professional;
 
+  // Si le professionnel n'est pas trouvé dans l'état
   if (!professional) {
-    // Redirection vers une page d'erreur ou la liste des professionnels si les données ne sont pas disponibles
     return (
       <div className="App">
         <Navbar />
         <div className="container my-5 text-center">
           <h2>Professionnel non trouvé</h2>
-          <p>Les informations de ce professionnel ne sont pas disponibles.</p>
-          <Link to="/" className="btn btn-primary mt-3">Retour à l'accueil</Link>
+          <p>Le professionnel que vous cherchez n'existe pas ou n'est plus disponible.</p>
+          <button 
+            onClick={() => navigate('/')} 
+            className="btn"
+            style={{
+              backgroundColor: '#C63E46',
+              color: 'white'
+            }}
+          >
+            Retour à l'accueil
+          </button>
         </div>
         <Footer />
       </div>
@@ -27,7 +35,9 @@ const ProfessionalProfile = () => {
   }
 
   const handleContact = () => {
-    navigate(`/contact-professional/${professional.id}`, { state: { professional } });
+    navigate(`/contact-professional/${professional.id}`, {
+      state: { professional }
+    });
   };
 
   return (
@@ -35,131 +45,153 @@ const ProfessionalProfile = () => {
       <Navbar />
       <div className="container my-5">
         <div className="mb-4">
-          <Link to={-1} className="text-decoration-none d-flex align-items-center gap-2">
+          <button onClick={() => navigate(-1)} className="btn btn-link text-decoration-none p-0 d-flex align-items-center gap-2">
             <ArrowLeft size={18} />
             <span>Retour</span>
-          </Link>
+          </button>
         </div>
-        
-        <div className="professional-profile-header">
-          <div className="large-profile-image-container">
-            <img 
-              src={professional.profileImage} 
-              alt={professional.name} 
-              className="profile-image" 
-            />
-          </div>
-          <div className="professional-info">
-            <h1 className="mb-2">{professional.name}</h1>
-            <div className="d-flex align-items-center mb-2">
-              <Star size={18} fill="#ffc107" stroke="#ffc107" className="me-2" />
-              <span className="fw-medium">{professional.rating}</span>
-              <span className="text-muted ms-2">(32 avis)</span>
-            </div>
-            <p className="text-muted mb-1">{professional.speciality}</p>
-            <div className="d-flex align-items-center mb-3">
-              <Calendar size={16} className="me-2 text-muted" />
-              <span className="text-muted">{professional.experience} ans d'expérience</span>
-            </div>
-            <button 
-              className="btn btn-primary" 
-              style={{backgroundColor: '#C63E46', borderColor: '#C63E46'}}
-              onClick={handleContact}
-            >
-              Contacter ce professionnel
-            </button>
-          </div>
-        </div>
-        
+
         <div className="row">
-          <div className="col-lg-8">
-            <div className="card mb-4 border-0 shadow-sm">
-              <div className="card-body">
-                <h3 className="mb-3">À propos</h3>
-                <p>{professional.descriptif}</p>
+          {/* Colonne de gauche - Informations du professionnel */}
+          <div className="col-lg-4 mb-4">
+            <div className="card shadow-sm border-0 rounded-3">
+              <div className="card-body p-4">
+                <div className="text-center mb-4">
+                  <img 
+                    src={professional.profileImage || 'https://via.placeholder.com/120'} 
+                    alt={professional.name} 
+                    className="rounded-circle mb-3"
+                    style={{ width: '120px', height: '120px', objectFit: 'cover' }} 
+                  />
+                  <h2 className="card-title mb-0 fw-bold">{professional.name}</h2>
+                  <p className="text-muted">{professional.speciality || 'Professionnel'}</p>
+                  <div className="d-flex align-items-center justify-content-center">
+                    <Star size={18} fill="#ffc107" stroke="#ffc107" className="me-1" />
+                    <span className="fw-medium">{professional.rating || '4.8'}</span>
+                    <span className="text-muted ms-1">(28 avis)</span>
+                  </div>
+                </div>
+
+                <hr />
+
+                <div className="mb-3 d-flex align-items-center">
+                  <MapPin size={18} className="me-2 text-primary" />
+                  <span>{professional.address || 'Adresse non spécifiée'}, {professional.location || ''}</span>
+                </div>
+                <div className="mb-3 d-flex align-items-center">
+                  <Phone size={18} className="me-2 text-primary" />
+                  <span>{professional.phone || 'Téléphone non spécifié'}</span>
+                </div>
+                <div className="mb-3 d-flex align-items-center">
+                  <Mail size={18} className="me-2 text-primary" />
+                  <span>{professional.email || professional.name?.toLowerCase().replace(' ', '.') + '@example.com'}</span>
+                </div>
+                <div className="mb-3 d-flex align-items-center">
+                  <Calendar size={18} className="me-2 text-primary" />
+                  <span>Inscrit depuis le 15/03/2023</span>
+                </div>
+                <div className="mb-3 d-flex align-items-center">
+                  <Briefcase size={18} className="me-2 text-primary" />
+                  <span>{professional.experience || 5} ans d'expérience</span>
+                </div>
+
+                <div className="d-grid gap-2 mt-4">
+                  <button 
+                    className="btn btn-primary" 
+                    onClick={handleContact}
+                    style={{ backgroundColor: '#C63E46', borderColor: '#C63E46' }}
+                  >
+                    Contacter
+                  </button>
+                </div>
               </div>
             </div>
-            
-            <div className="card mb-4 border-0 shadow-sm">
-              <div className="card-body">
-                <h3 className="mb-3">Compétences</h3>
-                <div className="d-flex flex-wrap gap-2">
-                  {['Installation', 'Réparation', 'Maintenance', 'Conseil', 'Urgences'].map((skill, index) => (
-                    <span key={index} className="badge bg-light text-dark p-2">{skill}</span>
+
+            {/* Qualifications et certifications */}
+            <div className="card shadow-sm border-0 rounded-3 mt-4">
+              <div className="card-body p-4">
+                <h5 className="fw-bold mb-3">Qualifications</h5>
+                <div className="mb-2 d-flex align-items-center">
+                  <CheckCircle size={16} className="me-2 text-success" />
+                  <span>Certification professionnelle</span>
+                </div>
+                <div className="mb-2 d-flex align-items-center">
+                  <CheckCircle size={16} className="me-2 text-success" />
+                  <span>Assurance décennale</span>
+                </div>
+                <div className="mb-2 d-flex align-items-center">
+                  <CheckCircle size={16} className="me-2 text-success" />
+                  <span>Garantie de qualité</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Colonne de droite - Description, services, galerie */}
+          <div className="col-lg-8">
+            {/* À propos */}
+            <div className="card shadow-sm border-0 rounded-3 mb-4">
+              <div className="card-body p-4">
+                <h3 className="fw-bold mb-3">À propos</h3>
+                <p>{professional.descriptif || 'Aucune description disponible.'}</p>
+              </div>
+            </div>
+
+            {/* Services proposés */}
+            <div className="card shadow-sm border-0 rounded-3 mb-4">
+              <div className="card-body p-4">
+                <h3 className="fw-bold mb-3">Services proposés</h3>
+                <div className="row">
+                  <div className="col-md-6 mb-3">
+                    <div className="d-flex align-items-center">
+                      <Clock size={16} className="me-2 text-primary" />
+                      <span>Installation</span>
+                    </div>
+                  </div>
+                  <div className="col-md-6 mb-3">
+                    <div className="d-flex align-items-center">
+                      <Clock size={16} className="me-2 text-primary" />
+                      <span>Réparation</span>
+                    </div>
+                  </div>
+                  <div className="col-md-6 mb-3">
+                    <div className="d-flex align-items-center">
+                      <Clock size={16} className="me-2 text-primary" />
+                      <span>Maintenance</span>
+                    </div>
+                  </div>
+                  <div className="col-md-6 mb-3">
+                    <div className="d-flex align-items-center">
+                      <Clock size={16} className="me-2 text-primary" />
+                      <span>Conseil</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Galerie de réalisations */}
+            <div className="card shadow-sm border-0 rounded-3">
+              <div className="card-body p-4">
+                <h3 className="fw-bold mb-3">Galerie de réalisations</h3>
+                <div className="row g-2">
+                  {[
+                    professional.image, 
+                    professional.image1, 
+                    professional.image2, 
+                    professional.image3,
+                    professional.image4
+                  ].filter(Boolean).map((image, index) => (
+                    <div key={index} className="col-4">
+                      <img 
+                        src={image} 
+                        alt={`Réalisation ${index + 1}`} 
+                        className="img-fluid rounded" 
+                        style={{ height: '150px', width: '100%', objectFit: 'cover' }}
+                      />
+                    </div>
                   ))}
                 </div>
-              </div>
-            </div>
-            
-            <div className="card mb-4 border-0 shadow-sm">
-              <div className="card-body">
-                <h3 className="mb-3">Expériences</h3>
-                <div className="d-flex align-items-start mb-4">
-                  <Briefcase size={24} className="me-3 mt-1" />
-                  <div>
-                    <h5 className="mb-1">Expert {professional.speciality}</h5>
-                    <p className="text-muted mb-1">Entreprise Exemple • 2018 - Aujourd'hui</p>
-                    <p>Expertise en {professional.speciality} pour des clients particuliers et professionnels.</p>
-                  </div>
-                </div>
-                <div className="d-flex align-items-start">
-                  <Briefcase size={24} className="me-3 mt-1" />
-                  <div>
-                    <h5 className="mb-1">Technicien {professional.speciality}</h5>
-                    <p className="text-muted mb-1">Entreprise ABC • 2015 - 2018</p>
-                    <p>Intervention technique et maintenance dans le domaine de {professional.speciality}.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="card border-0 shadow-sm">
-              <div className="card-body">
-                <h3 className="mb-3">Certifications</h3>
-                <div className="d-flex align-items-start mb-3">
-                  <Award size={24} className="me-3 mt-1" />
-                  <div>
-                    <h5 className="mb-1">Certification Professionnelle</h5>
-                    <p className="text-muted">Obtenue en 2019</p>
-                  </div>
-                </div>
-                <div className="d-flex align-items-start">
-                  <Award size={24} className="me-3 mt-1" />
-                  <div>
-                    <h5 className="mb-1">Formation Technique Avancée</h5>
-                    <p className="text-muted">Obtenue en 2016</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="col-lg-4">
-            <div className="contact-info-card">
-              <h3 className="mb-3">Coordonnées</h3>
-              <div className="contact-info-item">
-                <MapPin size={20} />
-                <span>{professional.address}, {professional.location}</span>
-              </div>
-              <div className="contact-info-item">
-                <Phone size={20} />
-                <span>{professional.phone}</span>
-              </div>
-              <div className="contact-info-item">
-                <Mail size={20} />
-                <span>{professional.name.toLowerCase().replace(' ', '.')}@example.com</span>
-              </div>
-            </div>
-            
-            <div className="card border-0 shadow-sm">
-              <div className="card-body">
-                <h3 className="mb-3">Disponibilité</h3>
-                <p className="mb-3">Généralement disponible sous 24 à 48 heures</p>
-                <h5 className="mb-2">Horaires de travail</h5>
-                <ul className="list-unstyled">
-                  <li className="mb-2">Lundi - Vendredi: 8h - 18h</li>
-                  <li>Samedi: 9h - 14h (urgences uniquement)</li>
-                </ul>
               </div>
             </div>
           </div>
