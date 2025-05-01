@@ -11,11 +11,11 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-primary text-white px-4 py-2 rounded hover:bg-primary-hover transition-all duration-300 shadow-sm hover:shadow-md;
+    @apply bg-[#C63E46] text-white px-4 py-2 rounded hover:bg-[#b73840] transition-all duration-300 shadow-sm hover:shadow-md;
   }
   
   .btn-secondary {
-    @apply bg-transparent border border-primary text-secondary px-4 py-2 rounded hover:bg-primary hover:text-white transition-all duration-300 shadow-sm hover:shadow-md;
+    @apply bg-transparent border border-[#C63E46] text-secondary px-4 py-2 rounded hover:bg-[#C63E46] hover:text-white transition-all duration-300 shadow-sm hover:shadow-md;
   }
   
   .card-hover {

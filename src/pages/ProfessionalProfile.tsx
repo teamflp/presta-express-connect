@@ -1,15 +1,15 @@
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Container, Row, Col, Card, Button, Badge, Tabs, Tab } from 'react-bootstrap';
 import { useParams, Link } from 'react-router-dom';
-import { Star, MapPin, Phone, Mail, Briefcase, Clock, Award, Tool, MessageSquare } from 'lucide-react';
+import { Star, MapPin, Phone, Mail, Briefcase, Clock, Award, Wrench, MessageSquare } from 'lucide-react';
 import Navbar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
 
 const ProfessionalProfile = () => {
   // Use the id from useParams
   const { id } = useParams<{id: string}>();
-  const [professional, setProfessional] = useState({
+  const [professional] = useState({
     id: id || '1',
     name: 'Jean Dupont',
     rating: '4.8',
@@ -37,7 +37,6 @@ const ProfessionalProfile = () => {
     ]
   });
 
-  // Changed to string to match Link to prop type
   return (
     <>
       <Navbar />
@@ -145,7 +144,7 @@ const ProfessionalProfile = () => {
                     {professional.experience} ans d'expérience
                   </Badge>
                   <Badge bg="light" text="dark" className="me-2 mb-2 p-2">
-                    <Tool size={14} className="me-1" />
+                    <Wrench size={14} className="me-1" />
                     Professionnel qualifié
                   </Badge>
                   <Badge bg="light" text="dark" className="me-2 mb-2 p-2">
