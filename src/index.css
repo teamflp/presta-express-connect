@@ -8,3 +8,18 @@
     --bg-color1 : #FDFAF7;
     --red-element-color : #C63E46;
 }
+
+/* Fix for text-white and other Tailwind classes */
+@layer components {
+  .text-white {
+    color: #ffffff;
+  }
+  
+  .bg-primary {
+    background-color: #C63E46;
+  }
+  
+  .text-primary {
+    color: #C63E46;
+  }
+}

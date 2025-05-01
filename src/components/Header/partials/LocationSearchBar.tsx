@@ -86,38 +86,37 @@ function LocationSearchBar() {
   };
 
   return (
-    <div className="location-search-container">
-      <Form onSubmit={handleSearch} className="location-search-form">
-        <InputGroup>
-          <InputGroup.Text className="location-search-icon">
+    <div className="w-full">
+      <Form onSubmit={handleSearch} className="flex">
+        <div className="relative flex w-full">
+          <div className="flex items-center absolute left-3 top-1/2 transform -translate-y-1/2 text-primary z-10">
             <MapPin size={20} />
-          </InputGroup.Text>
+          </div>
           <Form.Control
             type="text"
             placeholder={placeholder}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="location-search-input"
+            className="pl-10 py-3 pr-[120px] rounded-full w-full shadow-lg border-0"
             aria-label="Location search"
           />
           <Button 
             variant="outline-light" 
             onClick={handleGeolocation} 
             disabled={isGeolocating}
-            className="geolocation-button"
+            className="absolute right-[104px] top-1/2 transform -translate-y-1/2 flex items-center gap-2 text-gray-600 hover:text-primary bg-transparent border-0"
             title="Utiliser ma position actuelle"
           >
-            <Compass size={20} />
-            <span className="geolocation-text">Ma position</span>
+            <Compass size={18} />
+            <span>Ma position</span>
           </Button>
           <Button 
             type="submit" 
-            variant="primary" 
-            className="search-submit-button"
+            className="absolute right-0 top-0 h-full bg-primary hover:bg-primary-hover text-white px-6 rounded-r-full"
           >
             Rechercher
           </Button>
-        </InputGroup>
+        </div>
       </Form>
     </div>
   );

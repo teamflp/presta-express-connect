@@ -30,5 +30,11 @@ export default {
             }
         },
     },
+    safelist: [
+        'text-white',
+        'bg-white',
+        'text-primary',
+        'bg-primary',
+    ],
     plugins: [],
 }
