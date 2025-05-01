@@ -1,5 +1,4 @@
 
-// Using Functional Component syntax without explicit React import (modern React)
 import { useState } from 'react';
 
 const LoginComponent = () => {

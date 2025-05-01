@@ -15,6 +15,8 @@ export default {
                 background: "#FDFAF7",
                 light: "#f8f9fa",
                 dark: "#212529",
+                white: "#ffffff", // Adding white explicitly
+                black: "#000000", // Adding black explicitly
             },
             boxShadow: {
                 "card-hover": "0 10px 20px rgba(0, 0, 0, 0.1)",
