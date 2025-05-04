@@ -1,7 +1,7 @@
 
 import LetterMetiersWithList from '../components/ArtisanMetiers/ListMetiers';
 import FaqAccordion from '../components/FAQ/Faqs';
-import Navbar from '../../src/components/Header/partials/NavBar';
+import Navbar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
 
 function Metiers() {

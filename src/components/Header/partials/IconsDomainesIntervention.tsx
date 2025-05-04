@@ -1,6 +1,6 @@
 
 import { useNavigate } from 'react-router-dom';
-import { domainesIntervention } from '../../../assets/tableaux/domaines';
+import domaines from '../../../assets/tableaux/domaines';
 
 function IconsDomainesIntervention() {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ function IconsDomainesIntervention() {
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 justify-center">
-      {domainesIntervention.map((domaine, index) => (
+      {domaines.map((domaine, index) => (
         <div 
           key={index} 
           className="flex flex-col items-center justify-center p-4 cursor-pointer transition-all hover:scale-105"

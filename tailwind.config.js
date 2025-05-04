@@ -27,7 +27,16 @@ export default {
             },
             backgroundImage: {
                 'auth-pattern': "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjZmZmIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiNmMGYwZjAiPjwvcmVjdD4KPC9zdmc+Cg==')",
-            }
+            },
+            container: {
+                center: true,
+                padding: {
+                    DEFAULT: '1rem',
+                    sm: '2rem',
+                    lg: '4rem',
+                    xl: '5rem',
+                },
+            },
         },
     },
     safelist: [
@@ -35,6 +44,7 @@ export default {
         'bg-white',
         'text-primary',
         'bg-primary',
+        'hover:bg-primary-hover',
     ],
     plugins: [],
 }
