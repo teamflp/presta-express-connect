@@ -1,49 +1,39 @@
 
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getUsers } from '../features/users/usersSlice';
-import { RootState, AppDispatch } from '../store';
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchUsers } from '../features/users/usersSlice';
 
-// Define a User interface since we can't see the users slice file
-interface User {
-  email: string;
-  id?: string;
-  name?: string;
-}
+function TestUsersComponent() {
+  const [users, setUsers] = useState([]);
+  const dispatch = useDispatch();
 
-const TestUsersComponent = () => {
-    const dispatch: AppDispatch = useDispatch();
-    
-    // Create temporary mock state since the real users is not in the state
-    const usersState = {
-        users: [] as User[],
-        status: 'idle',
-        error: null
+  useEffect(() => {
+    const loadUsers = async () => {
+      try {
+        const result = await dispatch(fetchUsers());
+        setUsers(result.payload);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
     };
     
-    useEffect(() => {
-        console.log('Dispatching getUsers');
-        dispatch(getUsers());
-    }, [dispatch]);
+    loadUsers();
+  }, [dispatch]);
 
-    useEffect(() => {
-        console.log('Users:', usersState.users);
-        console.log('Status:', usersState.status);
-        console.log('Error:', usersState.error);
-    }, [usersState.users, usersState.status, usersState.error]);
-
-    return (
-        <div>
-            <h1>Users List</h1>
-            {usersState.status === 'loading' && <p>Loading...</p>}
-            {usersState.status === 'failed' && <p>Error: {usersState.error}</p>}
-            <ul>
-                {usersState.users.map((user: User) => (
-                    <li key={user.email}>{user.email}</li>
-                ))}
-            </ul>
-        </div>
-    );
-};
+  return (
+    <div>
+      <h2>Users List</h2>
+      {users.length > 0 ? (
+        <ul>
+          {users.map((user: any) => (
+            <li key={user.id}>{user.name}</li>
+          ))}
+        </ul>
+      ) : (
+        <p>Loading users...</p>
+      )}
+    </div>
+  );
+}
 
 export default TestUsersComponent;

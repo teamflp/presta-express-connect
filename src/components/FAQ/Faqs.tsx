@@ -2,6 +2,12 @@
 import { Accordion } from 'react-bootstrap';
 import { faqData } from '../../assets/tableaux/faqData';
 
+interface FaqItem {
+  id: number;
+  question: string;
+  answer: string;
+}
+
 function FaqAccordion() {
   return (
     <div className="py-5">
@@ -9,7 +15,7 @@ function FaqAccordion() {
       <p className="text-center mb-5 text-gray-600">Retrouvez les réponses aux questions les plus posées</p>
       <div className="accordion-container">
         <Accordion defaultActiveKey="0" flush>
-          {faqData.map((faq, index) => (
+          {faqData.map((faq: FaqItem, index: number) => (
             <Accordion.Item eventKey={index.toString()} key={index}>
               <Accordion.Header>{faq.question}</Accordion.Header>
               <Accordion.Body>
