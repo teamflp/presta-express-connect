@@ -19,4 +19,6 @@ const domaines: Domaine[] = [
   ...servicesDomaines
 ];
 
+// Export both the default and named export to maintain compatibility
+export { domaines };
 export default domaines;

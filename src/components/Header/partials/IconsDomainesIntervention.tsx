@@ -1,14 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import { domaines } from '../../../assets/tableaux/domaines';
-
-interface Domaine {
-  id: number;
-  titre: string;
-  icone: string;
-  lien?: string;
-  description?: string;
-}
+import { Domaine } from '../../../assets/tableaux/types/domaineTypes';
 
 function IconsDomainesIntervention() {
   return (

@@ -23,3 +23,4 @@ const faqData = [
 ];
 
 export { faqData };
+export default faqData;

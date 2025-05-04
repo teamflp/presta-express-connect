@@ -9,4 +9,6 @@ export interface Domaine {
   ville: string;
   phone: string;
   dateInscription: string;
+  lien?: string;
+  description?: string;
 }
