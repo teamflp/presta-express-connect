@@ -1,86 +1,99 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+
+import { useState, useEffect } from 'react';
 
 function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState('overview');
-  const navigate = useNavigate();
+  const [userData, setUserData] = useState({
+    name: 'Admin User',
+    email: 'admin@example.com',
+    role: 'Administrator',
+    lastLogin: '2023-05-20'
+  });
 
-  // To fix the TS error, we need to properly type the parameter
-  const handleTabChange = (selectedTab: string) => {
-    setActiveTab(selectedTab);
-  };
+  useEffect(() => {
+    // Fetch admin data from API in a real application
+    console.log('Admin dashboard loaded');
+  }, []);
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-6">Tableau de bord Administrateur</h1>
-      <div className="md:flex md:space-x-6">
-        <div className="md:w-1/4">
-          <nav className="mb-6 md:mb-0">
-            <ul className="space-y-2">
-              <li>
-                <button
-                  onClick={() => handleTabChange('overview')}
-                  className={`w-full text-left py-2 px-4 rounded block hover:bg-gray-100 ${activeTab === 'overview' ? 'bg-gray-100 font-medium' : ''}`}
-                >
-                  Vue d'ensemble
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => handleTabChange('users')}
-                  className={`w-full text-left py-2 px-4 rounded block hover:bg-gray-100 ${activeTab === 'users' ? 'bg-gray-100 font-medium' : ''}`}
-                >
-                  Gestion des utilisateurs
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => handleTabChange('products')}
-                  className={`w-full text-left py-2 px-4 rounded block hover:bg-gray-100 ${activeTab === 'products' ? 'bg-gray-100 font-medium' : ''}`}
-                >
-                  Gestion des produits
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => handleTabChange('orders')}
-                  className={`w-full text-left py-2 px-4 rounded block hover:bg-gray-100 ${activeTab === 'orders' ? 'bg-gray-100 font-medium' : ''}`}
-                >
-                  Gestion des commandes
-                </button>
-              </li>
-            </ul>
-          </nav>
+    <div className="container my-5">
+      <h1 className="mb-4">Tableau de bord Administrateur</h1>
+      
+      <div className="row">
+        <div className="col-md-3">
+          <div className="card mb-4">
+            <div className="card-body">
+              <h5 className="card-title">Profil</h5>
+              <p className="mb-1"><strong>Nom:</strong> {userData.name}</p>
+              <p className="mb-1"><strong>Email:</strong> {userData.email}</p>
+              <p className="mb-1"><strong>Rôle:</strong> {userData.role}</p>
+              <p className="mb-1"><strong>Dernière connexion:</strong> {userData.lastLogin}</p>
+            </div>
+          </div>
+          
+          <div className="list-group mb-4">
+            <a href="#" className="list-group-item list-group-item-action active">Tableau de bord</a>
+            <a href="#" className="list-group-item list-group-item-action">Utilisateurs</a>
+            <a href="#" className="list-group-item list-group-item-action">Artisans</a>
+            <a href="#" className="list-group-item list-group-item-action">Rapports</a>
+            <a href="#" className="list-group-item list-group-item-action">Paramètres</a>
+          </div>
         </div>
-
-        <div className="md:w-3/4">
-          {activeTab === 'overview' && (
-            <div className="p-4 bg-white rounded shadow">
-              <h2 className="text-lg font-semibold mb-4">Vue d'ensemble</h2>
-              <p>Bienvenue sur le tableau de bord administrateur. Ici, vous pouvez gérer les utilisateurs, les produits et les commandes.</p>
+        
+        <div className="col-md-9">
+          <div className="card mb-4">
+            <div className="card-body">
+              <h5 className="card-title">Statistiques</h5>
+              <div className="row">
+                <div className="col-md-4 mb-3">
+                  <div className="border rounded p-3 text-center">
+                    <h2>152</h2>
+                    <p className="text-muted mb-0">Utilisateurs</p>
+                  </div>
+                </div>
+                <div className="col-md-4 mb-3">
+                  <div className="border rounded p-3 text-center">
+                    <h2>87</h2>
+                    <p className="text-muted mb-0">Artisans</p>
+                  </div>
+                </div>
+                <div className="col-md-4 mb-3">
+                  <div className="border rounded p-3 text-center">
+                    <h2>243</h2>
+                    <p className="text-muted mb-0">Projets</p>
+                  </div>
+                </div>
+              </div>
             </div>
-          )}
-
-          {activeTab === 'users' && (
-            <div className="p-4 bg-white rounded shadow">
-              <h2 className="text-lg font-semibold mb-4">Gestion des utilisateurs</h2>
-              <p>Liste des utilisateurs et actions possibles (modifier, supprimer, etc.).</p>
+          </div>
+          
+          <div className="card">
+            <div className="card-body">
+              <h5 className="card-title">Activités récentes</h5>
+              <ul className="list-group list-group-flush">
+                <li className="list-group-item d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong>Nouvel artisan inscrit</strong>
+                    <p className="mb-0 text-muted">Pierre Durand</p>
+                  </div>
+                  <small className="text-muted">Il y a 2 heures</small>
+                </li>
+                <li className="list-group-item d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong>Projet validé</strong>
+                    <p className="mb-0 text-muted">Rénovation appartement</p>
+                  </div>
+                  <small className="text-muted">Il y a 5 heures</small>
+                </li>
+                <li className="list-group-item d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong>Nouveau commentaire</strong>
+                    <p className="mb-0 text-muted">Sur le profil de Jean Dupont</p>
+                  </div>
+                  <small className="text-muted">Il y a 1 jour</small>
+                </li>
+              </ul>
             </div>
-          )}
-
-          {activeTab === 'products' && (
-            <div className="p-4 bg-white rounded shadow">
-              <h2 className="text-lg font-semibold mb-4">Gestion des produits</h2>
-              <p>Liste des produits et actions possibles (ajouter, modifier, supprimer, etc.).</p>
-            </div>
-          )}
-
-          {activeTab === 'orders' && (
-            <div className="p-4 bg-white rounded shadow">
-              <h2 className="text-lg font-semibold mb-4">Gestion des commandes</h2>
-              <p>Liste des commandes et détails (statut, date, etc.).</p>
-            </div>
-          )}
+          </div>
         </div>
       </div>
     </div>

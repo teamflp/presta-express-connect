@@ -1,15 +1,24 @@
-const jobs = [
+// Types
+export interface Job {
+  id: number;
+  title: string;
+  image: string;
+  servicesList: string[];
+}
+
+// Job data
+const jobs: Job[] = [
   {
     id: 1,
-    title: "Électricien",
-    image: "/src/assets/images/installation-electrique.jpg",
-    servicesList: ["Installation électrique", "Dépannage", "Mise aux normes"]
+    title: "Plombier",
+    image: "/src/assets/images/plomberie.jpg",
+    servicesList: ["Installation", "Réparation", "Débouchage", "Remplacement"]
   },
   {
     id: 2,
-    title: "Plombier",
-    image: "/src/assets/images/plomberie.jpg",
-    servicesList: ["Installation sanitaire", "Réparation fuite", "Débouchage"]
+    title: "Électricien",
+    image: "/src/assets/images/installation-electrique.jpg",
+    servicesList: ["Installation", "Dépannage", "Rénovation", "Mise aux normes"]
   },
   {
     id: 3,
@@ -20,8 +29,8 @@ const jobs = [
   {
     id: 4,
     title: "Peintre",
-    image: "/src/assets/images/peinture.jpg",
-    servicesList: ["Peinture intérieure", "Peinture extérieure", "Revêtement mural"]
+    image: "/src/assets/images/peinture-interieure.jpg",
+    servicesList: ["Intérieur", "Extérieur", "Décoration", "Rénovation"]
   },
   {
     id: 5,
@@ -37,4 +46,6 @@ const jobs = [
   }
 ];
 
+// Export both the default and named exports for compatibility
+export { jobs };
 export default jobs;

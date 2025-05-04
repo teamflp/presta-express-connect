@@ -3,37 +3,39 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchUsers } from '../features/users/usersSlice';
 
-function TestUsersComponent() {
-  const [users, setUsers] = useState([]);
+// Define User type
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+function TestUsers() {
   const dispatch = useDispatch();
+  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    const loadUsers = async () => {
-      try {
-        const result = await dispatch(fetchUsers());
-        setUsers(result.payload);
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      }
-    };
+    // Correctly type the dispatch
+    dispatch(fetchUsers() as any);
     
-    loadUsers();
+    // In a real app, you would use a selector instead
+    // This is just for testing
+    fetch('/testStore/users.json')
+      .then(response => response.json())
+      .then(data => setUsers(data as User[]))
+      .catch(error => console.error('Error fetching users:', error));
   }, [dispatch]);
 
   return (
     <div>
-      <h2>Users List</h2>
-      {users.length > 0 ? (
-        <ul>
-          {users.map((user: any) => (
-            <li key={user.id}>{user.name}</li>
-          ))}
-        </ul>
-      ) : (
-        <p>Loading users...</p>
-      )}
+      <h2>Test Users</h2>
+      <ul>
+        {users.map((user: User) => (
+          <li key={user.id}>{user.name} - {user.email}</li>
+        ))}
+      </ul>
     </div>
   );
 }
 
-export default TestUsersComponent;
+export default TestUsers;

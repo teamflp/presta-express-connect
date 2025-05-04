@@ -1,218 +1,145 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+
+import { useState, useEffect } from 'react';
 
 function ArtisanDashboard() {
-  const [activeTab, setActiveTab] = useState('overview');
-  const navigate = useNavigate();
+  const [userData, setUserData] = useState({
+    name: 'Jean Dupont',
+    job: 'Plombier',
+    rating: 4.8,
+    reviewCount: 124,
+    city: 'Lyon',
+    pendingProjects: 3,
+    completedProjects: 78
+  });
 
-  const handleTabChange = (selectedTab: string) => {
-    setActiveTab(selectedTab);
-  };
+  useEffect(() => {
+    // Fetch artisan data from API in a real application
+    console.log('Artisan dashboard loaded');
+  }, []);
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-6">Tableau de bord Artisan</h1>
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
-        <div className="flex border-b">
-          <button
-            className={`px-4 py-3 ${activeTab === 'overview' ? 'bg-primary text-white' : 'hover:bg-gray-100'}`}
-            onClick={() => handleTabChange('overview')}
-          >
-            Vue d'ensemble
-          </button>
-          <button
-            className={`px-4 py-3 ${activeTab === 'projects' ? 'bg-primary text-white' : 'hover:bg-gray-100'}`}
-            onClick={() => handleTabChange('projects')}
-          >
-            Mes projets
-          </button>
-          <button
-            className={`px-4 py-3 ${activeTab === 'messages' ? 'bg-primary text-white' : 'hover:bg-gray-100'}`}
-            onClick={() => handleTabChange('messages')}
-          >
-            Messages
-          </button>
-          <button
-            className={`px-4 py-3 ${activeTab === 'profile' ? 'bg-primary text-white' : 'hover:bg-gray-100'}`}
-            onClick={() => handleTabChange('profile')}
-          >
-            Mon profil
-          </button>
+    <div className="container my-5">
+      <h1 className="mb-4">Tableau de bord Artisan</h1>
+      
+      <div className="row">
+        <div className="col-md-3">
+          <div className="card mb-4">
+            <div className="card-body text-center">
+              <div className="mb-3">
+                <img 
+                  src="/src/assets/images/plomberie.jpg" 
+                  className="rounded-circle" 
+                  alt="Profil" 
+                  style={{width: '100px', height: '100px', objectFit: 'cover'}}
+                />
+              </div>
+              <h5>{userData.name}</h5>
+              <p className="text-muted">{userData.job}</p>
+              <div className="mb-2">
+                <span className="me-1">★</span>
+                <span>{userData.rating} ({userData.reviewCount} avis)</span>
+              </div>
+              <p className="mb-0">{userData.city}</p>
+            </div>
+          </div>
+          
+          <div className="list-group mb-4">
+            <a href="#" className="list-group-item list-group-item-action active">Tableau de bord</a>
+            <a href="#" className="list-group-item list-group-item-action">Mon profil</a>
+            <a href="#" className="list-group-item list-group-item-action">Projets</a>
+            <a href="#" className="list-group-item list-group-item-action">Messages</a>
+            <a href="#" className="list-group-item list-group-item-action">Avis</a>
+            <a href="#" className="list-group-item list-group-item-action">Paramètres</a>
+          </div>
         </div>
         
-        <div className="p-6">
-          {activeTab === 'overview' && (
-            <div>
-              <h2 className="text-xl font-semibold mb-4">Vue d'ensemble</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h3 className="font-medium text-gray-700">Projets en cours</h3>
-                  <p className="text-2xl font-bold">3</p>
+        <div className="col-md-9">
+          <div className="card mb-4">
+            <div className="card-body">
+              <h5 className="card-title">Mes projets</h5>
+              <div className="row">
+                <div className="col-md-6 mb-3">
+                  <div className="border rounded p-3 text-center">
+                    <h2>{userData.pendingProjects}</h2>
+                    <p className="text-muted mb-0">Projets en cours</p>
+                  </div>
                 </div>
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h3 className="font-medium text-gray-700">Demandes de devis</h3>
-                  <p className="text-2xl font-bold">7</p>
-                </div>
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h3 className="font-medium text-gray-700">Messages non lus</h3>
-                  <p className="text-2xl font-bold">2</p>
-                </div>
-              </div>
-              
-              <h3 className="font-semibold mb-3">Activité récente</h3>
-              <div className="space-y-3">
-                <div className="border-l-4 border-primary pl-3 py-1">
-                  <p className="font-medium">Nouveau message de Jean Dupont</p>
-                  <p className="text-sm text-gray-500">Il y a 2 heures</p>
-                </div>
-                <div className="border-l-4 border-primary pl-3 py-1">
-                  <p className="font-medium">Nouvelle demande de devis</p>
-                  <p className="text-sm text-gray-500">Il y a 1 jour</p>
-                </div>
-                <div className="border-l-4 border-primary pl-3 py-1">
-                  <p className="font-medium">Projet marqué comme terminé</p>
-                  <p className="text-sm text-gray-500">Il y a 3 jours</p>
+                <div className="col-md-6 mb-3">
+                  <div className="border rounded p-3 text-center">
+                    <h2>{userData.completedProjects}</h2>
+                    <p className="text-muted mb-0">Projets terminés</p>
+                  </div>
                 </div>
               </div>
             </div>
-          )}
+          </div>
           
-          {activeTab === 'projects' && (
-            <div>
-              <h2 className="text-xl font-semibold mb-4">Mes projets</h2>
-              <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
+          <div className="card mb-4">
+            <div className="card-body">
+              <h5 className="card-title">Projets récents</h5>
+              <div className="table-responsive">
+                <table className="table">
+                  <thead>
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Projet</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                      <th>Client</th>
+                      <th>Type</th>
+                      <th>Date</th>
+                      <th>Statut</th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
+                  <tbody>
                     <tr>
-                      <td className="px-6 py-4 whitespace-nowrap">Marie Martin</td>
-                      <td className="px-6 py-4 whitespace-nowrap">Rénovation salle de bain</td>
-                      <td className="px-6 py-4 whitespace-nowrap"><span className="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">En cours</span></td>
-                      <td className="px-6 py-4 whitespace-nowrap">12/05/2023</td>
-                      <td className="px-6 py-4 whitespace-nowrap"><button className="text-primary hover:underline">Voir détails</button></td>
+                      <td>Marie Martin</td>
+                      <td>Réparation fuite</td>
+                      <td>10/05/2023</td>
+                      <td><span className="badge bg-warning">En cours</span></td>
                     </tr>
                     <tr>
-                      <td className="px-6 py-4 whitespace-nowrap">Pierre Dubois</td>
-                      <td className="px-6 py-4 whitespace-nowrap">Installation électrique</td>
-                      <td className="px-6 py-4 whitespace-nowrap"><span className="px-2 py-1 text-xs rounded-full bg-yellow-100 text-yellow-800">En attente</span></td>
-                      <td className="px-6 py-4 whitespace-nowrap">08/05/2023</td>
-                      <td className="px-6 py-4 whitespace-nowrap"><button className="text-primary hover:underline">Voir détails</button></td>
+                      <td>Pierre Durand</td>
+                      <td>Installation douche</td>
+                      <td>05/05/2023</td>
+                      <td><span className="badge bg-success">Terminé</span></td>
                     </tr>
                     <tr>
-                      <td className="px-6 py-4 whitespace-nowrap">Sophie Bernard</td>
-                      <td className="px-6 py-4 whitespace-nowrap">Peinture salon</td>
-                      <td className="px-6 py-4 whitespace-nowrap"><span className="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">Devis envoyé</span></td>
-                      <td className="px-6 py-4 whitespace-nowrap">05/05/2023</td>
-                      <td className="px-6 py-4 whitespace-nowrap"><button className="text-primary hover:underline">Voir détails</button></td>
+                      <td>Sophie Lefebvre</td>
+                      <td>Changement robinet</td>
+                      <td>01/05/2023</td>
+                      <td><span className="badge bg-success">Terminé</span></td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
-          )}
+          </div>
           
-          {activeTab === 'messages' && (
-            <div>
-              <h2 className="text-xl font-semibold mb-4">Messages</h2>
-              <div className="space-y-4">
-                <div className="border rounded-lg p-4 hover:bg-gray-50 cursor-pointer">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h3 className="font-medium">Jean Dupont</h3>
-                      <p className="text-sm text-gray-500">Projet: Rénovation cuisine</p>
-                    </div>
-                    <span className="text-xs text-gray-500">Il y a 2 heures</span>
-                  </div>
-                  <p className="mt-2 text-gray-700">Bonjour, je voudrais savoir quand vous pourriez commencer les travaux...</p>
+          <div className="card">
+            <div className="card-body">
+              <h5 className="card-title">Derniers avis</h5>
+              <div className="mb-3 pb-3 border-bottom">
+                <div className="d-flex justify-content-between">
+                  <span>Marie Martin</span>
+                  <small className="text-muted">10/05/2023</small>
                 </div>
-                
-                <div className="border rounded-lg p-4 hover:bg-gray-50 cursor-pointer">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h3 className="font-medium">Marie Martin</h3>
-                      <p className="text-sm text-gray-500">Projet: Rénovation salle de bain</p>
-                    </div>
-                    <span className="text-xs text-gray-500">Hier</span>
-                  </div>
-                  <p className="mt-2 text-gray-700">Merci pour votre devis, j'ai quelques questions concernant...</p>
-                </div>
-                
-                <div className="border rounded-lg p-4 hover:bg-gray-50 cursor-pointer">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h3 className="font-medium">Pierre Dubois</h3>
-                      <p className="text-sm text-gray-500">Projet: Installation électrique</p>
-                    </div>
-                    <span className="text-xs text-gray-500">Il y a 3 jours</span>
-                  </div>
-                  <p className="mt-2 text-gray-700">Est-ce que vous pourriez me donner plus de détails sur...</p>
-                </div>
-              </div>
-            </div>
-          )}
-          
-          {activeTab === 'profile' && (
-            <div>
-              <h2 className="text-xl font-semibold mb-4">Mon profil</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h3 className="font-medium mb-3">Informations personnelles</h3>
-                  <div className="space-y-3">
-                    <div>
-                      <label className="block text-sm text-gray-500">Nom</label>
-                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm" defaultValue="Dupont" />
-                    </div>
-                    <div>
-                      <label className="block text-sm text-gray-500">Prénom</label>
-                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm" defaultValue="Jean" />
-                    </div>
-                    <div>
-                      <label className="block text-sm text-gray-500">Email</label>
-                      <input type="email" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm" defaultValue="jean.dupont@example.com" />
-                    </div>
-                    <div>
-                      <label className="block text-sm text-gray-500">Téléphone</label>
-                      <input type="tel" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm" defaultValue="06 12 34 56 78" />
-                    </div>
-                  </div>
+                  <span className="me-1">★★★★★</span>
+                  <span className="text-muted">5.0</span>
                 </div>
-                
-                <div>
-                  <h3 className="font-medium mb-3">Informations professionnelles</h3>
-                  <div className="space-y-3">
-                    <div>
-                      <label className="block text-sm text-gray-500">Métier</label>
-                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm" defaultValue="Plombier" />
-                    </div>
-                    <div>
-                      <label className="block text-sm text-gray-500">Entreprise</label>
-                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm" defaultValue="Dupont Plomberie" />
-                    </div>
-                    <div>
-                      <label className="block text-sm text-gray-500">SIRET</label>
-                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm" defaultValue="12345678901234" />
-                    </div>
-                    <div>
-                      <label className="block text-sm text-gray-500">Adresse</label>
-                      <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm" defaultValue="123 Rue de la Plomberie, 75001 Paris" />
-                    </div>
-                  </div>
-                </div>
+                <p className="mt-2 mb-0">Travail impeccable et très professionnel. Je recommande vivement.</p>
               </div>
               
-              <div className="mt-6">
-                <button className="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-hover">Enregistrer les modifications</button>
+              <div>
+                <div className="d-flex justify-content-between">
+                  <span>Pierre Durand</span>
+                  <small className="text-muted">05/05/2023</small>
+                </div>
+                <div>
+                  <span className="me-1">★★★★☆</span>
+                  <span className="text-muted">4.0</span>
+                </div>
+                <p className="mt-2 mb-0">Bon travail, mais un peu de retard sur la livraison.</p>
               </div>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>

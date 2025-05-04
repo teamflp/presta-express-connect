@@ -1,185 +1,103 @@
-
-import { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Star, MapPin, Phone, Mail } from 'lucide-react';
-import Navbar from '../components/Header/partials/NavBar';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import NavBar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
-import products from '../assets/tableaux/productData';
-import jobs from '../assets/tableaux/jobs';
+import NoResults from '../components/Search/NoResults';
+import { jobs, Job } from '../assets/tableaux/jobs';
 
+// Mock professionals data - in a real app, this would come from an API
 interface Professional {
   id: number;
   name: string;
-  rating: string;
-  speciality: string;
-  experience: number;
-  profileImage: string;
-  phone: string;
-  address: string;
-  descriptif: string;
+  jobId: number;
+  city: string;
+  rating: number;
   image: string;
-  image1: string;
-  image2: string;
-  image3: string;
-  image4: string;
-  location: string;
 }
 
-const ProfessionalsByJob = () => {
-  const { categoryId, jobId } = useParams<{ categoryId?: string, jobId?: string }>();
-  const numCategoryId = categoryId ? parseInt(categoryId) : 0;
-  const numJobId = jobId ? parseInt(jobId) : 0;
-  const navigate = useNavigate();
-  const [professionals, setProfessionals] = useState<Professional[]>([]);
-  const [job, setJob] = useState<any>(null); // We'll use any for now as we don't have the exact Job interface
-  const [isLoading, setIsLoading] = useState(true);
+// Sample data
+const mockProfessionals: Professional[] = [
+  { id: 1, name: "Jean Dupont", jobId: 1, city: "Lyon", rating: 4.8, image: "/src/assets/images/plomberie.jpg" },
+  { id: 2, name: "Marie Martin", jobId: 2, city: "Paris", rating: 4.9, image: "/src/assets/images/installation-electrique.jpg" },
+  { id: 3, name: "Pierre Durand", jobId: 1, city: "Marseille", rating: 4.7, image: "/src/assets/images/plomberie.jpg" },
+  { id: 4, name: "Sophie Lefebvre", jobId: 3, city: "Bordeaux", rating: 4.5, image: "/src/assets/images/peinture-interieure.jpg" },
+  { id: 5, name: "Luc Bernard", jobId: 2, city: "Toulouse", rating: 4.6, image: "/src/assets/images/installation-electrique.jpg" },
+  { id: 6, name: "Isabelle Garcia", jobId: 3, city: "Nice", rating: 4.8, image: "/src/assets/images/peinture-interieure.jpg" },
+  { id: 7, name: "Thomas Roux", jobId: 1, city: "Nantes", rating: 4.9, image: "/src/assets/images/plomberie.jpg" },
+  { id: 8, name: "Julie Chevalier", jobId: 3, city: "Strasbourg", rating: 4.7, image: "/src/assets/images/peinture-interieure.jpg" },
+  { id: 9, name: "David Meunier", jobId: 2, city: "Lille", rating: 4.5, image: "/src/assets/images/installation-electrique.jpg" },
+  { id: 10, name: "Catherine Dubois", jobId: 1, city: "Rennes", rating: 4.6, image: "/src/assets/images/plomberie.jpg" }
+];
 
-  // Noms fictifs pour les professionnels
-  const fictionalNames = ["Thomas Martin", "Sophie Dubois", "Jean Lefebvre", "Marie Lambert", "Pierre Dupont", "Claire Bernard", "Lucas Moreau", "Camille Richard", "Antoine Leroy", "Julie Laurent"];
+function ProfessionalsByJob() {
+  const { id } = useParams<{ id: string }>();
+  const [professionals, setProfessionals] = useState<Professional[]>([]);
+  const [category, setCategory] = useState<Job | null>(null);
+  const jobList = jobs as Job[];
 
   useEffect(() => {
-    // Récupération des informations du métier
-    if (numCategoryId && numJobId && jobs[numCategoryId]) {
-      const foundJob = jobs[numCategoryId].find(j => j.id === numJobId);
-      if (foundJob) {
-        setJob(foundJob);
-      }
+    // Find job category
+    const jobId = Number(id);
+    const foundCategory = jobList.find((j) => j.id === jobId);
+    if (foundCategory) {
+      setCategory(foundCategory);
     }
 
-    // Simulation d'une requête API pour récupérer les professionnels
-    const fetchProfessionals = async () => {
-      try {
-        // Simulation d'un délai réseau
-        await new Promise(resolve => setTimeout(resolve, 800));
-
-        // Utilisez les données de produits comme professionnels avec des noms fictifs
-        const mockProfessionals = products.slice(0, 6).map((product, index) => ({
-          ...product,
-          id: index + 1,
-          name: fictionalNames[index],
-          // Utilise des noms fictifs
-          rating: (Math.random() * 2 + 3).toFixed(1),
-          // Note entre 3 et 5
-          speciality: job?.name || "Spécialiste",
-          experience: Math.floor(Math.random() * 15) + 2,
-          // Entre 2 et 17 ans d'expérience
-          // Images de profil aléatoires
-          profileImage: `https://randomuser.me/api/portraits/${index % 2 === 0 ? 'men' : 'women'}/${index + 1}.jpg`,
-          phone: `0${Math.floor(Math.random() * 9) + 1} ${Math.floor(Math.random() * 90 + 10)} ${Math.floor(Math.random() * 90 + 10)} ${Math.floor(Math.random() * 90 + 10)} ${Math.floor(Math.random() * 90 + 10)}`
-        }));
-        setProfessionals(mockProfessionals);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Erreur lors de la récupération des professionnels:", error);
-        setIsLoading(false);
-      }
-    };
-    fetchProfessionals();
-  }, [numCategoryId, numJobId, job?.name]);
-
-  const handleViewProfile = (professionalId: number) => {
-    navigate(`/professional/${professionalId}`, {
-      state: {
-        professional: professionals.find(p => p.id === professionalId)
-      }
-    });
-  };
-
-  const handleContact = (professionalId: number) => {
-    navigate(`/contact-professional/${professionalId}`, {
-      state: {
-        professional: professionals.find(p => p.id === professionalId)
-      }
-    });
-  };
+    // Filter professionals by job ID
+    const filteredProfessionals = mockProfessionals.filter((p) => p.jobId === jobId);
+    setProfessionals(filteredProfessionals);
+  }, [id, jobList]);
 
   return (
     <div className="App">
-      <Navbar />
+      <NavBar />
+      
       <div className="container my-5">
-        <div className="mb-4">
-          <Link to={`/categories/${categoryId}`} className="text-decoration-none d-flex align-items-center gap-2">
-            <ArrowLeft size={18} />
-            <span>Retour à la catégorie</span>
-          </Link>
-        </div>
-
-        <div className="mb-5">
-          <h1 className="mb-2 title1 fw-bold">Professionnels {job?.name}</h1>
-          <p className="text-muted">Découvrez les meilleurs professionnels pour vos projets de {job?.name}</p>
-        </div>
-
-        {isLoading ? (
-          <div className="d-flex justify-content-center my-5">
-            <div className="spinner-border text-primary" role="status">
-              <span className="visually-hidden">Chargement...</span>
-            </div>
-          </div>
-        ) : professionals.length > 0 ? (
-          <div className="row g-4">
-            {professionals.map(professional => (
-              <div key={professional.id} className="col-md-6 col-lg-4">
-                <div className="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-                  <div className="card-body p-4">
-                    <div className="d-flex mb-3">
-                      <div className="me-3">
-                        <div className="profile-image-container-small">
-                          <img src={professional.profileImage} alt={`${professional.name}`} className="profile-image" />
+        {category ? (
+          <>
+            <h1 className="title1 mb-4">Artisans {category.title}</h1>
+            <div className="row mb-5">
+              {professionals.length > 0 ? (
+                professionals.map((pro) => (
+                  <div key={pro.id} className="col-md-4 mb-4">
+                    <div className="card hover-card h-100">
+                      <img 
+                        src={pro.image} 
+                        className="card-img-top" 
+                        alt={pro.name}
+                        style={{ height: '200px', objectFit: 'cover' }}
+                      />
+                      <div className="card-body">
+                        <h5 className="card-title">{pro.name}</h5>
+                        <p className="card-text">
+                          <small className="text-muted">{pro.city}</small>
+                        </p>
+                        <div className="d-flex align-items-center mb-3">
+                          <span className="me-2">★</span>
+                          <span>{pro.rating} / 5</span>
                         </div>
+                        <a href={`/artisan/${pro.id}`} className="btn btn-primary">
+                          Voir le profil
+                        </a>
                       </div>
-                      <div>
-                        <h5 className="card-title mb-0 fw-bold text-base font-normal">{professional.name}</h5>
-                        <div className="d-flex align-items-center mt-1">
-                          <Star size={14} fill="#ffc107" stroke="#ffc107" className="me-1" />
-                          <span className="fw-medium">{professional.rating}</span>
-                        </div>
-                        <p className="text-muted mb-0">{professional.speciality}</p>
-                        <p className="text-muted small">{professional.experience} ans d'expérience</p>
-                      </div>
-                    </div>
-                    
-                    <div className="mb-3">
-                      <div className="d-flex align-items-center text-muted mb-2">
-                        <MapPin size={16} className="me-2" />
-                        <span>{professional.address}, {professional.location}</span>
-                      </div>
-                      <div className="d-flex align-items-center text-muted mb-2">
-                        <Phone size={16} className="me-2" />
-                        <span>{professional.phone}</span>
-                      </div>
-                      <div className="d-flex align-items-center text-muted">
-                        <Mail size={16} className="me-2" />
-                        <span>{professional.name.toLowerCase().replace(' ', '.')}@example.com</span>
-                      </div>
-                    </div>
-                    
-                    <p className="card-text mb-4">{professional.descriptif.substring(0, 80)}...</p>
-                    
-                    <div className="d-grid gap-2">
-                      <button className="btn btn-primary" style={{
-                        backgroundColor: '#C63E46',
-                        borderColor: '#C63E46'
-                      }} onClick={() => handleContact(professional.id)}>
-                        Contacter
-                      </button>
-                      <button className="btn btn-outline-secondary" onClick={() => handleViewProfile(professional.id)}>
-                        Voir le profil
-                      </button>
                     </div>
                   </div>
-                </div>
-              </div>
-            ))}
-          </div>
+                ))
+              ) : (
+                <NoResults />
+              )}
+            </div>
+          </>
         ) : (
-          <div className="alert alert-info">
-            Aucun professionnel trouvé pour ce métier. Veuillez essayer une autre recherche.
+          <div className="text-center">
+            <h2>Catégorie non trouvée</h2>
           </div>
         )}
       </div>
+      
       <Footer />
     </div>
   );
-};
+}
 
 export default ProfessionalsByJob;

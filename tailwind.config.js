@@ -37,6 +37,9 @@ export default {
                     xl: '5rem',
                 },
             },
+            fontFamily: {
+                sans: ['Segoe UI', 'system-ui', 'sans-serif'],
+            }
         },
     },
     safelist: [
@@ -45,6 +48,8 @@ export default {
         'text-primary',
         'bg-primary',
         'hover:bg-primary-hover',
+        'button-container',
+        'hover-card',
     ],
     plugins: [],
 }
