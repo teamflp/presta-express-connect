@@ -11,7 +11,14 @@
 @import './components/pagination.css';
 @import './components/profile-image.css';
 @import './components/search.css';
-@import './components/dashboard.css'; /* Added dashboard.css */
+@import './components/dashboard.css';
+@import './components/nav.css';
+@import './components/decorations.css';
+@import './components/filter-controls.css';
+@import './components/letter-buttons.css';
+@import './components/form-controls.css';
+@import './components/hover-effects.css';
+@import './components/domaines-intervention.css';
 @import './layout/header.css';
 @import './utilities/spacing.css';
 @import './utilities/colors.css';

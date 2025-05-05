@@ -1,0 +1,26 @@
+
+/*  Traits rouge  */
+.redLineStyle {
+  border: none;
+  border-top: 2px solid #C63E46;
+  width: 100px;
+  position: relative;
+  right: 17px;
+  top: -10px;
+  opacity: 1;
+}
+
+.redLineContainer {
+  border-top: 2px solid #C63E46;
+  width: 100%;
+  opacity: 1;
+}
+
+/* IMAGEHEADER */
+.card-bg-image{
+  width: clamp(90%, 3vw, 80%);
+}
+
+.card-title{
+  font-size: clamp(18px, 3vw, 44px);
+}

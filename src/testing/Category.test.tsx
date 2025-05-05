@@ -5,12 +5,12 @@ import Category from '../components/Artisant/Category';
 
 describe('Category component', () => {
   const mockJob = {
-    id: '1',
+    id: 1, // Changed from string to number to match the Job type
     title: 'Plombier',
     servicesList: ['Réparation', 'Installation', 'Entretien'],
     icon: 'icon-plumber',
     description: 'Services de plomberie',
-    image: '/path/to/image.jpg', // Added missing image property
+    image: '/path/to/image.jpg',
   };
 
   it('renders the category component correctly', () => {

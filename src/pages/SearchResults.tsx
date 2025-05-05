@@ -1,12 +1,12 @@
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import SearchFilters from '../components/Search/SearchFilters';
 import ArtisanCard, { Artisan } from '../components/Search/ArtisanCard';
 import PaginationComponent from '../components/Pagination/PaginationComponent';
 
 function SearchResults() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [filters, setFilters] = useState({
+  const [filters] = useState({
     category: '',
     rating: '',
     distance: '',

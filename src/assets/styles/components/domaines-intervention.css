@@ -1,0 +1,34 @@
+
+/* DOMAINES D'INTERVENTION */
+.domaines-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  font-size: clamp(14px, 3vw, 16px);    
+}
+    
+.domaine-card {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+    
+.domaine-image{
+  width: clamp(30px, 3vw, 50px);  
+  height: auto;
+}
+
+/* COMPOSANT ARGUMENT */
+.titre span{
+  color:#b73840;
+}
+
+.argument-image{
+  width: clamp(50px, 3vw, 70px);  
+  height: auto;
+}
+
+.argument-title{
+  width: clamp(14px, 3vw, 18px);  
+}

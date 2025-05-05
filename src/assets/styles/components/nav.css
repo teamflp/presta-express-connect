@@ -1,0 +1,17 @@
+
+/*____NAVBAR STYLES____ */
+/* Applique un margin-top de 100px uniquement lorsque l'utilisateur est sur la page Home */
+.navbar-home {
+  margin-top: 61px;
+}
+
+/* Styles appliqués lorsque la navbar est scrollée */
+.navbar-scroll {
+  background-color: white !important;
+  box-shadow: 0 4px 2px -2px gray;
+}
+
+/* Modifie la couleur du texte des liens dans la navbar lorsqu'elle est scrollée */
+.navbar-scroll .nav-link {
+  color: black !important;
+}
