@@ -9,7 +9,8 @@ describe('Category component', () => {
     title: 'Plombier',
     servicesList: ['Réparation', 'Installation', 'Entretien'],
     icon: 'icon-plumber',
-    description: 'Services de plomberie'
+    description: 'Services de plomberie',
+    image: '/path/to/image.jpg', // Added missing image property
   };
 
   it('renders the category component correctly', () => {

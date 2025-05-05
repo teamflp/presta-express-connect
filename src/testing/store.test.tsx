@@ -1,12 +1,12 @@
 
 import { configureStore } from '@reduxjs/toolkit';
-import thunkMiddleware from 'redux-thunk';
+import { thunk } from 'redux-thunk'; // Updated import
 
 // Créons un mockStore simplifié
 const mockStore = (initialState = {}) => {
   return configureStore({
     reducer: (state = initialState) => state,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunkMiddleware),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
   });
 };
 
