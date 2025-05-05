@@ -4,12 +4,25 @@
 @tailwind utilities;
 
 :root{
-    --box-shadow-color : rgba(0, 0, 0, 0.027);
-    --bg-color1 : #FDFAF7;
-    --red-element-color : #C63E46;
+  --box-shadow-color : rgba(0, 0, 0, 0.027);
+  --bg-color1 : #FDFAF7;
+  --red-element-color : #C63E46;
 }
 
-/* Fix for text-white and other Tailwind classes */
+@layer base {
+  body {
+    @apply bg-background text-gray-800 font-sans;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold text-gray-800;
+  }
+  
+  a {
+    @apply transition-colors duration-200;
+  }
+}
+
 @layer components {
   .text-white {
     color: #ffffff;
@@ -68,6 +81,7 @@
     padding-right: 15px;
     margin-left: auto;
     margin-right: auto;
+    max-width: 1200px;
   }
   
   .my-15 {
@@ -94,5 +108,26 @@
   
   .text-muted {
     color: #6c757d !important;
+  }
+  
+  /* Ajoutons des styles modernes pour les cartes */
+  .card {
+    @apply bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300;
+  }
+  
+  .card-body {
+    @apply p-6 flex flex-col h-full;
+  }
+  
+  .card-title {
+    @apply text-xl font-semibold mb-2 text-gray-800;
+  }
+  
+  .card-text {
+    @apply text-gray-600 mb-4;
+  }
+  
+  .card-link {
+    @apply text-primary font-medium hover:underline mt-auto inline-flex items-center;
   }
 }

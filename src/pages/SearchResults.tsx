@@ -1,203 +1,86 @@
-import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import NavBar from '../components/Header/partials/NavBar';
-import Footer from '../components/Footer/Footer';
+import React, { useState } from 'react';
 import SearchFilters from '../components/Search/SearchFilters';
-import ArtisanCard, { Artisan } from '../components/Search/ArtisanCard';
-import NoResults from '../components/Search/NoResults';
-import PaginationComponent from '../components/Pagination/PaginationComponent';
-
-// Sample data for artisans
-const mockArtisans: Artisan[] = [
-  {
-    id: 1,
-    name: "Jean Dupont",
-    job: "Plombier",
-    city: "Lyon",
-    rating: 4.8,
-    reviews: 124,
-    image: "/src/assets/images/plomberie.jpg",
-    description: "Plombier professionnel avec plus de 15 ans d'expérience."
-  },
-  {
-    id: 2,
-    name: "Marie Martin",
-    job: "Électricienne",
-    city: "Paris",
-    rating: 4.9,
-    reviews: 89,
-    image: "/src/assets/images/installation-electrique.jpg",
-    description: "Spécialiste en installations électriques et dépannage."
-  },
-  {
-    id: 3,
-    name: "Pierre Durand",
-    job: "Peintre",
-    city: "Marseille",
-    rating: 4.7,
-    reviews: 65,
-    image: "/src/assets/images/peinture-interieure.jpg",
-    description: "Expert en peinture intérieure et extérieure."
-  },
-  {
-    id: 4,
-    name: "Sophie Lefebvre",
-    job: "Jardinière",
-    city: "Bordeaux",
-    rating: 4.5,
-    reviews: 42,
-    image: "/src/assets/images/jardinier.jpg",
-    description: "Création et entretien de jardins et espaces verts."
-  },
-  {
-    id: 5,
-    name: "Luc Bernard",
-    job: "Menuisier",
-    city: "Toulouse",
-    rating: 4.6,
-    reviews: 78,
-    image: "/src/assets/images/menuisier.jpg",
-    description: "Fabrication et installation de meubles sur mesure."
-  },
-  {
-    id: 6,
-    name: "Isabelle Garnier",
-    job: "Carreleuse",
-    city: "Nice",
-    rating: 4.4,
-    reviews: 32,
-    image: "/src/assets/images/carreleur.jpg",
-    description: "Pose de carrelage pour salles de bains et cuisines."
-  },
-  {
-    id: 7,
-    name: "Thomas Richard",
-    job: "Chauffagiste",
-    city: "Strasbourg",
-    rating: 4.7,
-    reviews: 95,
-    image: "/src/assets/images/chauffagiste.jpg",
-    description: "Installation et maintenance de systèmes de chauffage."
-  },
-  {
-    id: 8,
-    name: "Nathalie Dubois",
-    job: "Plombière",
-    city: "Nantes",
-    rating: 4.9,
-    reviews: 110,
-    image: "/src/assets/images/plomberie.jpg",
-    description: "Dépannage et installation de plomberie en urgence."
-  },
-  {
-    id: 9,
-    name: "Antoine Meunier",
-    job: "Électricien",
-    city: "Lille",
-    rating: 4.6,
-    reviews: 58,
-    image: "/src/assets/images/installation-electrique.jpg",
-    description: "Mise aux normes et rénovation électrique."
-  },
-  {
-    id: 10,
-    name: "Julie Roussel",
-    job: "Peintre",
-    city: "Reims",
-    rating: 4.5,
-    reviews: 48,
-    image: "/src/assets/images/peinture-interieure.jpg",
-    description: "Peinture décorative et revêtements muraux."
-  }
-];
+import ArtisanCard from '../components/Search/ArtisanCard';
+import PaginationComponent from '../components/Search/PaginationComponent';
 
 function SearchResults() {
-  const location = useLocation();
-  const [searchLocation, setSearchLocation] = useState<string | null>(null);
-  const [artisans, setArtisans] = useState<Artisan[]>(mockArtisans);
-  const [filteredArtisans, setFilteredArtisans] = useState<Artisan[]>(mockArtisans);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5);
-  
-  // Extract search query from URL
-  useEffect(() => {
-    const query = new URLSearchParams(location.search);
-    const locationParam = query.get('location');
-    setSearchLocation(locationParam);
-    
-    // If there's a location filter, apply it
-    if (locationParam) {
-      const filtered = mockArtisans.filter(artisan => 
-        artisan.city.toLowerCase().includes(locationParam.toLowerCase())
-      );
-      setFilteredArtisans(filtered);
-    } else {
-      setFilteredArtisans(mockArtisans);
-    }
-  }, [location]);
-  
-  // Get current artisans for pagination
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentArtisans = filteredArtisans.slice(indexOfFirstItem, indexOfLastItem);
-  
-  // Change page
-  const handlePageChange = (pageNumber: number) => setCurrentPage(pageNumber);
-  
-  // Handle contact button click
-  const handleContact = (artisan: Artisan) => {
-    console.log("Contact requested for:", artisan.name);
-    // In a real app, this would navigate to a contact form or open a modal
+  const [filters, setFilters] = useState({
+    category: '',
+    rating: '',
+    distance: '',
+    availability: ''
+  });
+  // Remplaçons la déclaration inutilisée d'artisans
+  const [searchResults, setSearchResults] = useState([]);
+  const location = 'Paris, France'; // Location fixe pour l'exemple
+  const itemsPerPage = 5;
+  const totalItems = 25; // Nombre total d'exemples
+
+  // Fonction pour simuler la récupération des résultats de recherche
+  const getSearchResults = (page: number, filterOptions: any) => {
+    // Simuler une requête API ici
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    // Retourner une tranche des résultats simulés
+    return Array.from({ length: Math.min(itemsPerPage, totalItems - startIndex) }, (_, i) => ({
+      id: startIndex + i + 1,
+      name: `Artisan ${startIndex + i + 1}`,
+      category: 'Plombier',
+      rating: 4.5,
+      description: 'Description de l\'artisan...',
+      imageUrl: 'https://via.placeholder.com/150'
+    }));
   };
 
+  const handleFilterChange = () => {
+    // Reset to first page when filters change
+    setCurrentPage(1);
+    // Dans une implémentation réelle, cette fonction ferait une requête API avec les nouveaux filtres
+    console.log("Filters changed:", filters);
+  };
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+    // Dans une implémentation réelle, cette fonction ferait une requête API pour la nouvelle page
+    console.log("Page changed to:", pageNumber);
+  };
+
+  // Structure JSX
   return (
-    <div className="App">
-      <NavBar />
+    <div className="container mx-auto py-8 px-4">
+      <h1 className="text-3xl font-bold mb-6">Résultats de recherche</h1>
+      <p className="text-gray-600 mb-8">Artisans disponibles près de {location}</p>
       
-      <div className="container my-5">
-        <div className="row">
-          {/* Filters column */}
-          <div className="col-lg-3 mb-4">
-            <SearchFilters 
-              location={searchLocation || ''} 
-              onFilterChange={() => {}} 
-            />
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div className="lg:col-span-1">
+          {/* Correction des props de SearchFilters */}
+          <SearchFilters 
+            filters={filters}
+            setFilters={setFilters}
+            onFilterChange={handleFilterChange}
+          />
+        </div>
+        
+        <div className="lg:col-span-3">
+          {/* Contenu des résultats de recherche */}
+          <div className="mb-6 space-y-6">
+            {/* Exemple d'ArtisanCard */}
+            <ArtisanCard />
+            <ArtisanCard />
+            <ArtisanCard />
+            <ArtisanCard />
+            <ArtisanCard />
           </div>
           
-          {/* Results column */}
-          <div className="col-lg-9">
-            <h2 className="mb-4">
-              {searchLocation ? `Résultats pour "${searchLocation}"` : 'Tous les artisans'}
-            </h2>
-            
-            {currentArtisans.length > 0 ? (
-              <>
-                {currentArtisans.map(artisan => (
-                  <ArtisanCard 
-                    key={artisan.id} 
-                    artisan={artisan}
-                    onContact={handleContact}
-                  />
-                ))}
-                
-                {/* Pagination */}
-                <div className="d-flex justify-content-center mt-4">
-                  <PaginationComponent 
-                    currentPage={currentPage}
-                    itemsPerPage={itemsPerPage}
-                    totalItems={filteredArtisans.length}
-                    onPageChange={handlePageChange}
-                  />
-                </div>
-              </>
-            ) : (
-              <NoResults location={searchLocation} />
-            )}
-          </div>
+          {/* Correction des props de PaginationComponent */}
+          <PaginationComponent 
+            currentPage={currentPage}
+            totalPages={Math.ceil(totalItems / itemsPerPage)}
+            onPageChange={handlePageChange}
+          />
         </div>
       </div>
-      
-      <Footer />
     </div>
   );
 }

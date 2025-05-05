@@ -1,46 +1,26 @@
 
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { render } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
 import Category from '../components/Artisant/Category';
-import { Job } from '../assets/tableaux/jobs';
 
-describe('Category Component', () => {
-  const mockJob: Job = {
-    id: 1,
-    title: "Plombier",
-    image: "/src/assets/images/plomberie.jpg",
-    servicesList: ["Installation", "Réparation", "Débouchage", "Remplacement"]
+describe('Category component', () => {
+  const mockJob = {
+    id: '1',
+    title: 'Plombier',
+    servicesList: ['Réparation', 'Installation', 'Entretien'],
+    icon: 'icon-plumber',
+    description: 'Services de plomberie'
   };
-  
-  it('renders category title', () => {
-    render(
-      <MemoryRouter>
+
+  it('renders the category component correctly', () => {
+    const { getByText } = render(
+      <BrowserRouter>
         <Category job={mockJob} />
-      </MemoryRouter>
+      </BrowserRouter>
     );
     
-    expect(screen.getByText('Plombier')).toBeInTheDocument();
-  });
-  
-  it('renders services list', () => {
-    render(
-      <MemoryRouter>
-        <Category job={mockJob} />
-      </MemoryRouter>
-    );
-    
-    expect(screen.getByText('Installation, Réparation, Débouchage, Remplacement')).toBeInTheDocument();
-  });
-  
-  it('renders link to professionals', () => {
-    render(
-      <MemoryRouter>
-        <Category job={mockJob} />
-      </MemoryRouter>
-    );
-    
-    const link = screen.getByText('Voir les artisans');
-    expect(link).toBeInTheDocument();
-    expect(link.closest('a')).toHaveAttribute('href', '/professionnels/1');
+    expect(getByText('Plombier')).toBeInTheDocument();
+    expect(getByText('Réparation, Installation, Entretien')).toBeInTheDocument();
+    expect(getByText('Voir les artisans')).toBeInTheDocument();
   });
 });

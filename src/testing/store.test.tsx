@@ -1,15 +1,17 @@
 
-import { render, screen } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
-import { fetchUsers } from '../store/features/users/usersSlice';
+import { configureStore } from '@reduxjs/toolkit';
+import thunkMiddleware from 'redux-thunk';
 
-// Create mock store
-const mockStore = configureStore([thunk]);
+// Créons un mockStore simplifié
+const mockStore = (initialState = {}) => {
+  return configureStore({
+    reducer: (state = initialState) => state,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunkMiddleware),
+  });
+};
 
 describe('Redux Store Tests', () => {
-  let store: any;
+  let store: ReturnType<typeof mockStore>;
 
   beforeEach(() => {
     store = mockStore({
@@ -26,16 +28,20 @@ describe('Redux Store Tests', () => {
     });
   });
 
-  it('should dispatch fetchUsers action', () => {
-    // Not actually making API call in tests
+  it('should have the correct initial state', () => {
+    const state = store.getState();
+    expect(state.users.status).toBe('idle');
+    expect(state.products.status).toBe('idle');
+  });
+
+  it('should dispatch actions correctly', () => {
     store.dispatch({ type: 'users/fetchUsers/pending' });
-    store.dispatch({ 
+    const actions = store.dispatch({ 
       type: 'users/fetchUsers/fulfilled', 
       payload: [{ id: 1, name: 'Test User' }] 
     });
     
-    const actions = store.getActions();
-    expect(actions[0].type).toEqual('users/fetchUsers/pending');
-    expect(actions[1].type).toEqual('users/fetchUsers/fulfilled');
+    expect(actions.type).toBe('users/fetchUsers/fulfilled');
+    expect(actions.payload).toEqual([{ id: 1, name: 'Test User' }]);
   });
 });

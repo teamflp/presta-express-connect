@@ -2,11 +2,11 @@
 import { useState, useEffect } from 'react';
 
 function AdminDashboard() {
-  const [userData, setUserData] = useState({
+  const [userData] = useState({
     name: 'Admin User',
     email: 'admin@example.com',
-    role: 'Administrator',
-    lastLogin: '2023-05-20'
+    role: 'Administrateur',
+    lastLogin: '2023-05-04T10:30:00'
   });
 
   useEffect(() => {
