@@ -5,7 +5,7 @@ import HeroHeader from './partials/HeroHeader';
 
 function Header() {
   return (
-    <>
+    <header className="bg-background">
       <NavBar />
       <HeroHeader />
       <div className="container my-10">
@@ -15,7 +15,7 @@ function Header() {
         </p>
         <IconsDomainesIntervention />
       </div>
-    </>
+    </header>
   );
 }
 

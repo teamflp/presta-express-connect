@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -19,17 +20,17 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #C63E46;
   text-decoration: inherit;
 }
+
 a:hover {
-  color: #747bff;
+  color: #b73840;
 }
 
 body {
   margin: 0;
   display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -50,30 +51,17 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
-  border-color: #646cff;
+  border-color: #C63E46;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
 }
 
 /* Fix for the category component */
 .bg-white {
   background-color: white;
 }
-
-/* Additional utility classes now moved to their respective modules */

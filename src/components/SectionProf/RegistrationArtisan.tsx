@@ -16,7 +16,7 @@ function RegistrationArtisan() {
         <li>Assistance personnalisée</li>
       </ul>
       <NavLink to="/professional-register">
-        <Button className="button2">
+        <Button className="bg-white text-primary hover:bg-gray-100 font-medium rounded-lg py-2 px-4 transition-all">
           <span>S'inscrire gratuitement</span>
         </Button>
       </NavLink>
