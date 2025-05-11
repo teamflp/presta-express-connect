@@ -81,7 +81,7 @@ function LocationSearchBar() {
             <Compass size={18} className={isGeolocating ? 'animate-spin' : ''} />
             <span className="geolocation-text">Ma position</span>
           </Button>
-          <Button type="submit" variant="primary" className="search-submit-button py-[16px]">
+          <Button type="submit" variant="primary" className="search-submit-button py-[17px]">
             <Search size={18} className="me-1 d-none d-sm-inline" />
             Rechercher
           </Button>
