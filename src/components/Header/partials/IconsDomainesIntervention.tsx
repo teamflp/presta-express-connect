@@ -17,7 +17,7 @@ function IconsDomainesIntervention() {
               className="flex flex-col items-center text-center transition-all duration-300 hover:transform hover:scale-105 group"
             >
               <div className="w-20 h-20 flex items-center justify-center bg-white rounded-full shadow-md mb-4 p-4 group-hover:bg-accent transition-colors duration-300">
-                <img src={domaine.icone} alt={domaine.titre} className="w-12 h-12" />
+                <img src={domaine.icone} alt={domaine.titre} className="w-12 h-12 object-contain" />
               </div>
               <h3 className="text-xl font-medium text-gray-800 group-hover:text-primary transition-colors duration-300">{domaine.titre}</h3>
             </Link>
