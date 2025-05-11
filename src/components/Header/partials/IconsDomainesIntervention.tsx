@@ -6,7 +6,7 @@ function IconsDomainesIntervention() {
       <div className="container mx-auto px-4 w-100">
         <h2 className="text-3xl font-bold text-center mb-12">Nos domaines d'intervention</h2>
         
-        <div className="flex flex-nowrap justify-between overflow-x-auto pb-4">
+        <div className="flex flex-nowrap justify-between overflow-x-auto pb-4 py-[60px]">
           {domaines.slice(0, 6).map((domaine: Domaine) => <Link to={domaine.lien || "#"} key={domaine.id} className="flex flex-col items-center text-center mx-4 transition-all duration-300 hover:transform hover:scale-105 group min-w-[100px]">
               <div className="w-16 h-16 flex items-center justify-center bg-white rounded-full shadow-md mb-3 p-3 group-hover:bg-accent transition-colors duration-300">
                 <img src={domaine.icone} alt={domaine.titre} className="w-10 h-10 object-contain" />
