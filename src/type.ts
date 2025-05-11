@@ -1,6 +1,6 @@
 
 // types.ts
-import { store } from './store/store';
+import store from './store/store';
 
 // Export type definitions
 export type AppDispatch = typeof store.dispatch;

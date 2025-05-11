@@ -1,3 +1,4 @@
+
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
@@ -41,9 +42,7 @@ const usersSlice = createSlice({
 });
 
 export const selectAllUsers = (state: { users: UserState }) => state.users.users;
-
 export const selectUsersStatus = (state: { users: UserState }) => state.users.status;
-
 export const selectUsersError = (state: { users: UserState }) => state.users.error;
-
+export const usersReducer = usersSlice.reducer; // Export as named export for consistency
 export default usersSlice.reducer;
