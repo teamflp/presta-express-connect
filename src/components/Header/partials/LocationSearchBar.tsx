@@ -1,8 +1,10 @@
+
 import { useState } from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { MapPin, Compass, Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
+
 function LocationSearchBar() {
   const [searchTerm, setSearchTerm] = useState('');
   const [placeholder, setPlaceholder] = useState('Rechercher par ville, adresse ou code postal');
@@ -70,23 +72,44 @@ function LocationSearchBar() {
       maximumAge: 0
     });
   };
-  return <div className="location-search-container">
+
+  return (
+    <div className="location-search-container">
       <Form onSubmit={handleSearch} className="location-search-form">
         <InputGroup className="search-input-group">
           <InputGroup.Text className="search-icon-wrapper">
             <MapPin size={20} className="text-primary" />
           </InputGroup.Text>
-          <Form.Control type="text" placeholder={placeholder} value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="search-input" disabled={isGeolocating} />
-          <Button variant="light" onClick={handleGeolocation} disabled={isGeolocating} title="Utiliser ma position actuelle" className="geolocation-button py-[17px]">
+          <Form.Control 
+            type="text" 
+            placeholder={placeholder} 
+            value={searchTerm} 
+            onChange={e => setSearchTerm(e.target.value)} 
+            className="search-input" 
+            disabled={isGeolocating} 
+          />
+          <Button 
+            variant="light" 
+            onClick={handleGeolocation} 
+            disabled={isGeolocating} 
+            title="Utiliser ma position actuelle" 
+            className="geolocation-button"
+          >
             <Compass size={18} className={isGeolocating ? 'animate-spin' : ''} />
             <span className="geolocation-text">Ma position</span>
           </Button>
-          <Button type="submit" variant="primary" className="search-submit-button py-[17px]">
+          <Button 
+            type="submit" 
+            variant="primary" 
+            className="search-submit-button"
+          >
             <Search size={18} className="me-1 d-none d-sm-inline" />
             Rechercher
           </Button>
         </InputGroup>
       </Form>
-    </div>;
+    </div>
+  );
 }
+
 export default LocationSearchBar;
