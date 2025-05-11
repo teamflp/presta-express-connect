@@ -15,6 +15,116 @@
   overflow: hidden;
 }
 
+/* Search Input Styling - New Professional Design */
+.search-input-group {
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  background-color: white;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.search-input-group:focus-within {
+  box-shadow: 0 6px 20px rgba(198, 62, 70, 0.12);
+  transform: translateY(-1px);
+}
+
+.search-icon-wrapper {
+  background-color: white;
+  border: none;
+  border-right: none;
+  padding-left: 16px;
+  color: #C63E46;
+}
+
+.search-input {
+  height: 56px;
+  border: none;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  padding-left: 8px;
+  background-color: white;
+}
+
+.search-input:focus {
+  box-shadow: none;
+  background-color: white;
+}
+
+.search-input::placeholder {
+  color: #999;
+  font-size: 15px;
+}
+
+.geolocation-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: white;
+  color: #555;
+  border: none;
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 0 16px;
+  height: 100%;
+  transition: all 0.2s ease;
+  font-size: 15px;
+}
+
+.geolocation-button:hover, 
+.geolocation-button:focus {
+  background-color: #f9f9f9;
+  color: #C63E46;
+}
+
+.geolocation-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.search-submit-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #C63E46 0%, #A33138 100%);
+  color: white;
+  font-weight: 500;
+  border: none;
+  padding: 0 28px;
+  height: 100%;
+  transition: all 0.3s ease;
+  font-size: 15px;
+}
+
+.search-submit-button:hover,
+.search-submit-button:focus {
+  background: linear-gradient(135deg, #b73840 0%, #932c33 100%);
+  box-shadow: 0 4px 12px rgba(198, 62, 70, 0.2);
+}
+
+.location-search-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto 1.5rem;
+  padding: 0 15px;
+}
+
+.location-search-form {
+  width: 100%;
+}
+
+.animate-spin {
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 /* Artisan card styling */
 .artisan-card-horizontal {
   transition: all 0.3s ease;
@@ -348,5 +458,32 @@
     margin-top: 0.5rem;
     width: 100%;
     justify-content: center;
+  }
+  
+  .search-input-group {
+    flex-wrap: wrap;
+  }
+  
+  .geolocation-button, 
+  .search-submit-button {
+    padding: 0 18px;
+  }
+  
+  .geolocation-text {
+    display: none;
+  }
+  
+  .search-input {
+    height: 50px;
+  }
+  
+  .search-input-group {
+    border-radius: 8px 8px 0 0;
+  }
+  
+  .search-icon-wrapper,
+  .search-input,
+  .geolocation-button {
+    height: 46px;
   }
 }

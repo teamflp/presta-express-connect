@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
-import { MapPin, Compass } from 'lucide-react';
+import { Button, Form, InputGroup } from 'react-bootstrap';
+import { MapPin, Compass, Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 
@@ -86,37 +86,39 @@ function LocationSearchBar() {
   };
 
   return (
-    <div className="w-full">
-      <Form onSubmit={handleSearch} className="flex">
-        <div className="relative flex w-full">
-          <div className="flex items-center absolute left-3 top-1/2 transform -translate-y-1/2 text-primary z-10">
-            <MapPin size={20} />
-          </div>
+    <div className="location-search-container">
+      <Form onSubmit={handleSearch} className="location-search-form">
+        <InputGroup className="search-input-group">
+          <InputGroup.Text className="search-icon-wrapper">
+            <MapPin size={20} className="text-primary" />
+          </InputGroup.Text>
           <Form.Control
             type="text"
             placeholder={placeholder}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 py-3 pr-[120px] rounded-full w-full shadow-lg border-0"
-            aria-label="Location search"
+            className="search-input"
+            disabled={isGeolocating}
           />
           <Button 
-            variant="outline-light" 
-            onClick={handleGeolocation} 
+            variant="light" 
+            onClick={handleGeolocation}
             disabled={isGeolocating}
-            className="absolute right-[104px] top-1/2 transform -translate-y-1/2 flex items-center gap-2 text-gray-600 hover:text-primary bg-transparent border-0"
+            className="geolocation-button"
             title="Utiliser ma position actuelle"
           >
-            <Compass size={18} />
-            <span>Ma position</span>
+            <Compass size={18} className={isGeolocating ? 'animate-spin' : ''} />
+            <span className="geolocation-text">Ma position</span>
           </Button>
           <Button 
             type="submit" 
-            className="absolute right-0 top-0 h-full bg-primary hover:bg-primary-hover text-white px-6 rounded-r-full"
+            variant="primary"
+            className="search-submit-button"
           >
+            <Search size={18} className="me-1 d-none d-sm-inline" />
             Rechercher
           </Button>
-        </div>
+        </InputGroup>
       </Form>
     </div>
   );
