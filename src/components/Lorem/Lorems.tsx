@@ -1,5 +1,4 @@
 
-import React from 'react';
 import LoremsData from '../../assets/tableaux/lorems';
 
 function LoremsPresta() {
@@ -19,7 +18,9 @@ function LoremsPresta() {
           >
             <div className="p-4">
               <div className="flex items-center justify-center mb-4">
-                <img src={item.icone} alt={item.titre} className="w-12 h-12" />
+                <div className="w-16 h-16 flex items-center justify-center bg-white rounded-full shadow-md p-3 group-hover:bg-accent transition-colors duration-300">
+                  <img src={item.icone} alt={item.titre} className="w-10 h-10 object-contain" />
+                </div>
               </div>
               <h3 className="text-xl font-semibold mb-2">{item.titre}</h3>
               <p className="text-gray-600 mb-4 line-clamp-2">{item.description}</p>
