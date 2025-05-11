@@ -9,7 +9,7 @@ interface CategoryProps {
 
 function Category({ job }: CategoryProps) {
   return (
-    <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden">
+    <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden h-full">
       <div className="p-6">
         <h5 className="text-xl font-semibold mb-2">{job.title}</h5>
         <p className="text-gray-600 mb-4">

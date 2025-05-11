@@ -41,9 +41,9 @@ function CategoriesArtisans() {
         </div>
       </div>
       
-      <div className="flex flex-col space-y-4">
+      <div className="flex flex-nowrap overflow-x-auto gap-4 pb-4">
         {jobList.slice(currentIndex, currentIndex + jobsPerSlide).map((job) => (
-          <div key={job.id}>
+          <div key={job.id} className="flex-shrink-0" style={{ minWidth: '250px', maxWidth: '300px' }}>
             <Category job={job} />
           </div>
         ))}
