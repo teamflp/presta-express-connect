@@ -38,7 +38,7 @@ function HeroHeader() {
         backgroundColor: '#C63E46',
         borderColor: '#C63E46',
         padding: '12px 24px',
-        borderRadius: '20px 0 20px 20px',
+        borderRadius: '0',
         fontWeight: '500',
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
         transition: 'all 0.3s ease'
