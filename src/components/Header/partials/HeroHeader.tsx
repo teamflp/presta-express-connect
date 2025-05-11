@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import Background from '../../../assets/images/lyon.jpg';
@@ -8,7 +9,7 @@ function HeroHeader() {
   const handleClick = () => {
     setClicked(!clicked);
   };
-  return <div className="relative h-[80vh] w-full rounded-b-3xl overflow-hidden">
+  return <div className="relative h-[80vh] w-full rounded-t-3xl overflow-hidden">
             {/* Background image with overlay */}
             <div className="absolute inset-0 bg-cover bg-center" style={{
       backgroundImage: `url(${Background})`
@@ -17,7 +18,7 @@ function HeroHeader() {
             </div>
             
             {/* Content container */}
-            <div className="relative h-full flex flex-col items-center justify-center px-4 rounded-none">
+            <div className="relative h-full flex flex-col items-center justify-center px-4">
                 {/* Search bar */}
                 <div className="w-full max-w-3xl mb-8">
                     <LocationSearchBar />
