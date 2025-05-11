@@ -77,7 +77,7 @@ function LocationSearchBar() {
             <MapPin size={20} className="text-primary" />
           </InputGroup.Text>
           <Form.Control type="text" placeholder={placeholder} value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="search-input" disabled={isGeolocating} />
-          <Button variant="light" onClick={handleGeolocation} disabled={isGeolocating} title="Utiliser ma position actuelle" className="geolocation-button py-[16px]">
+          <Button variant="light" onClick={handleGeolocation} disabled={isGeolocating} title="Utiliser ma position actuelle" className="geolocation-button py-[17px]">
             <Compass size={18} className={isGeolocating ? 'animate-spin' : ''} />
             <span className="geolocation-text">Ma position</span>
           </Button>
