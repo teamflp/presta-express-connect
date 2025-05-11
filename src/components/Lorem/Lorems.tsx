@@ -1,61 +1,54 @@
 
 import React from 'react';
-import { Card, Row, Col } from 'react-bootstrap';
 import LoremsData from '../../assets/tableaux/lorems';
-import { Link } from 'react-router-dom';
 
-const Lorems: React.FC = () => {
+function LoremsPresta() {
   return (
-    <div className="container py-5">
-      <div className="text-center mb-5">
-        <h2 className="fw-bold title1">Conseils et actualités</h2>
-        <p className="fs-5">Découvrez nos derniers articles pour vos projets de rénovation</p>
+    <div className="container mx-auto p-4 p-md-5">
+      <div className="text-center mb-6">
+        <h2 className="text-2xl font-semibold mb-2">Conseils et actualités</h2>
+        <p className="text-gray-600">Découvrez nos derniers conseils pour vos projets et actualités du secteur</p>
       </div>
       
-      <Row className="g-4">
+      <div className="flex flex-nowrap overflow-x-auto gap-4 pb-4">
         {LoremsData.map((item) => (
-          <Col md={6} lg={3} key={item.id}>
-            <Card className="h-100 border-0 shadow-sm hover-card" style={{ borderRadius: '20px 0px 20px 20px' }}>
-              <div className="d-flex justify-content-center mb-3 pt-4">
-                <div className="rounded-circle p-3" style={{ backgroundColor: '#f8f9fa', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.05)' }}>
-                  <img src={item.icone} alt={item.titre} style={{ width: '40px', height: '40px' }} />
-                </div>
+          <div 
+            key={item.id} 
+            className="flex-shrink-0 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
+            style={{ minWidth: '250px', maxWidth: '300px' }}
+          >
+            <div className="p-4">
+              <div className="flex items-center justify-center mb-4">
+                <img src={item.icone} alt={item.titre} className="w-12 h-12" />
               </div>
-              <Card.Body className="text-center px-4">
-                <Card.Title className="mb-3 fw-bold">{item.titre}</Card.Title>
-                <Card.Text className="text-muted mb-4" style={{ fontSize: '0.9rem' }}>
-                  {item.description}
-                </Card.Text>
-                <Link 
-                  to={item.lien} 
-                  className="btn px-4 py-2"
-                  style={{
-                    backgroundColor: '#C63E46',
-                    color: 'white',
-                    borderRadius: '20px 0px 20px 20px',
-                    fontWeight: '500',
-                    transition: 'all 0.3s ease'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = '#b73840';
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                    e.currentTarget.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.15)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = '#C63E46';
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = 'none';
-                  }}
+              <h3 className="text-xl font-semibold mb-2">{item.titre}</h3>
+              <p className="text-gray-600 mb-4 line-clamp-2">{item.description}</p>
+              <a
+                href={item.lien}
+                className="text-primary font-medium hover:underline inline-flex items-center"
+              >
+                Lire la suite
+                <svg
+                  className="w-4 h-4 ml-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  Lire l'article
-                </Link>
-              </Card.Body>
-            </Card>
-          </Col>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M9 5l7 7-7 7"
+                  ></path>
+                </svg>
+              </a>
+            </div>
+          </div>
         ))}
-      </Row>
+      </div>
     </div>
   );
-};
+}
 
-export default Lorems;
+export default LoremsPresta;
