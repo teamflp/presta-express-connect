@@ -4,12 +4,15 @@ import { Button } from 'react-bootstrap';
 import Background from '../../../assets/images/lyon.jpg';
 import { ExternalLink } from 'lucide-react';
 import LocationSearchBar from './LocationSearchBar';
+
 function HeroHeader() {
   const [clicked, setClicked] = useState(false);
+  
   const handleClick = () => {
     setClicked(!clicked);
   };
-  return <div className="relative h-[80vh] w-full rounded-t-3xl overflow-hidden">
+  
+  return <div className="relative h-[80vh] w-full overflow-hidden">
             {/* Background image with overlay */}
             <div className="absolute inset-0 bg-cover bg-center" style={{
       backgroundImage: `url(${Background})`
@@ -57,4 +60,5 @@ function HeroHeader() {
             </div>
         </div>;
 }
+
 export default HeroHeader;
