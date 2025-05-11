@@ -4,8 +4,23 @@ console.log('Starting development build...');
 const { execSync } = require('child_process');
 
 try {
+  // Disable declaration file generation for the build
+  process.env.TS_NODE_COMPILER_OPTIONS = JSON.stringify({ 
+    declaration: false,
+    emitDeclarationOnly: false
+  });
+  
   // Using vite build directly with explicit config to avoid TypeScript compiler conflicts
-  execSync('vite build --mode development --config vite.config.ts', { stdio: 'inherit' });
+  execSync('vite build --mode development --config vite.config.ts', { 
+    stdio: 'inherit',
+    env: {
+      ...process.env,
+      TS_NODE_COMPILER_OPTIONS: JSON.stringify({ 
+        declaration: false,
+        emitDeclarationOnly: false
+      })
+    }
+  });
   console.log('Development build completed successfully.');
 } catch (error) {
   console.error('Development build failed:', error);

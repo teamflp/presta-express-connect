@@ -8,7 +8,9 @@
     "allowJs": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "declaration": false,
+    "emitDeclarationOnly": false
   },
   "include": [
     "testing/**/*",

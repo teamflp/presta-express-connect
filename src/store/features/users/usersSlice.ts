@@ -2,7 +2,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-interface UserState {
+// Export the interface so it can be used by other files
+export interface UserState {
   users: any[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
