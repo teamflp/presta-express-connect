@@ -2,7 +2,7 @@
 import { useState, useEffect, createContext, useContext, ReactNode } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginSuccess, logout as logoutAction } from '../store/features/Authentification/AuthSlice';
-import { RootState } from '../store/store';
+import type { RootState } from '../store/store';
 
 // Interface pour le contexte d'authentification
 interface AuthContextType {

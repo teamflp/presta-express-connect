@@ -2,7 +2,8 @@
 // authSlice.ts
 import { createSlice } from '@reduxjs/toolkit';
 
-interface AuthState {
+// Export the AuthState interface so it can be used in other files
+export interface AuthState {
   isAuthenticated: boolean;
 }
 

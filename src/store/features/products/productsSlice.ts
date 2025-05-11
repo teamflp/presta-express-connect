@@ -70,7 +70,6 @@ const productsSlice = createSlice({
 })
 
 export const {fetchProductsStart, fetchProductsSuccess, fetchProductsFail} = productsSlice.actions
-export const productsReducer = productsSlice.reducer; // Export as named export for consistency
 export default productsSlice.reducer
 
 // Récupération des products depuis le back avec Thunk

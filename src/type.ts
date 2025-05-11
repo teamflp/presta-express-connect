@@ -1,7 +1,6 @@
 
 // types.ts
-import store from './store/store';
+import type { RootState, AppDispatch } from './store/store';
 
 // Export type definitions
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
+export type { AppDispatch, RootState };
