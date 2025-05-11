@@ -38,9 +38,9 @@ function ArgumentsPresta() {
                 <h2 className="my-4 title1 fw-bold">Pourquoi choisir <span style={{ color: '#C63E46' }}>Presta Express</span> ?</h2>
                 <p className="mb-5 fs-5">La plateforme qui connecte particuliers et professionnels de confiance pour tous vos projets</p>
             </div>
-            <div className="row row-cols-1 row-cols-md-4 g-4 mt-3">
+            <div className="flex flex-nowrap overflow-x-auto pb-4 gap-4">
                 {argumentsData.map(argument => (
-                    <Card className="col border-0 hover-card" key={argument.id}>
+                    <Card className="border-0 hover-card flex-shrink-0" key={argument.id} style={{ minWidth: '250px', maxWidth: '300px' }}>
                         <div className="text-center p-3">
                             <div className="d-flex justify-content-center mb-3">
                                 <div className="rounded-circle p-3" style={{ backgroundColor: '#f8f9fa', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.05)' }}>
