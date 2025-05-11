@@ -11,7 +11,7 @@ function Category({ job }: CategoryProps) {
     <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden h-full hover-card">
       <div className="p-6 flex flex-col h-full">
         <h5 className="text-xl font-semibold mb-3 text-gray-800">{job.title}</h5>
-        <p className="text-gray-600 mb-4 text-sm">
+        <p className="text-gray-600 mb-4 text-sm line-clamp-2">
           {job.servicesList.join(', ')}
         </p>
         <Link 

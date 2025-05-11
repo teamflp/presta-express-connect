@@ -1,36 +1,35 @@
 
-// Configuration du store
-import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit"
-import { persistStore, persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
-import authReducer from "./features/Authentification/AuthSlice";
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import thunk from 'redux-thunk';
+import { authReducer } from './features/Authentification/AuthSlice';
+import { usersReducer } from './features/users/usersSlice';
+import { productsReducer } from './features/products/productsSlice';
 
 const persistConfig = {
-    key: 'root',
-    storage,
+  key: 'root',
+  storage,
+  whitelist: ['auth', 'users', 'products']
 };
 
-const persistedReducer = persistReducer(persistConfig, authReducer);
-
-// Exportation du store pour pouvoir l'utiliser dans l'application
-export const store = configureStore({
-    reducer: {
-        auth: persistedReducer
-    },
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-            serializableCheck: {
-                ignoredActions: ['persist/PERSIST'],
-            },
-        }),
+const rootReducer = combineReducers({
+  auth: authReducer,
+  users: usersReducer,
+  products: productsReducer,
 });
 
-// Définissez et exportez le type RootState
-export type RootState = ReturnType<typeof store.getState>;
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) => 
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat(thunk),
+});
 
 export const persistor = persistStore(store);
-export type AppStore = typeof store
-export type AppDispatch = typeof store.dispatch
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>
-
-export default store
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+export default store;

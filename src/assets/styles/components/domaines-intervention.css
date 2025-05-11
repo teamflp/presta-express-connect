@@ -1,34 +1,85 @@
 
-/* DOMAINES D'INTERVENTION */
-.domaines-container {
+/* Domaines d'Intervention specific styling */
+.domaines-intervention-section {
+  padding: 4rem 0;
+  background-color: #fafafa;
+}
+
+.domaine-icon-wrapper {
   display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  font-size: clamp(14px, 3vw, 16px);    
-}
-    
-.domaine-card {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
-    
-.domaine-image{
-  width: clamp(30px, 3vw, 50px);  
-  height: auto;
+  width: 80px;
+  height: 80px;
+  background-color: rgba(198, 62, 70, 0.1);
+  border-radius: 50%;
+  margin: 0 auto 1.5rem;
+  transition: all 0.3s ease;
 }
 
-/* COMPOSANT ARGUMENT */
-.titre span{
-  color:#b73840;
+.domaine-icon {
+  color: #C63E46;
+  width: 40px;
+  height: 40px;
 }
 
-.argument-image{
-  width: clamp(50px, 3vw, 70px);  
-  height: auto;
+.domaine-card:hover .domaine-icon-wrapper {
+  transform: scale(1.1);
+  background-color: rgba(198, 62, 70, 0.15);
 }
 
-.argument-title{
-  width: clamp(14px, 3vw, 18px);  
+.domaine-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.domaine-card:hover .domaine-title {
+  color: #C63E46;
+}
+
+.domaine-description {
+  color: #666;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.domaine-count {
+  display: inline-block;
+  background-color: rgba(198, 62, 70, 0.1);
+  color: #C63E46;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 2rem;
+  margin-top: 0.5rem;
+}
+
+/* Grid layout for domaines */
+.domaines-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .domaines-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+  
+  .domaine-icon-wrapper {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .domaine-icon {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .domaine-title {
+    font-size: 0.95rem;
+  }
 }

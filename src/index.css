@@ -30,7 +30,6 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -64,4 +63,12 @@ button:focus-visible {
 /* Fix for the category component */
 .bg-white {
   background-color: white;
+}
+
+/* Line clamp utility */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
 }

@@ -30,7 +30,7 @@ function HeroHeader() {
                 </div>
                 
                 {/* Hero text */}
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-4 text-center">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 text-center">
                     Trouvez le professionnel idéal pour vos projets
                 </h1>
                 
