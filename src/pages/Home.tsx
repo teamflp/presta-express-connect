@@ -1,4 +1,3 @@
-
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import FaqAccordion from '../components/FAQ/Faqs';
@@ -10,12 +9,10 @@ import ArtisanByLetter from '../components/SectionProf/ArtisanByLetter';
 import CategoriesArtisans from '../components/Artisant/CategoriesArtisans';
 import RegistrationArtisan from '../components/SectionProf/RegistrationArtisan';
 import City from '../components/City/City';
-
 function Home() {
-  return (
-    <div className="App">
+  return <div className="App">
       <Header />
-      <div className="my-8">
+      <div className="my-8 bg-white">
         <CardArguments />
       </div>
       <div className="container my-15 container-carousel">
@@ -51,8 +48,6 @@ function Home() {
         <FaqAccordion />
       </div>
       <Footer />
-    </div>
-  );
+    </div>;
 }
-
 export default Home;
