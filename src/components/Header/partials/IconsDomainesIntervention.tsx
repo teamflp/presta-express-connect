@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { domaines } from '../../../assets/tableaux/domaines';
 import { Domaine } from '../../../assets/tableaux/types/domaineTypes';
 function IconsDomainesIntervention() {
-  return <div className="py-16 bg-background px-0 bg-zinc-100">
+  return <div className="py-16 bg-background px-0 bg-zinc-100 mb-0">
       <div className="container mx-auto px-4 w-100">
         <h2 className="text-3xl font-bold text-center mb-12">Nos domaines d'intervention</h2>
         
