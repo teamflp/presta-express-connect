@@ -1,8 +1,12 @@
-interface FiltersState {
-  service?: string;
-  rating?: number;
-  distance?: number;
+
+import React from 'react';
+
+export interface FiltersState {
+  category?: string;
+  rating?: number | string;
+  distance?: number | string;
   availability?: string;
+  service?: string;
 }
 
 interface SearchFiltersProps {
@@ -14,12 +18,16 @@ function SearchFilters({ onFilterChange }: SearchFiltersProps) {
     onFilterChange({ service: e.target.value });
   };
 
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    onFilterChange({ category: e.target.value });
+  };
+
   const handleRatingChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    onFilterChange({ rating: Number(e.target.value) });
+    onFilterChange({ rating: e.target.value });
   };
 
   const handleDistanceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    onFilterChange({ distance: Number(e.target.value) });
+    onFilterChange({ distance: e.target.value });
   };
 
   const handleAvailabilityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -29,6 +37,21 @@ function SearchFilters({ onFilterChange }: SearchFiltersProps) {
   return (
     <div className="bg-white rounded-lg shadow-md p-4 mb-4">
       <h3 className="font-bold text-lg mb-3">Filtres</h3>
+      
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700 mb-1">Catégorie</label>
+        <select 
+          className="w-full border border-gray-300 rounded-md p-2"
+          onChange={handleCategoryChange}
+        >
+          <option value="">Toutes les catégories</option>
+          <option value="plomberie">Plomberie</option>
+          <option value="electricite">Électricité</option>
+          <option value="menuiserie">Menuiserie</option>
+          <option value="peinture">Peinture</option>
+          <option value="maconnerie">Maçonnerie</option>
+        </select>
+      </div>
       
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-1">Service</label>

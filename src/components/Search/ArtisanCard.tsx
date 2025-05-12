@@ -41,66 +41,64 @@ const ArtisanCard: React.FC<ArtisanProps> = ({ artisan, onContact }) => {
 
   return (
     <div className="artisan-card-horizontal rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-all border border-gray-100">
-      <div className="row g-0">
-        <div className="col-md-3">
+      <div className="flex flex-col md:flex-row">
+        <div className="w-full md:w-1/4 h-full">
           <img 
             src={artisan.image} 
-            className="artisan-image h-full object-cover" 
+            className="w-full h-full md:h-64 object-cover" 
             alt={artisan.name}
           />
         </div>
-        <div className="col-md-9">
-          <div className="card-body p-4">
-            <div className="d-flex justify-content-between align-items-start mb-2">
-              <div>
-                <h5 className="card-title mb-1 font-bold">{artisan.name}</h5>
-                <p className="card-subtitle text-muted mb-2 d-flex align-items-center">
-                  <span className="artisan-badge me-2">{artisan.job}</span>
-                  <MapPin size={14} className="me-1" />
-                  <small>{artisan.city}</small>
-                </p>
-              </div>
-              <div className={`artisan-rating ${getRatingColor(artisan.rating)} py-1 px-2 rounded-pill d-flex align-items-center`}>
-                <Star size={14} fill="white" stroke="white" className="me-1" />
-                <span className="fw-bold">{formattedRating}</span>
-                <small className="ms-1 text-white">({artisan.reviews})</small>
+        <div className="w-full md:w-3/4 p-5">
+          <div className="flex justify-between items-start mb-3">
+            <div>
+              <h5 className="text-xl font-bold mb-1">{artisan.name}</h5>
+              <div className="flex items-center text-gray-600 mb-2">
+                <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs mr-2">{artisan.job}</span>
+                <MapPin size={14} className="mr-1" />
+                <span className="text-sm">{artisan.city}</span>
               </div>
             </div>
-            
-            {artisan.description && (
-              <p className="card-text line-clamp-2 mb-3">{artisan.description}</p>
-            )}
-            
-            <div className="d-flex flex-wrap gap-2 mb-3">
-              <span className="badge bg-light text-dark d-flex align-items-center">
-                <Clock size={12} className="me-1" /> Disponible sous 24h
-              </span>
-              <span className="badge bg-light text-dark d-flex align-items-center">
-                <Star size={12} className="me-1 text-warning" /> Service certifié
-              </span>
+            <div className={`${getRatingColor(artisan.rating)} text-white py-1 px-2 rounded-full flex items-center`}>
+              <Star size={14} fill="white" stroke="white" className="mr-1" />
+              <span className="font-bold">{formattedRating}</span>
+              <small className="ml-1">({artisan.reviews})</small>
             </div>
-            
-            <div className="d-flex justify-content-between align-items-center mt-2">
-              <div className="d-flex align-items-center">
-                <Phone size={16} className="text-primary me-2" />
-                <span className="text-primary font-weight-bold">Contact direct</span>
-              </div>
-              <div>
-                <Button 
-                  variant="outline-secondary" 
-                  className="me-2"
-                  onClick={() => window.location.href = `/artisan/${artisan.id}`}
-                >
-                  Voir le profil
-                </Button>
-                <Button 
-                  variant="primary"
-                  onClick={handleContactClick}
-                  className="artisan-contact-btn"
-                >
-                  Demander un devis
-                </Button>
-              </div>
+          </div>
+          
+          {artisan.description && (
+            <p className="text-gray-600 line-clamp-2 mb-4">{artisan.description}</p>
+          )}
+          
+          <div className="flex flex-wrap gap-2 mb-4">
+            <span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-full flex items-center">
+              <Clock size={12} className="mr-1" /> Disponible sous 24h
+            </span>
+            <span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-full flex items-center">
+              <Star size={12} className="mr-1 text-yellow-500" /> Service certifié
+            </span>
+          </div>
+          
+          <div className="flex justify-between items-center mt-4 border-t pt-4">
+            <div className="flex items-center">
+              <Phone size={16} className="text-red-500 mr-2" />
+              <span className="text-red-500 font-semibold">Contact direct</span>
+            </div>
+            <div className="flex gap-2">
+              <Button 
+                variant="outline-secondary" 
+                className="px-3 py-2"
+                onClick={() => window.location.href = `/artisan/${artisan.id}`}
+              >
+                Voir le profil
+              </Button>
+              <Button 
+                variant="danger"
+                onClick={handleContactClick}
+                className="px-3 py-2 bg-[#C63E46] border-[#C63E46]"
+              >
+                Demander un devis
+              </Button>
             </div>
           </div>
         </div>
