@@ -1,5 +1,4 @@
-
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { MapPin, Compass, Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -29,98 +28,91 @@ function LocationSearchBar() {
     if (!navigator.geolocation) {
       toast.error('La géolocalisation n\'est pas prise en charge par votre navigateur');
       setIsGeolocating(false);
+      setPlaceholder('Rechercher par ville, adresse ou code postal'); // Rétablir le placeholder initial
       return;
     }
 
     navigator.geolocation.getCurrentPosition(
-      (position) => {
-        // Utilisation de l'API de géocodage inverse pour obtenir l'adresse à partir des coordonnées
-        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}&zoom=18&addressdetails=1`)
-          .then(response => response.json())
-          .then(data => {
-            // Formatage de l'adresse récupérée
-            const city = data.address.city || data.address.town || data.address.village || '';
-            const postcode = data.address.postcode || '';
-            
-            // Mise à jour du champ de recherche
-            const locationStr = city ? `${city}${postcode ? ', ' + postcode : ''}` : 'Position actuelle';
-            setSearchTerm(locationStr);
-            
-            // Message de succès
-            toast.success('Position récupérée avec succès');
-          })
-          .catch(err => {
-            console.error('Erreur lors de la géolocalisation inverse:', err);
-            toast.error('Impossible de déterminer votre adresse');
-            setSearchTerm('Position actuelle');
-          })
-          .finally(() => {
-            setPlaceholder('Rechercher par ville, adresse ou code postal');
-            setIsGeolocating(false);
-          });
-      },
-      (error) => {
-        console.error('Erreur de géolocalisation:', error);
-        
-        // Messages d'erreur personnalisés selon le type d'erreur
-        let errorMessage = 'Erreur lors de la récupération de votre position';
-        
-        if (error.code === 1) {
-          errorMessage = 'Accès à la localisation refusé. Veuillez autoriser l\'accès à votre position.';
-        } else if (error.code === 2) {
-          errorMessage = 'Position indisponible. Veuillez réessayer plus tard.';
-        } else if (error.code === 3) {
-          errorMessage = 'Délai d\'attente dépassé. Veuillez réessayer.';
+        (position) => {
+          fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}&zoom=18&addressdetails=1`)
+              .then(response => response.json())
+              .then(data => {
+                const city = data.address.city || data.address.town || data.address.village || '';
+                const postcode = data.address.postcode || '';
+                const locationStr = city ? `${city}${postcode ? ', ' + postcode : ''}` : 'Position actuelle';
+                setSearchTerm(locationStr);
+                toast.success('Position récupérée avec succès');
+              })
+              .catch(err => {
+                console.error('Erreur lors de la géolocalisation inverse:', err);
+                toast.error('Impossible de déterminer votre adresse');
+                setSearchTerm('Position actuelle'); // Peut-être laisser vide ou indiquer une erreur
+              })
+              .finally(() => {
+                setPlaceholder('Rechercher par ville, adresse ou code postal');
+                setIsGeolocating(false);
+              });
+        },
+        (error) => {
+          console.error('Erreur de géolocalisation:', error);
+          let errorMessage = 'Erreur lors de la récupération de votre position';
+          if (error.code === 1) {
+            errorMessage = 'Accès à la localisation refusé. Veuillez autoriser l\'accès à votre position.';
+          } else if (error.code === 2) {
+            errorMessage = 'Position indisponible. Veuillez réessayer plus tard.';
+          } else if (error.code === 3) {
+            errorMessage = 'Délai d\'attente dépassé. Veuillez réessayer.';
+          }
+          toast.error(errorMessage);
+          setIsGeolocating(false);
+          setPlaceholder('Rechercher par ville, adresse ou code postal');
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0
         }
-        
-        toast.error(errorMessage);
-        setIsGeolocating(false);
-        setPlaceholder('Rechercher par ville, adresse ou code postal');
-      },
-      {
-        enableHighAccuracy: true,
-        timeout: 10000,
-        maximumAge: 0
-      }
     );
   };
 
   return (
-    <div className="location-search-container">
-      <Form onSubmit={handleSearch} className="location-search-form">
-        <InputGroup className="search-input-group">
-          <InputGroup.Text className="search-icon-wrapper">
-            <MapPin size={20} className="text-primary" />
-          </InputGroup.Text>
-          <Form.Control
-            type="text"
-            placeholder={placeholder}
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="search-input"
-            disabled={isGeolocating}
-          />
-          <Button 
-            variant="light" 
-            onClick={handleGeolocation}
-            disabled={isGeolocating}
-            className="geolocation-button"
-            title="Utiliser ma position actuelle"
-          >
-            <Compass size={18} className={isGeolocating ? 'animate-spin' : ''} />
-            <span className="geolocation-text">Ma position</span>
-          </Button>
-          <Button 
-            type="submit" 
-            variant="primary"
-            className="search-submit-button"
-          >
-            <Search size={18} className="me-1 d-none d-sm-inline" />
-            Rechercher
-          </Button>
-        </InputGroup>
-      </Form>
-    </div>
+      <div className="location-search-container my-3"> {/* my-3 pour l'espacement vertical */}
+        <Form onSubmit={handleSearch} className="location-search-form">
+          <InputGroup className="location-search-bar shadow-sm rounded-pill">
+            <InputGroup.Text className="border-1 ps-3 pe-1">
+              <MapPin size={20} className="text-muted" />
+            </InputGroup.Text>
+            <Form.Control
+                type="text"
+                placeholder={placeholder}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="search-input border-0 shadow-none py-lg-4" // shadow-none pour enlever l'ombre au focus
+                disabled={isGeolocating}
+                aria-label="Rechercher par ville, adresse ou code postal"
+            />
+            <Button
+                variant="light"
+                onClick={handleGeolocation}
+                disabled={isGeolocating}
+                className="geolocation-button px-2 py-l border-2 d-flex align-items-center" // d-flex et align-items-center pour l'alignement vertical
+                title="Utiliser ma position actuelle"
+            >
+              <Compass size={18} className={isGeolocating ? 'animate-spin text-primary' : 'text-secondary'} />
+              <span className="geolocation-text ms-1 d-none d-md-inline">Ma position</span>
+            </Button>
+            <Button
+                type="submit"
+                variant="primary"
+                className="search-submit-button py-lg-3" // react-bootstrap s'occupe des coins arrondis du dernier élément
+                disabled={isGeolocating}
+            >
+              <Search size={18} className="me-1 d-none d-sm-inline" />
+              Rechercher
+            </Button>
+          </InputGroup>
+        </Form>
+      </div>
   );
 }
 
