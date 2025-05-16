@@ -21,7 +21,8 @@ try {
         emitDeclarationOnly: false,
         skipLibCheck: true
       }),
-      TS_NODE_SKIP_PROJECT: "true"
+      TS_NODE_SKIP_PROJECT: "true",
+      TS_NODE_TRANSPILE_ONLY: "true"
     }
   });
   console.log('Development build completed successfully.');
