@@ -7,7 +7,8 @@ try {
   // Set environment variables to disable declaration file generation
   process.env.TS_NODE_COMPILER_OPTIONS = JSON.stringify({ 
     declaration: false,
-    emitDeclarationOnly: false
+    emitDeclarationOnly: false,
+    skipLibCheck: true
   });
   
   // Using vite build directly with explicit config to avoid TypeScript compiler conflicts
@@ -17,7 +18,8 @@ try {
       ...process.env,
       TS_NODE_COMPILER_OPTIONS: JSON.stringify({ 
         declaration: false,
-        emitDeclarationOnly: false
+        emitDeclarationOnly: false,
+        skipLibCheck: true
       }),
       TS_NODE_SKIP_PROJECT: "true"
     }
