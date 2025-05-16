@@ -72,7 +72,7 @@ const NavbarComponent = () => {
                     <LogIn size={16} />
                     Connexion
                   </Nav.Link>
-                  <Nav.Link as={NavLink} to="/professional-login" className="btn btn-primary ms-2 py-2 px-3 rounded">
+                  <Nav.Link as={NavLink} to="/professional-login" className="btn btn-primary ms-2 py-2 px-3 rounded text-white">
                     Espace Pro
                   </Nav.Link>
                 </div>}
