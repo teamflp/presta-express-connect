@@ -12,14 +12,14 @@ const City: React.FC<CityProps> = () => {
   const carouselContentRef = useRef<HTMLDivElement>(null);
   const [autoScrollActive, setAutoScrollActive] = useState(true);
   const [currentPosition, setCurrentPosition] = useState(0);
-  const autoScrollRef = useRef<NodeJS.Timeout | null>(null);
-  const scrollIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const autoScrollRef = useRef<number | null>(null);
+  const scrollIntervalRef = useRef<number | null>(null);
 
   // Fonction pour faire défiler automatiquement
   const startAutoScroll = () => {
     if (autoScrollRef.current) clearInterval(autoScrollRef.current);
     
-    autoScrollRef.current = setInterval(() => {
+    autoScrollRef.current = window.setInterval(() => {
       if (autoScrollActive) {
         setCurrentPosition(prev => {
           const carouselContent = carouselContentRef.current;
@@ -59,7 +59,7 @@ const City: React.FC<CityProps> = () => {
     
     if (scrollIntervalRef.current) clearInterval(scrollIntervalRef.current);
     
-    scrollIntervalRef.current = setInterval(() => {
+    scrollIntervalRef.current = window.setInterval(() => {
       setCurrentPosition(prev => {
         const step = 10;
         if (direction === 'next') {

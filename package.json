@@ -19,6 +19,7 @@
     "@tailwindcss/cli": "^4.1.5",
     "@tailwindcss/vite": "^4.1.5",
     "@types/redux-thunk": "^2.1.0",
+    "@types/testing-library__jest-dom": "^6.0.0",
     "axios": "1.8.2",
     "bootstrap": "^5.3.3",
     "lovable-tagger": "^1.1.8",
