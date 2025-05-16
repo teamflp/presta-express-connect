@@ -4,7 +4,7 @@ console.log('Starting development build...');
 const { execSync } = require('child_process');
 
 try {
-  // Disable declaration file generation for the build
+  // Set environment variables to disable declaration file generation
   process.env.TS_NODE_COMPILER_OPTIONS = JSON.stringify({ 
     declaration: false,
     emitDeclarationOnly: false
@@ -18,7 +18,8 @@ try {
       TS_NODE_COMPILER_OPTIONS: JSON.stringify({ 
         declaration: false,
         emitDeclarationOnly: false
-      })
+      }),
+      TS_NODE_SKIP_PROJECT: "true"
     }
   });
   console.log('Development build completed successfully.');

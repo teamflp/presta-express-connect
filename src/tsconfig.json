@@ -10,10 +10,12 @@
     "esModuleInterop": true,
     "jsx": "react-jsx",
     "declaration": false,
-    "emitDeclarationOnly": false
+    "emitDeclarationOnly": false,
+    "outDir": "../dist"
   },
   "include": [
     "testing/**/*",
-    "store/test/**/*"
+    "store/test/**/*",
+    "**/*"
   ]
 }

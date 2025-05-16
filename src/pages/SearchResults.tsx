@@ -6,7 +6,7 @@ import LocationBar from '../components/Search/LocationBar';
 import NoResults from '../components/Search/NoResults';
 import PaginationComponent from '../components/Pagination/PaginationComponent';
 import { useSearchParams } from 'react-router-dom';
-import { MapPin, Filter, SlidersHorizontal } from 'lucide-react';
+import { MapPin, SlidersHorizontal } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import RegistrationArtisan from '../components/SectionProf/RegistrationArtisan';
 
