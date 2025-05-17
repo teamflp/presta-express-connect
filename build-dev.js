@@ -8,7 +8,8 @@ try {
   process.env.TS_NODE_COMPILER_OPTIONS = JSON.stringify({ 
     declaration: false,
     emitDeclarationOnly: false,
-    skipLibCheck: true
+    skipLibCheck: true,
+    skipDefaultLibCheck: true
   });
   
   // Using vite build directly with explicit config to avoid TypeScript compiler conflicts
@@ -19,7 +20,8 @@ try {
       TS_NODE_COMPILER_OPTIONS: JSON.stringify({ 
         declaration: false,
         emitDeclarationOnly: false,
-        skipLibCheck: true
+        skipLibCheck: true,
+        skipDefaultLibCheck: true
       }),
       TS_NODE_SKIP_PROJECT: "true",
       TS_NODE_TRANSPILE_ONLY: "true"
