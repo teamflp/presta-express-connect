@@ -4,12 +4,12 @@ import FaqAccordion from '../components/FAQ/Faqs';
 import Footer from '../components/Footer/Footer';
 import DomainFilter from '../components/Filtres/DomainesFilters';
 const DomainesIntervention: React.FC = () => {
-  return <div className="App py-[60px]">
+  return <div className="App my-[65px] py-[96px]">
       {/* Affichage de la barre de navigation */}
       <Navbar />
       
       {/* Affichage des filtres pour les domaines */}
-      <div className="container my-3 my-md-5">
+      <div className="container my-md-5 my-0">
         <DomainFilter />
       </div>
       
