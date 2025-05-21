@@ -16,6 +16,7 @@ export default {
       animation: {
         "fade-in": "fadeIn 0.3s ease-out",
         "scale-in": "scaleIn 0.2s ease-out",
+        "fadeIn": "fadeIn 0.5s ease-out forwards",
       },
       keyframes: {
         fadeIn: {
@@ -30,6 +31,7 @@ export default {
       boxShadow: {
         'card': '0 4px 10px rgba(0, 0, 0, 0.05)',
         'hover': '0 8px 30px rgba(0, 0, 0, 0.12)',
+        'inner': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)'
       },
       borderRadius: {
         'custom': '25px 1px 25px 25px',

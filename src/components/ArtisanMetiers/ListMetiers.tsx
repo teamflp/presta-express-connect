@@ -53,18 +53,18 @@ function LetterMetiersWithList() {
 
     return (
         <div className="container mx-auto my-8 px-4">
-            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-                <h3 className="text-2xl font-bold mb-6 text-gray-800">Trouvez les artisans par métier</h3>
+            <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-100 hover:shadow-xl transition-all duration-300">
+                <h3 className="text-2xl md:text-3xl font-bold mb-6 text-gray-800">Trouvez les artisans par métier</h3>
                 
                 {/* Conteneur pour les boutons de lettres */}
-                <div className="flex flex-wrap gap-2 mb-6">
+                <div className="flex flex-wrap gap-2 md:gap-3 mb-8">
                     {letters.map(letter => (
                         <button
                             key={letter}
                             onClick={() => setSelectedLetter(letter)}
                             className={`px-3 py-2 rounded-lg transition-all duration-300 hover:shadow-md
                                 ${selectedLetter === letter 
-                                    ? 'bg-primary text-white shadow-md' 
+                                    ? 'bg-primary text-white shadow-md transform scale-105' 
                                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
                             aria-pressed={selectedLetter === letter}
                         >
@@ -73,27 +73,27 @@ function LetterMetiersWithList() {
                     ))}
                 </div>
                 
-                <div className="bg-gray-50 p-4 rounded-lg">
-                    <h4 className="text-xl font-medium mb-4 text-gray-700">
-                        Métiers commençant par {selectedLetter}
+                <div className="bg-gray-50 p-5 rounded-lg shadow-inner">
+                    <h4 className="text-xl font-medium mb-5 text-gray-700 border-b pb-2 border-gray-200">
+                        Métiers commençant par "{selectedLetter}"
                     </h4>
                     
-                    {jobs.length > 0 ? (
-                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                    {jobs.length > 0 && jobs[0] !== '' ? (
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
                             {jobs.map((job, index) => (
                                 <div key={index} className="group">
                                     <NavLink 
                                         to={`/metiers/${job.toLowerCase()}`} 
-                                        className="block py-2 px-3 rounded-lg text-gray-700 hover:bg-white hover:shadow-md transition-all duration-300 group-hover:text-primary"
+                                        className="block py-3 px-4 rounded-lg text-gray-700 bg-white hover:bg-primary hover:text-white shadow-sm transition-all duration-300 group-hover:shadow-md"
                                     >
-                                        {job}
-                                        <span className="block h-0.5 w-0 group-hover:w-full bg-primary transition-all duration-300"></span>
+                                        <span className="font-medium">{job}</span>
+                                        <div className="h-0.5 w-0 group-hover:w-full bg-white transition-all duration-300 mt-1 opacity-70"></div>
                                     </NavLink>
                                 </div>
                             ))}
                         </div>
                     ) : (
-                        <p className="text-gray-500 italic">Aucun métier trouvé pour cette lettre</p>
+                        <p className="text-gray-500 italic py-3 px-4">Aucun métier trouvé pour cette lettre</p>
                     )}
                 </div>
             </div>

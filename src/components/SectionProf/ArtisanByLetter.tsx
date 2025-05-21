@@ -33,16 +33,16 @@ function ArtisanByLetter() {
   const letters = Object.keys(jobsByLetter);
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-lg">
-      <h3 className="text-2xl font-bold mb-6 text-gray-800">Trouvez par nom de famille</h3>
+    <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl">
+      <h3 className="text-2xl md:text-3xl font-bold mb-6 text-gray-800">Trouvez un artisan par nom de famille</h3>
       
-      <div className="flex flex-wrap gap-2 mb-6">
+      <div className="flex flex-wrap gap-2 mb-8">
         {letters.map((letter: string) => (
           <button
             key={letter}
             className={`px-3 py-2 rounded-lg transition-all duration-300 hover:shadow-md
               ${activeLetter === letter 
-                ? 'bg-primary text-white shadow-md' 
+                ? 'bg-primary text-white shadow-md transform scale-105' 
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
             onClick={() => handleLetterClick(letter)}
             aria-pressed={activeLetter === letter}
@@ -52,20 +52,20 @@ function ArtisanByLetter() {
         ))}
       </div>
       
-      <div className="bg-gray-50 p-4 rounded-lg">
-        <h4 className="text-xl font-medium mb-4 text-gray-700">
-          Artisans dont le nom commence par {activeLetter}
+      <div className="bg-gray-50 p-5 rounded-lg shadow-inner">
+        <h4 className="text-xl font-medium mb-5 text-gray-700 border-b pb-2 border-gray-200">
+          Artisans dont le nom commence par "{activeLetter}"
         </h4>
         
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {jobsByLetter[activeLetter].map((name: string, index: number) => (
             <div key={index} className="group">
               <NavLink 
                 to={`/artisans/${name.toLowerCase()}`} 
-                className="block py-2 px-3 rounded-lg text-gray-700 hover:bg-white hover:shadow-md transition-all duration-300 group-hover:text-primary"
+                className="block py-3 px-4 rounded-lg text-gray-700 bg-white hover:bg-primary hover:text-white shadow-sm transition-all duration-300 group-hover:shadow-md"
               >
-                {name}
-                <span className="block h-0.5 w-0 group-hover:w-full bg-primary transition-all duration-300"></span>
+                <span className="font-medium">{name}</span>
+                <div className="h-0.5 w-0 group-hover:w-full bg-white transition-all duration-300 mt-1 opacity-70"></div>
               </NavLink>
             </div>
           ))}
