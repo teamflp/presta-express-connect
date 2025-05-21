@@ -1,3 +1,4 @@
+
 import { Briefcase, Search, UsersRound, HelpCircle, ChevronRight } from 'lucide-react';
 import LetterMetiersWithList from '../components/ArtisanMetiers/ListMetiers';
 import FaqAccordion from '../components/FAQ/Faqs';
@@ -5,18 +6,22 @@ import Navbar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
 import ArtisanByLetter from '../components/SectionProf/ArtisanByLetter';
 import { useState } from 'react';
+
 function Metiers() {
   const [searchTerm, setSearchTerm] = useState<string>('');
+  
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     // Implémentation de la recherche - cette partie serait connectée à une API réelle
     console.log(`Recherche pour: ${searchTerm}`);
   };
-  return <div className="App bg-gray-50 min-h-screen">
+  
+  return (
+    <div className="App bg-gray-50 min-h-screen">
       <Navbar />
       
-      {/* Hero section avec gradient amélioré */}
-      <section className="bg-gradient-to-br from-primary via-[#b73840] to-[#a73238] text-white py-16 md:py-24 px-4 mx-0 my-[70px]">
+      {/* Hero section avec gradient amélioré - ajustement des marges */}
+      <section className="bg-gradient-to-br from-primary via-[#b73840] to-[#a73238] text-white py-16 md:py-24 px-4 mt-16 md:mt-20">
         <div className="container mx-auto">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fadeIn">Les métiers de nos artisans</h1>
@@ -26,7 +31,10 @@ function Metiers() {
             
             <form onSubmit={handleSearch} className="bg-white p-2 rounded-lg shadow-lg flex items-center max-w-xl mx-auto">
               <Search className="text-gray-400 ml-3 mr-2" size={20} />
-              <input type="text" placeholder="Rechercher un métier, ex: plombier, électricien..." className="flex-1 outline-none text-gray-700 py-3 px-2" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+              <input type="text" placeholder="Rechercher un métier, ex: plombier, électricien..." 
+                     className="flex-1 outline-none text-gray-700 py-3 px-2" 
+                     value={searchTerm} 
+                     onChange={e => setSearchTerm(e.target.value)} />
               <button type="submit" className="bg-primary text-white px-6 py-3 rounded hover:bg-[#b73840] transition-colors flex items-center">
                 Rechercher
                 <ChevronRight size={18} className="ml-1" />
@@ -36,10 +44,10 @@ function Metiers() {
         </div>
       </section>
       
-      {/* Statistics section avec animation */}
-      <section className="py-12 md:py-16">
+      {/* Statistics section avec espacement amélioré */}
+      <section className="py-16">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white p-6 md:p-8 rounded-xl shadow-md text-center transform transition-all duration-500 hover:shadow-lg hover:-translate-y-1">
               <div className="bg-red-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-5">
                 <Briefcase className="text-primary" size={32} />
@@ -67,7 +75,7 @@ function Metiers() {
         </div>
       </section>
       
-      {/* Main content */}
+      {/* Main content - ajout d'espacement et marge correcte */}
       <section className="py-12 md:py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto mb-10 text-center">
@@ -76,11 +84,13 @@ function Metiers() {
               Parcourez notre liste complète de métiers de l'artisanat classés par ordre alphabétique.
             </p>
           </div>
-          <LetterMetiersWithList />
+          <div className="mb-16">
+            <LetterMetiersWithList />
+          </div>
         </div>
       </section>
       
-      {/* Secondary content */}
+      {/* Secondary content - ajustement des marges */}
       <section className="py-12 md:py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto mb-10 text-center">
@@ -89,11 +99,13 @@ function Metiers() {
               En plus de rechercher par métier, vous pouvez également parcourir les professionnels selon leur nom de famille.
             </p>
           </div>
-          <ArtisanByLetter />
+          <div className="mb-8">
+            <ArtisanByLetter />
+          </div>
         </div>
       </section>
       
-      {/* FAQ section */}
+      {/* FAQ section - espacement amélioré */}
       <section className="py-12 md:py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto mb-10 text-center">
@@ -108,7 +120,7 @@ function Metiers() {
         </div>
       </section>
       
-      {/* CTA section */}
+      {/* CTA section - ajustement des marges */}
       <section className="py-16 md:py-24 bg-gradient-to-br from-primary via-[#b73840] to-[#a73238] text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Vous êtes un artisan ?</h2>
@@ -122,6 +134,8 @@ function Metiers() {
       </section>
       
       <Footer />   
-    </div>;
+    </div>
+  );
 }
+
 export default Metiers;
