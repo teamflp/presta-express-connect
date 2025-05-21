@@ -70,7 +70,7 @@ function LetterMetiersWithList() {
                 {jobs.length > 0 && jobs[0] !== '' ? <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
                         {jobs.map((job, index) => <div key={index} className="group">
                                 <button onClick={() => handleJobClick(job)} className="block w-full text-left py-3 px-4 rounded-lg text-gray-700 bg-white hover:bg-primary hover:text-white shadow-sm transition-all duration-300 group-hover:shadow-md">
-                                    <span className="font-medium text-white">{job}</span>
+                                    <span className="font-medium text-red-700">{job}</span>
                                     <div className="h-0.5 w-0 group-hover:w-full bg-white transition-all duration-300 mt-1 opacity-70"></div>
                                 </button>
                             </div>)}
