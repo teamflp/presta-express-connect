@@ -5,6 +5,7 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "declaration": false,
+    "declarationDir": null,
     "emitDeclarationOnly": false,
     "skipLibCheck": true,
     "outDir": "./dist"

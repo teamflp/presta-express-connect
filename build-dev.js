@@ -7,6 +7,7 @@ try {
   // Set environment variables to disable declaration file generation
   process.env.TS_NODE_COMPILER_OPTIONS = JSON.stringify({ 
     declaration: false,
+    declarationDir: null,
     emitDeclarationOnly: false,
     skipLibCheck: true,
     skipDefaultLibCheck: true
@@ -19,6 +20,7 @@ try {
       ...process.env,
       TS_NODE_COMPILER_OPTIONS: JSON.stringify({ 
         declaration: false,
+        declarationDir: null,
         emitDeclarationOnly: false,
         skipLibCheck: true,
         skipDefaultLibCheck: true
