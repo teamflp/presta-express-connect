@@ -59,7 +59,7 @@ const Contact = () => {
   };
   return <>
       <Navbar />
-      <Container className="py-5 my-[130px]">
+      <Container className="my-[110px] py-[96px]">
         <div className="text-center mb-5">
           <h1 className="fw-bold mb-3">Contactez-nous</h1>
           <p className="text-muted">Nous sommes à votre écoute pour toute question ou suggestion</p>
