@@ -25,9 +25,9 @@ function ArgumentsPresta() {
     icon: Users
   }];
   return <div style={{
-    borderRadius: "25px 1px 25px 25px",
-    boxShadow: "0 8px 16px rgba(0, 0, 0, 0.08)"
-  }} className="container bg-white p-4 p-md-5 rounded-none px-[15px] mx-0 my-0">
+    // borderRadius: "25px 1px 25px 25px",
+    // boxShadow: "0 8px 16px rgba(0, 0, 0, 0.08)"
+  }} className="container bg-white p-4 p-md-5 rounded-none mx-auto my-0">
             <div className="text-center">
                 <h2 className="my-4 title1 fw-bold">Pourquoi choisir <span style={{
           color: '#C63E46'
