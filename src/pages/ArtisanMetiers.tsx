@@ -1,4 +1,3 @@
-
 import { Briefcase, Search, UsersRound, HelpCircle, ChevronRight } from 'lucide-react';
 import LetterMetiersWithList from '../components/ArtisanMetiers/ListMetiers';
 import FaqAccordion from '../components/FAQ/Faqs';
@@ -6,22 +5,18 @@ import Navbar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
 import ArtisanByLetter from '../components/SectionProf/ArtisanByLetter';
 import { useState } from 'react';
-
 function Metiers() {
   const [searchTerm, setSearchTerm] = useState<string>('');
-
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     // Implémentation de la recherche - cette partie serait connectée à une API réelle
     console.log(`Recherche pour: ${searchTerm}`);
   };
-
-  return (
-    <div className="App bg-gray-50 min-h-screen">
+  return <div className="App bg-gray-50 min-h-screen">
       <Navbar />
       
       {/* Hero section avec gradient amélioré */}
-      <section className="bg-gradient-to-br from-primary via-[#b73840] to-[#a73238] text-white py-16 md:py-24 px-4">
+      <section className="bg-gradient-to-br from-primary via-[#b73840] to-[#a73238] text-white py-16 md:py-24 px-4 mx-0 my-[70px]">
         <div className="container mx-auto">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fadeIn">Les métiers de nos artisans</h1>
@@ -31,17 +26,8 @@ function Metiers() {
             
             <form onSubmit={handleSearch} className="bg-white p-2 rounded-lg shadow-lg flex items-center max-w-xl mx-auto">
               <Search className="text-gray-400 ml-3 mr-2" size={20} />
-              <input 
-                type="text" 
-                placeholder="Rechercher un métier, ex: plombier, électricien..." 
-                className="flex-1 outline-none text-gray-700 py-3 px-2"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              <button 
-                type="submit"
-                className="bg-primary text-white px-6 py-3 rounded hover:bg-[#b73840] transition-colors flex items-center"
-              >
+              <input type="text" placeholder="Rechercher un métier, ex: plombier, électricien..." className="flex-1 outline-none text-gray-700 py-3 px-2" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+              <button type="submit" className="bg-primary text-white px-6 py-3 rounded hover:bg-[#b73840] transition-colors flex items-center">
                 Rechercher
                 <ChevronRight size={18} className="ml-1" />
               </button>
@@ -136,8 +122,6 @@ function Metiers() {
       </section>
       
       <Footer />   
-    </div>
-  );
+    </div>;
 }
-
 export default Metiers;
