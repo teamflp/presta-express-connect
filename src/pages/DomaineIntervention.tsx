@@ -1,13 +1,10 @@
-
 import React from 'react';
 import Navbar from '../components/Header/partials/NavBar';
 import FaqAccordion from '../components/FAQ/Faqs';
 import Footer from '../components/Footer/Footer';
-import DomainFilter from '../components/Filtres/DomainesFilters'; 
-
+import DomainFilter from '../components/Filtres/DomainesFilters';
 const DomainesIntervention: React.FC = () => {
-  return (
-    <div className="App">
+  return <div className="App py-[60px]">
       {/* Affichage de la barre de navigation */}
       <Navbar />
       
@@ -23,8 +20,6 @@ const DomainesIntervention: React.FC = () => {
       
       {/* Affichage du pied de page */}
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default DomainesIntervention;
