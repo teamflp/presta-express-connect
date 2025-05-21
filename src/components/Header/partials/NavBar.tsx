@@ -1,9 +1,11 @@
+
 import { useState, useEffect } from 'react';
 import { Navbar, Nav, Container, Offcanvas } from 'react-bootstrap';
 import { NavLink, useLocation } from 'react-router-dom';
 import '../../../assets/styles/layout/header.css';
 import { useAuth } from '../../../hooks/useAuth';
 import { Menu, User, LogIn } from 'lucide-react';
+
 const NavbarComponent = () => {
   const location = useLocation();
   const {
@@ -13,8 +15,10 @@ const NavbarComponent = () => {
   } = useAuth();
   const [isNavbarScroll, setIsNavbarScroll] = useState(false);
   const [showOffcanvas, setShowOffcanvas] = useState(false);
+  
   const handleOffcanvasClose = () => setShowOffcanvas(false);
   const handleOffcanvasShow = () => setShowOffcanvas(true);
+  
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50 || location.pathname !== '/') {
@@ -31,8 +35,10 @@ const NavbarComponent = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [location.pathname]);
-  return <>
-      <Navbar expand="lg" className={`navbar sticky-top ${isNavbarScroll ? 'navbar-scroll shadow-lg' : ''} ${location.pathname === '/' && !isNavbarScroll ? 'navbar-home' : ''}`}>
+  
+  return (
+    <>
+      <Navbar expand="lg" className={`navbar fixed-top ${isNavbarScroll ? 'navbar-scroll shadow-lg' : ''} ${location.pathname === '/' && !isNavbarScroll ? 'navbar-home' : ''}`}>
         <Container>
           {/* Brand */}
           <NavLink to="/" className="navbar-brand fw-bold d-flex align-items-center">
@@ -124,6 +130,8 @@ const NavbarComponent = () => {
           </Nav>
         </Offcanvas.Body>
       </Offcanvas>
-    </>;
+    </>
+  );
 };
+
 export default NavbarComponent;

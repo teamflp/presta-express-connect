@@ -8,6 +8,7 @@ function Header() {
   return (
     <header className="bg-background">
       <NavBar />
+      <div className="header-spacing"></div>
       <HeroHeader />
       <div className="container mx-auto mb-4">
         <LocationSearchBar />
