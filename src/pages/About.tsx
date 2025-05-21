@@ -1,15 +1,12 @@
-
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import Navbar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
 import FaqAccordion from '../components/FAQ/Faqs';
-
 function About() {
-  return (
-    <div className="App">
+  return <div className="App my-[130px]">
       <Navbar />
       
-      <Container className="my-5">
+      <Container className="my-[80px]">
         <h1 className="text-3xl font-bold mb-4 text-center">À propos de PrestaExpress</h1>
         
         <Row className="mb-5">
@@ -78,8 +75,6 @@ function About() {
       </div>
       
       <Footer />
-    </div>
-  );
+    </div>;
 }
-
 export default About;
