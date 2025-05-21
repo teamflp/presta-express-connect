@@ -65,7 +65,7 @@ function LocationSearchBar() {
   };
   return <div className="location-search-container my-3"> {/* my-3 pour l'espacement vertical */}
         <Form onSubmit={handleSearch} className="location-search-form">
-          <InputGroup className="location-search-bar shadow-sm rounded-pill">
+          <InputGroup className="location-search-bar shadow-sm rounded-pill py-0">
             <InputGroup.Text className="border-1 ps-3 pe-1">
               <MapPin size={20} className="text-muted" />
             </InputGroup.Text>
@@ -74,12 +74,13 @@ function LocationSearchBar() {
         disabled={isGeolocating} aria-label="Rechercher par ville, adresse ou code postal" className="search-input border-0 shadow-none py-lg-4 py-0" />
             <Button variant="light" onClick={handleGeolocation} disabled={isGeolocating}
         // d-flex et align-items-center pour l'alignement vertical
-        title="Utiliser ma position actuelle" className="geolocation-button px-2 py-l border-2 d-flex align-items-center bg-slate-300 hover:bg-slate-200 py-[17px] rounded-none">
+        title="Utiliser ma position actuelle" className="geolocation-button px-2 py-l border-2 d-flex align-items-center bg-slate-300 hover:bg-slate-200 rounded-none py-[16px]">
               <Compass size={18} className={isGeolocating ? 'animate-spin text-primary' : 'text-secondary'} />
               <span className="geolocation-text ms-1 d-none d-md-inline">Ma position</span>
             </Button>
-            <Button type="submit" variant="primary" className="search-submit-button py-lg-3" // react-bootstrap s'occupe des coins arrondis du dernier élément
-        disabled={isGeolocating}>
+            <Button type="submit" variant="primary"
+        // react-bootstrap s'occupe des coins arrondis du dernier élément
+        disabled={isGeolocating} className="search-submit-button py-lg-3 py-0">
               <Search size={18} className="me-1 d-none d-sm-inline" />
               Rechercher
             </Button>
