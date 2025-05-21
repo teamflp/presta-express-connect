@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import NavBar from '../components/Header/partials/NavBar';
@@ -20,60 +19,57 @@ interface Artisan {
   workingHours: string;
   experience: number;
 }
-
 const generateMockArtisans = (jobName: string): Artisan[] => {
   // This would be replaced by an API call in a real app
-  return [
-    {
-      id: 1,
-      name: `Jean Dupont`,
-      job: jobName,
-      location: 'Lyon, France',
-      rating: 4.8,
-      reviews: 127,
-      image: "/src/assets/images/installation-electrique.jpg",
-      description: `Artisan ${jobName} expérimenté avec plus de 15 ans d'expérience. Spécialisé dans tous types de travaux de ${jobName.toLowerCase()}.`,
-      phone: '06 12 34 56 78',
-      email: 'jean.dupont@example.com',
-      workingHours: 'Lun-Ven: 8h-18h',
-      experience: 15
-    },
-    {
-      id: 2,
-      name: `Marie Martin`,
-      job: jobName,
-      location: 'Paris, France',
-      rating: 4.9,
-      reviews: 85,
-      image: "/src/assets/images/plomberie.jpg",
-      description: `Artisan ${jobName} qualifié proposant des services de qualité. Travaux soignés et garantis.`,
-      phone: '06 98 76 54 32',
-      email: 'marie.martin@example.com',
-      workingHours: 'Lun-Sam: 9h-19h',
-      experience: 8
-    },
-    {
-      id: 3,
-      name: `Pierre Durand`,
-      job: jobName,
-      location: 'Marseille, France',
-      rating: 4.7,
-      reviews: 56,
-      image: "/src/assets/images/peinture-interieure.jpg",
-      description: `Artisan ${jobName} passionné par son métier. Service rapide et professionnel.`,
-      phone: '06 45 67 89 01',
-      email: 'pierre.durand@example.com',
-      workingHours: 'Lun-Ven: 8h30-17h30',
-      experience: 12
-    }
-  ];
+  return [{
+    id: 1,
+    name: `Jean Dupont`,
+    job: jobName,
+    location: 'Lyon, France',
+    rating: 4.8,
+    reviews: 127,
+    image: "/src/assets/images/installation-electrique.jpg",
+    description: `Artisan ${jobName} expérimenté avec plus de 15 ans d'expérience. Spécialisé dans tous types de travaux de ${jobName.toLowerCase()}.`,
+    phone: '06 12 34 56 78',
+    email: 'jean.dupont@example.com',
+    workingHours: 'Lun-Ven: 8h-18h',
+    experience: 15
+  }, {
+    id: 2,
+    name: `Marie Martin`,
+    job: jobName,
+    location: 'Paris, France',
+    rating: 4.9,
+    reviews: 85,
+    image: "/src/assets/images/plomberie.jpg",
+    description: `Artisan ${jobName} qualifié proposant des services de qualité. Travaux soignés et garantis.`,
+    phone: '06 98 76 54 32',
+    email: 'marie.martin@example.com',
+    workingHours: 'Lun-Sam: 9h-19h',
+    experience: 8
+  }, {
+    id: 3,
+    name: `Pierre Durand`,
+    job: jobName,
+    location: 'Marseille, France',
+    rating: 4.7,
+    reviews: 56,
+    image: "/src/assets/images/peinture-interieure.jpg",
+    description: `Artisan ${jobName} passionné par son métier. Service rapide et professionnel.`,
+    phone: '06 45 67 89 01',
+    email: 'pierre.durand@example.com',
+    workingHours: 'Lun-Ven: 8h30-17h30',
+    experience: 12
+  }];
 };
-
 function MetierDetails() {
-  const { jobName } = useParams<{ jobName: string }>();
+  const {
+    jobName
+  } = useParams<{
+    jobName: string;
+  }>();
   const [artisans, setArtisans] = useState<Artisan[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  
   useEffect(() => {
     // In a real app, you would fetch artisans by job from an API
     if (jobName) {
@@ -86,18 +82,14 @@ function MetierDetails() {
       }, 500);
     }
   }, [jobName]);
-  
+
   // Capitalize job name for display
-  const displayJobName = jobName 
-    ? jobName.charAt(0).toUpperCase() + jobName.slice(1) 
-    : '';
-  
-  return (
-    <div className="min-h-screen bg-gray-50">
+  const displayJobName = jobName ? jobName.charAt(0).toUpperCase() + jobName.slice(1) : '';
+  return <div className="min-h-screen bg-gray-50">
       <NavBar />
       
       {/* Hero section */}
-      <section className="pt-24 pb-12 bg-gradient-to-br from-primary via-[#b73840] to-[#a73238] text-white">
+      <section className="pt-24 pb-12 bg-gradient-to-br from-primary via-[#b73840] to-[#a73238] text-white my-[70px]">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
@@ -118,12 +110,9 @@ function MetierDetails() {
       {/* Main content */}
       <section className="py-12">
         <div className="container mx-auto px-4">
-          {loading ? (
-            <div className="flex justify-center py-20">
+          {loading ? <div className="flex justify-center py-20">
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
-            </div>
-          ) : artisans.length > 0 ? (
-            <>
+            </div> : artisans.length > 0 ? <>
               <div className="mb-10 flex items-center justify-between">
                 <h2 className="text-2xl font-bold text-gray-800">
                   {artisans.length} artisans {displayJobName.toLowerCase()} trouvés
@@ -136,14 +125,9 @@ function MetierDetails() {
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                {artisans.map((artisan) => (
-                  <div key={artisan.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300">
+                {artisans.map(artisan => <div key={artisan.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300">
                     <div className="relative">
-                      <img 
-                        src={artisan.image} 
-                        alt={`${artisan.name}, ${artisan.job}`} 
-                        className="w-full h-48 object-cover"
-                      />
+                      <img src={artisan.image} alt={`${artisan.name}, ${artisan.job}`} className="w-full h-48 object-cover" />
                       <div className="absolute top-3 right-3 bg-white rounded-full py-1 px-2 flex items-center shadow-sm">
                         <Star size={16} fill="#ffc107" stroke="#ffc107" className="mr-1" />
                         <span className="font-semibold text-sm">{artisan.rating}</span>
@@ -180,35 +164,25 @@ function MetierDetails() {
                         <span className="text-xs text-gray-500">
                           {artisan.experience} ans d'expérience
                         </span>
-                        <a 
-                          href={`/artisan/${artisan.id}`}
-                          className="flex items-center text-primary font-medium text-sm hover:underline"
-                        >
+                        <a href={`/artisan/${artisan.id}`} className="flex items-center text-primary font-medium text-sm hover:underline">
                           Voir profil
                           <ChevronRight size={16} className="ml-1" />
                         </a>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  </div>)}
               </div>
-            </>
-          ) : (
-            <div className="text-center py-20">
+            </> : <div className="text-center py-20">
               <h2 className="text-2xl font-medium text-gray-700 mb-3">
                 Aucun artisan trouvé
               </h2>
               <p className="text-gray-500 mb-6">
                 Nous n'avons pas trouvé d'artisans {displayJobName.toLowerCase()} pour le moment.
               </p>
-              <a 
-                href="/Metiers" 
-                className="inline-block px-6 py-3 bg-primary text-white rounded-lg font-medium hover:bg-[#b73840] transition-colors"
-              >
+              <a href="/Metiers" className="inline-block px-6 py-3 bg-primary text-white rounded-lg font-medium hover:bg-[#b73840] transition-colors">
                 Revenir à la liste des métiers
               </a>
-            </div>
-          )}
+            </div>}
         </div>
       </section>
       
@@ -228,8 +202,6 @@ function MetierDetails() {
       </section>
       
       <Footer />
-    </div>
-  );
+    </div>;
 }
-
 export default MetierDetails;
