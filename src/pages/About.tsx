@@ -3,7 +3,7 @@ import Navbar from '../components/Header/partials/NavBar';
 import Footer from '../components/Footer/Footer';
 import FaqAccordion from '../components/FAQ/Faqs';
 function About() {
-  return <div className="App my-0 py-[60px]">
+  return <div className="App my-[65px] py-[96px]">
       <Navbar />
       
       <Container className="my-[80px]">
