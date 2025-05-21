@@ -15,6 +15,7 @@ import ProfessionalRegister from './pages/ProfessionalRegister';
 import ProfessionalDashboard from './pages/ProfessionalDashboard';
 import SearchResults from './pages/SearchResults';
 import Metiers from './pages/ArtisanMetiers';
+import MetierDetails from './pages/MetierDetails';
 import ProductDetails from './pages/ProductDetails';
 import DomainesIntervention from './pages/DomaineIntervention';
 import Categories from './pages/Categories';
@@ -61,6 +62,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/ProductDetails" element={<ProductDetails />} />
               <Route path="/Metiers" element={<Metiers />} />
+              <Route path="/metier-details/:jobName" element={<MetierDetails />} />
               <Route path="/Intervention" element={<DomainesIntervention />} />
               <Route path="/categories" element={<Categories />} />
               <Route path="/categories/:id" element={<CategoryDetails />} />

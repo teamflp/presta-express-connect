@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface JobsByLetter {
   A: string[];
@@ -15,6 +15,7 @@ interface JobsByLetter {
 
 function ArtisanByLetter() {
   const [activeLetter, setActiveLetter] = useState<string>('A');
+  const navigate = useNavigate();
   
   const jobsByLetter: JobsByLetter = {
     A: ['Abadie', 'Aubry', 'Arnaud', 'Adam', 'Aubert', 'André'],
@@ -28,6 +29,10 @@ function ArtisanByLetter() {
 
   const handleLetterClick = (letter: string) => {
     setActiveLetter(letter);
+  };
+
+  const handleArtisanClick = (name: string) => {
+    navigate(`/artisan-details/${name.toLowerCase()}`);
   };
 
   const letters = Object.keys(jobsByLetter);
@@ -60,13 +65,13 @@ function ArtisanByLetter() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {jobsByLetter[activeLetter].map((name: string, index: number) => (
             <div key={index} className="group">
-              <NavLink 
-                to={`/artisans/${name.toLowerCase()}`} 
-                className="block py-3 px-4 rounded-lg text-gray-700 bg-white hover:bg-primary hover:text-white shadow-sm transition-all duration-300 group-hover:shadow-md"
+              <button 
+                onClick={() => handleArtisanClick(name)}
+                className="block w-full text-left py-3 px-4 rounded-lg text-gray-700 bg-white hover:bg-primary hover:text-white shadow-sm transition-all duration-300 group-hover:shadow-md"
               >
                 <span className="font-medium">{name}</span>
                 <div className="h-0.5 w-0 group-hover:w-full bg-white transition-all duration-300 mt-1 opacity-70"></div>
-              </NavLink>
+              </button>
             </div>
           ))}
         </div>

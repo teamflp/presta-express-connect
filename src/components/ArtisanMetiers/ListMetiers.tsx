@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 // Function to generate realistic job names based on a letter
 function generateJobs(letter: string) {
@@ -40,6 +40,7 @@ function generateJobs(letter: string) {
 function LetterMetiersWithList() {
     const [selectedLetter, setSelectedLetter] = useState<string>('A');
     const [jobs, setJobs] = useState<string[]>([]);
+    const navigate = useNavigate();
     
     // Tableau contenant toutes les lettres de l'alphabet
     const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -50,6 +51,10 @@ function LetterMetiersWithList() {
             setJobs(generateJobs(selectedLetter));
         }
     }, [selectedLetter]);
+    
+    const handleJobClick = (job: string) => {
+        navigate(`/metier-details/${job.toLowerCase()}`);
+    };
 
     return (
         <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-100 hover:shadow-xl transition-all duration-300">
@@ -81,13 +86,13 @@ function LetterMetiersWithList() {
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
                         {jobs.map((job, index) => (
                             <div key={index} className="group">
-                                <NavLink 
-                                    to={`/metiers/${job.toLowerCase()}`} 
-                                    className="block py-3 px-4 rounded-lg text-gray-700 bg-white hover:bg-primary hover:text-white shadow-sm transition-all duration-300 group-hover:shadow-md"
+                                <button
+                                    onClick={() => handleJobClick(job)}
+                                    className="block w-full text-left py-3 px-4 rounded-lg text-gray-700 bg-white hover:bg-primary hover:text-white shadow-sm transition-all duration-300 group-hover:shadow-md"
                                 >
                                     <span className="font-medium">{job}</span>
                                     <div className="h-0.5 w-0 group-hover:w-full bg-white transition-all duration-300 mt-1 opacity-70"></div>
-                                </NavLink>
+                                </button>
                             </div>
                         ))}
                     </div>
