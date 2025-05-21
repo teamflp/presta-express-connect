@@ -34,22 +34,22 @@ function HeroHeader() {
 
             {/* CTA Button */}
             <Button onClick={handleClick} style={{
-        backgroundColor: '#C63E46',
-        borderColor: '#C63E46',
-        padding: '12px 24px',
-        borderRadius: '20px 0 20px 20px',
-        fontWeight: '500',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-        transition: 'all 0.3s ease'
-      }} onMouseEnter={e => {
-        e.currentTarget.style.backgroundColor = '#b73840';
-        e.currentTarget.style.transform = 'translateY(-2px)';
-        e.currentTarget.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.15)';
-      }} onMouseLeave={e => {
-        e.currentTarget.style.backgroundColor = '#C63E46';
-        e.currentTarget.style.transform = 'translateY(0)';
-        e.currentTarget.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
-      }} className="">
+                backgroundColor: '#C63E46',
+                borderColor: '#C63E46',
+                padding: '12px 24px',
+                borderRadius: '20px 0 20px 20px',
+                fontWeight: '500',
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                transition: 'all 0.3s ease'
+              }} onMouseEnter={e => {
+                e.currentTarget.style.backgroundColor = '#b73840';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.15)';
+              }} onMouseLeave={e => {
+                e.currentTarget.style.backgroundColor = '#C63E46';
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
+              }} className="">
                 <span className="me-2">Déposer une annonce</span>
                 <ExternalLink size={16} />
             </Button>
