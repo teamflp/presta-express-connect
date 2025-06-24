@@ -37,7 +37,7 @@ function generateJobs(letter: string) {
 function LetterMetiersWithList() {
   const [selectedLetter, setSelectedLetter] = useState<string>('A');
   const [jobs, setJobs] = useState<string[]>([]);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
 
   // Tableau contenant toutes les lettres de l'alphabet
   const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
