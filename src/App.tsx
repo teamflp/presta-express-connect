@@ -31,6 +31,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import ArtisanDashboard from './pages/ArtisanDashboard';
 import ClientDashboard from './pages/ClientDashboard';
 
+
 function App() {
   return (
     <Provider store={store}>
@@ -47,6 +48,7 @@ function App() {
                 }
               }}
             />
+            
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
