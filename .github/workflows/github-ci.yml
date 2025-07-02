@@ -24,7 +24,7 @@ jobs:
           cache: 'npm' # Utilise le cache pour les dépendances npm, ce qui accélère les exécutions
 
       - name: Install dependencies
-        run: npm ci # 'npm ci' est préféré à 'npm install' dans les pipelines CI/CD car il garantit des installations propres et reproductibles
+        run: npm install # 'npm ci' est préféré à 'npm install' dans les pipelines CI/CD car il garantit des installations propres et reproductibles
 
       - name: Debug lister les fichiers
         run: ls -l
