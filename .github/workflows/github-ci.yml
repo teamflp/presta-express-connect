@@ -26,6 +26,10 @@ jobs:
       - name: Install dependencies
         run: npm ci # 'npm ci' est préféré à 'npm install' dans les pipelines CI/CD car il garantit des installations propres et reproductibles
 
+      - name: Debug lister les fichiers
+        run: ls -l
+
+
       - name: Run tests
         run: npm test
 
