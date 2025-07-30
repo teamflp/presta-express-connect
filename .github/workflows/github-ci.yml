@@ -7,7 +7,6 @@ on:
   pull_request:
     branches:
       - main
-  # Ajout de 'workflow_dispatch' pour permettre un déclenchement manuel du workflow
   workflow_dispatch:
 
 jobs:
@@ -15,16 +14,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4 # Mis à jour vers la version 4 pour les dernières fonctionnalités et correctifs
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4 # Mis à jour vers la version 4
+        uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'npm' # Utilise le cache pour les dépendances npm, ce qui accélère les exécutions
+          cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci # 'npm ci' est préféré à 'npm install' dans les pipelines CI/CD car il garantit des installations propres et reproductibles
+        run: npm ci
 
       - name: Run tests
         run: npm test
@@ -32,25 +31,35 @@ jobs:
       - name: Build React app
         run: npm run build
 
+      - name: Vérifier que le dossier build existe
+        run: |
+          echo "Contenu du dossier build/"
+          ls -al build || { echo "Le dossier build est introuvable !"; exit 1; }
+
       - name: Upload build artifact
-        uses: actions/upload-artifact@v4 # Sauvegarde l'artefact de la construction pour qu'il puisse être utilisé par d'autres jobs
+        uses: actions/upload-artifact@v4
         with:
           name: react-build
-          path: build/ 
+          path: build/
 
   build_and_push_docker_image:
-    needs: build_and_test # S'assure que ce job ne s'exécute qu'après la réussite de 'build_and_test'
+    needs: build_and_test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Download build artifact
-        uses: actions/download-artifact@v4 # Télécharge l'artefact de la construction précédemment uploadé
+        uses: actions/download-artifact@v4
         with:
           name: react-build
-          path: ./build
-          
+          path: build/
+
+      - name: Vérifier que l'artefact a bien été téléchargé
+        run: |
+          echo "Contenu du dossier build/ téléchargé"
+          ls -al build || { echo "Erreur: le dossier build/ est vide ou manquant."; exit 1; }
+
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
@@ -58,42 +67,27 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3 # Recommandé pour une meilleure performance de build et la prise en charge de multi-plateformes
+        uses: docker/setup-buildx-action@v3
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v5 # Permet de construire et de pousser l'image en une seule étape
+        uses: docker/build-push-action@v5
         with:
           context: .
           push: true
           tags: |
-            presta-express:${{ github.sha }} # Nom de l'image mis à jour
-            presta-express:latest # Nom de l'image mis à jour
-
-          cache-from: type=registry,ref=presta-express:cache # Utilisation du cache pour accélérer les builds futurs
+            presta-express:${{ github.sha }}
+            presta-express:latest
+          cache-from: type=registry,ref=presta-express:cache
 
   deploy:
-    needs: build_and_push_docker_image # Dépend de la réussite de la construction et du push de l'image Docker
-    # Condition pour le déploiement : uniquement sur les pushes vers la branche 'main' (et non sur les PRs)
+    needs: build_and_push_docker_image
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    environment: production # Utilisation d'environnements pour mieux gérer les secrets et les règles de déploiement
+    environment: production
     steps:
       - name: Deploy to server
         run: |
-          echo "Déploiement de l'image presta-express:${{ github.sha }} vers le serveur..." # Nom de l'image mis à jour
-          # Remplacez les lignes ci-dessous par vos commandes de déploiement réelles.
-          # Voici des exemples courants, choisissez celui qui correspond à votre infrastructure :
-          #
-          # Exemple 1: Déploiement SSH (pour un serveur distant simple)
-          # ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker pull presta-express:${{ github.sha }} && docker stop presta-express || true && docker rm presta-express || true && docker run -d --name presta-express -p 80:80 presta-express:${{ github.sha }}"
-          #
-          # Exemple 2: Déploiement Kubernetes (avec kubectl)
-          # kubectl config use-context your-kubernetes-context # Si vous avez plusieurs contextes
-          # kubectl set image deployment/your-deployment-name your-container-name=presta-express:${{ github.sha }} -n your-namespace
-          #
-          # Exemple 3: Déploiement avec un fournisseur cloud (AWS ECS, Google Cloud Run, Azure App Service, etc.)
-          # Par exemple, pour AWS ECS :
-          # aws ecs update-service --cluster your-cluster-name --service your-service-name --force-new-deployment
-          # (Nécessiterait des actions AWS spécifiques pour l'authentification et la configuration)
-          #
-          # Assurez-vous d'avoir les secrets nécessaires configurés dans votre dépôt GitHub (ex: SSH_USER, SSH_HOST, etc.)
+          echo "Déploiement de l'image presta-express:${{ github.sha }} vers le serveur..."
+          # Décommenter et adapter la ligne de déploiement selon votre cas :
+          # ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
+          # "docker pull presta-express:${{ github.sha }} && docker stop presta-express || true && docker rm presta-express || true && docker run -d --name presta-express -p 80:80 presta-express:${{ github.sha }}"
