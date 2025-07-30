@@ -65,8 +65,8 @@ jobs:
           context: .
           push: true
           tags: |
-            presta-express:${{ github.sha }} # Nom de l'image mis à jour
-            presta-express:latest # Nom de l'image mis à jour
+            presta-express:${{ github.sha }} 
+            presta-express:latest 
 
           cache-from: type=registry,ref=presta-express:cache # Utilisation du cache pour accélérer les builds futurs
 
@@ -79,7 +79,7 @@ jobs:
     steps:
       - name: Deploy to server
         run: |
-          echo "Déploiement de l'image presta-express:${{ github.sha }} vers le serveur..." # Nom de l'image mis à jour
+          echo "Déploiement de l'image presta-express:${{ github.sha }} vers le serveur..." 
           # Remplacez les lignes ci-dessous par vos commandes de déploiement réelles.
           # Voici des exemples courants, choisissez celui qui correspond à votre infrastructure :
           #
