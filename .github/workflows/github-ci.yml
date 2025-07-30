@@ -65,8 +65,8 @@ jobs:
           context: .
           push: true
           tags: |
-            presta-express:${{ github.sha }} 
-            presta-express:latest 
+            gnandojm/presta-express:${{ github.sha }} 
+            gnandojm/presta-express:latest 
 
           cache-from: type=registry,ref=presta-express:cache # Utilisation du cache pour accélérer les builds futurs
 
