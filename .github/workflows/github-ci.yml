@@ -65,8 +65,8 @@ jobs:
           context: .
           push: true
           tags: |
-            gnandojm/presta-express:${{ github.sha }} 
-            gnandojm/presta-express:latest 
+            teamflp/presta-express:${{ github.sha }} 
+            teamflp/presta-express:latest 
 
           cache-from: type=registry,ref=presta-express:cache # Utilisation du cache pour accélérer les builds futurs
 
