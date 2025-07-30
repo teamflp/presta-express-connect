@@ -1,67 +1,67 @@
+// src/testing/loginComponent.test.tsx
 
-import { render } from '@testing-library/react';
+import React from 'react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
+
 import LoginComponent from '../components/User/loginComponent';
 
-// Mock event functions that we'll need
-const mockFireEvent = {
-  change: (element: Element, options: { target: { value: string } }) => {
-    // Simple mock implementation
-    const input = element as HTMLInputElement;
-    if (input) {
-      input.value = options.target.value;
-    }
-  },
-  submit: (element: Element) => {
-    // Simple mock implementation for form submission
-    if (element) {
-      const form = element as HTMLFormElement;
-      const event = new Event('submit');
-      form.dispatchEvent(event);
-    }
-  }
-};
+// Mock de la fonction login du hook useAuth
+const mockLogin = jest.fn();
+
+// Mock du hook useAuth
+jest.mock('../hooks/useAuth', () => ({
+  useAuth: () => ({
+    login: mockLogin,
+  }),
+}));
+
+// Réinitialise le mock avant chaque test
+beforeEach(() => {
+  mockLogin.mockClear();
+});
 
 describe('LoginComponent', () => {
-  it('should render login form', () => {
-    const { getByText, getByLabelText } = render(<LoginComponent />);
-    expect(getByText(/Connexion/i)).toBeInTheDocument();
-    expect(getByLabelText(/Email/i)).toBeInTheDocument();
-    expect(getByLabelText(/Mot de passe/i)).toBeInTheDocument();
+  it('devrait afficher correctement le formulaire de connexion', () => {
+    render(<LoginComponent />);
+
+    expect(screen.getByRole('heading', { name: /Connexion/i })).toBeInTheDocument();
+    expect(screen.getByLabelText(/Email/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Mot de passe/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Connexion/i })).toBeInTheDocument();
   });
 
-  it('should allow entering credentials', () => {
-    const { getByLabelText } = render(<LoginComponent />);
-    
-    const emailInput = getByLabelText(/Email/i);
-    const passwordInput = getByLabelText(/Mot de passe/i);
-    
-    mockFireEvent.change(emailInput, { target: { value: 'test@example.com' } });
-    mockFireEvent.change(passwordInput, { target: { value: 'password123' } });
-    
-    expect((emailInput as HTMLInputElement).value).toBe('test@example.com');
-    expect((passwordInput as HTMLInputElement).value).toBe('password123');
+  it("devrait permettre à l'utilisateur de saisir ses identifiants", async () => {
+    const user = userEvent.setup();
+    render(<LoginComponent />);
+
+    const emailInput = screen.getByLabelText(/Email/i);
+    const passwordInput = screen.getByLabelText(/Mot de passe/i);
+
+    await user.type(emailInput, 'test@example.com');
+    await user.type(passwordInput, 'password123');
+
+    expect(emailInput).toHaveValue('test@example.com');
+    expect(passwordInput).toHaveValue('password123');
   });
 
-  it('should handle form submission', () => {
-    const mockSubmit = jest.fn();
-    const originalConsoleLog = console.log;
-    console.log = mockSubmit;
-    
-    const { getByRole, getByLabelText } = render(<LoginComponent />);
-    
-    const emailInput = getByLabelText(/Email/i);
-    const passwordInput = getByLabelText(/Mot de passe/i);
-    
-    mockFireEvent.change(emailInput, { target: { value: 'test@example.com' } });
-    mockFireEvent.change(passwordInput, { target: { value: 'password123' } });
-    
-    const form = getByRole('button', { name: /Connexion/i }).closest('form');
-    if (form) {
-      mockFireEvent.submit(form);
-    }
-    
-    expect(mockSubmit).toHaveBeenCalled();
-    console.log = originalConsoleLog;
+  it('devrait appeler la fonction de connexion avec les bonnes données lors de la soumission', async () => {
+    const user = userEvent.setup();
+    render(<LoginComponent />);
+
+    const emailInput = screen.getByLabelText(/Email/i);
+    const passwordInput = screen.getByLabelText(/Mot de passe/i);
+    const submitButton = screen.getByRole('button', { name: /Connexion/i });
+
+    await user.type(emailInput, 'user@test.com');
+    await user.type(passwordInput, 'securepassword');
+    await user.click(submitButton);
+
+    // Vérifie que mockLogin est bien appelé avec les bons arguments
+    await waitFor(() => {
+      expect(mockLogin).toHaveBeenCalledTimes(1);
+      expect(mockLogin).toHaveBeenCalledWith('user@test.com', 'securepassword');
+    });
   });
 });

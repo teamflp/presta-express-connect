@@ -1,23 +1,25 @@
-
 {
-  "extends": "../tsconfig.json",
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ],
   "compilerOptions": {
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "skipLibCheck": true,
-    "allowJs": true,
-    "resolveJsonModule": true,
+    "target": "es5",
+    "module": "commonjs",
+    "typeRoots": ["node_modules/@types", "./src/types", "./declaration-d.ts"],
+    "types": ["node", "jest", "@testing-library/jest-dom"],
     "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowImportingTsExtensions": true,
+
     "jsx": "react-jsx",
-    "declaration": false,
-    "declarationDir": null,
-    "emitDeclarationOnly": false,
-    "outDir": "../dist",
-    "types": ["node", "@testing-library/jest-dom"]
+    "lib": ["dom", "dom.iterable", "esnext"]
   },
-  "include": [
-    "testing/**/*",
-    "store/test/**/*",
-    "**/*"
-  ]
+  "include": ["src", "types"]
 }
