@@ -1,0 +1,32 @@
+# prometheus/rules.yml
+
+groups:
+  - name: general.rules
+    rules:
+      # Règle d'alerte : se déclenche si une instance (un service) est inaccessible depuis plus d'une minute.
+      - alert: InstanceDown
+        # Expression PromQL : la métrique 'up' est égale à 0 (down).
+        expr: up == 0
+        # Durée : l'alerte ne se déclenchera que si la condition est vraie pendant 1 minute sans interruption.
+        # Cela évite les fausses alertes dues à un redémarrage rapide.
+        for: 1m
+        # Étiquettes : ajoutent des informations à l'alerte.
+        labels:
+          severity: "critical"
+        # Annotations : fournissent des informations plus détaillées pour la notification.
+        annotations:
+          summary: "Instance {{ $labels.instance }} down"
+          description: "{{ $labels.job }} at {{ $labels.instance }} has been down for more than 1 minute."
+
+      # Règle d'alerte : se déclenche si Prometheus n'arrive pas à scraper une de ses cibles.
+      - alert: NginxHighErrorRate
+          # Se déclenche si le taux d'erreurs 5xx est supérieur à 5% pendant 2 minutes
+        expr: (sum(rate(nginx_http_requests_total{status=~"^5.."}[5m])) / sum(rate(nginx_http_requests_total[5m]))) * 100 > 5
+        for: 2m
+        labels:
+          severity: "warning"
+        annotations:
+          summary: "Taux d'erreurs Nginx élevé"
+          description: "Le service {{ $labels.job }} a un taux d'erreurs 5xx supérieur à 5%."
+
+

@@ -1,0 +1,22 @@
+# Fichier .dockerignore
+
+# Pour ignorer le lourd dossier des dépendances.
+# Le Dockerfile se chargera de lancer 'npm ci' à l'intérieur du conteneur.
+node_modules
+
+# Pour ignorer les logs de npm
+npm-debug.log
+
+# Pour ignorer les dossiers de build locaux (le Dockerfile crée le sien)
+dist
+build
+
+# Pour ignorer le dossier de gestion de version Git
+.git
+
+# Pour ignorer les fichiers d'environnement locaux
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

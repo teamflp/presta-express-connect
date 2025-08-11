@@ -1,0 +1,25 @@
+global:
+  resolve_timeout: 5m
+  # URL de ton webhook Discord
+  # slack_api_url: 'https://hooks.slack.com/services/T0651C0T23H/B0826U51WEA/bQ4jGse3o01U2fzYDZC5I'
+  # discord_api_url: 'https://discord.com/api/webhooks/1394068063149883682/u_Gk59i9YNg6ujc9OTJyMKlAf-4eug-9gf3NrYKUWxIdCdPmFCCVSVcsOWAlIvhX2'
+
+route:
+  receiver: 'discord-notifications'
+  group_by: ['job', 'alertname']
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 1h
+
+receivers:
+  - name: 'discord-notifications'
+    slack_configs:
+      - channel: '#le-nom-de-ton-canal' # Le nom du canal où le webhook poste
+        send_resolved: true
+        title: '{{ .CommonAnnotations.summary }}'
+        text: >-
+          {{ range .Alerts }}
+            *Alerte:* `{{ .Labels.alertname }}`
+            *Gravité:* `{{ .Labels.severity }}`
+            *Description:* {{ .Annotations.description }}
+          {{ end }}

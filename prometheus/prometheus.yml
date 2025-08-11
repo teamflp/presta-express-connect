@@ -1,0 +1,33 @@
+# prometheus/prometheus.yml
+
+# Configuration globale de Prometheus
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+# Charger les fichiers de règles d'alerte
+rule_files:
+  - "/etc/prometheus/rules.yml"
+
+# Configurer Alertmanager
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ["alertmanager:9093"]
+
+# Configuration des cibles de collecte (scrape targets)
+scrape_configs:
+  # Job 1 : surveiller Prometheus lui-même
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Job 2 : surveiller le serveur Nginx via son exporter
+  - job_name: 'nginx-exporter'
+    static_configs:
+      - targets: ['nginx-exporter:9113']
+
+  # NOUVEAU JOB : surveiller la base de données PostgreSQL via son exporter
+  - job_name: 'postgres-exporter'
+    static_configs:
+      - targets: ['postgres-exporter:9187'] # Le nom du service et son port par défaut
