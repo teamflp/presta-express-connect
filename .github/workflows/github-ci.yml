@@ -12,12 +12,13 @@ on:
 
 jobs:
   build_and_test:
+    name: Build & Test Application
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4 # Mis à jour vers la version 4 pour les dernières fonctionnalités et correctifs
 
-      - name: Set up Node.js
+      - name: Set up Node.js v22
         uses: actions/setup-node@v4 # Mis à jour vers la version 4
         with:
           node-version: '22'
@@ -25,6 +26,9 @@ jobs:
 
       - name: Install dependencies
         run: npm ci # 'npm ci' est préféré à 'npm install' dans les pipelines CI/CD car il garantit des installations propres et reproductibles
+      
+      - name: Debug - Lister les fichiers
+        run: ls -la
 
       - name: Run tests
         run: npm test
@@ -39,6 +43,7 @@ jobs:
           path: dist/ 
 
   build_and_push_docker_image:
+    name: Build & Push Docker Image
     needs: build_and_test # S'assure que ce job ne s'exécute qu'après la réussite de 'build_and_test'
     runs-on: ubuntu-latest
     steps:
@@ -65,12 +70,14 @@ jobs:
           context: .
           push: true
           tags: |
-            teamflp/presta-express:${{ github.sha }} 
-            teamflp/presta-express:latest 
+            ${{ secrets.DOCKER_USERNAME }}/presta-express:${{ github.sha }} 
+            ${{ secrets.DOCKER_USERNAME }}/presta-express:latest 
 
           cache-from: type=registry,ref=presta-express:cache # Utilisation du cache pour accélérer les builds futurs
-
+          cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/presta-express:cache,mode=max
+  
   deploy:
+    name: Deploy to Production
     needs: build_and_push_docker_image # Dépend de la réussite de la construction et du push de l'image Docker
     # Condition pour le déploiement : uniquement sur les pushes vers la branche 'main' (et non sur les PRs)
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'

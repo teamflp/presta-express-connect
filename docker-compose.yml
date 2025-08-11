@@ -1,0 +1,129 @@
+services:
+  # --- Service de l'application Web ---
+  presta-express-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: presta-express/webapp
+    container_name: presta-express-web
+    restart: unless-stopped
+    ports:
+      - "${WEB_PORT:-8080}:80"
+    networks:
+      - presta-express-net
+    labels:
+      - "project=Presta-Express"
+      - "service=frontend"
+
+  # --- Service pour exposer les métriques Nginx ---
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter:1.1.0
+    container_name: nginx-exporter
+    restart: unless-stopped
+    command: -nginx.scrape-uri=http://presta-express-web:8081/stub_status
+    networks:
+      - presta-express-net
+    depends_on:
+      - presta-express-web
+
+  # --- Service pour exposer les métriques de la base de données PostgreSQL ---
+  postgres-exporter:
+    image: quay.io/prometheuscommunity/postgres-exporter:v0.15.0
+    container_name: postgres-exporter
+    restart: unless-stopped
+    environment:
+      - DATA_SOURCE_NAME=${DATABASE_URL}
+    networks:
+      - presta-express-net
+    ports:
+      - "9187:9187"
+
+  # --- Service Prometheus (Collecte, stockage et envoi des alertes) ---
+  prometheus:
+    image: prom/prometheus:v2.53.0
+    container_name: prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prometheus_data:/prometheus
+    networks:
+      - presta-express-net
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    depends_on:
+      - alertmanager
+      - postgres-exporter
+
+  # --- Service Alertmanager (Gestion et envoi des notifications) ---
+  alertmanager:
+    image: prom/alertmanager:v0.27.0
+    container_name: alertmanager
+    restart: unless-stopped
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./alertmanager:/etc/alertmanager
+      - alertmanager_data:/alertmanager
+    networks:
+      - presta-express-net
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--storage.path=/alertmanager'
+
+  # --- Service Grafana (Visualisation) ---
+  grafana:
+    image: grafana/grafana:11.1.0
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - grafana_data:/var/lib/grafana
+    networks:
+      - presta-express-net
+    depends_on:
+      - prometheus
+      - loki
+
+  # --- Service Loki (Stockage des logs) ---
+  loki:
+    image: grafana/loki:2.9.0
+    container_name: loki
+    restart: unless-stopped
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./loki:/etc/loki
+      - loki_data:/loki
+    networks:
+      - presta-express-net
+    command: -config.file=/etc/loki/loki-config.yml
+
+  # --- Service Promtail (Collecte des logs) ---
+  promtail:
+    image: grafana/promtail:2.9.0
+    container_name: promtail
+    restart: unless-stopped
+    volumes:
+      - ./promtail:/etc/promtail
+      - ./promtail/positions.yaml:/etc/promtail/positions.yaml
+      - /var/log/docker/containers:/var/log/docker/containers:ro
+    networks:
+      - presta-express-net
+    command: -config.file=/etc/promtail/promtail-config.yml
+
+# --- Volumes pour la persistance des données ---
+volumes:
+  prometheus_data: {}
+  grafana_data: {}
+  loki_data: {}
+  alertmanager_data: {}
+
+# --- Réseau personnalisé ---
+networks:
+  presta-express-net:
+    driver: bridge
