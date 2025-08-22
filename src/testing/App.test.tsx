@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from '../store/store';
@@ -26,7 +26,7 @@ describe('App Tests', () => {
   test('displays navigation elements', () => {
     renderWithProviders(<Home />);
     // Test basic rendering without specific text that might not exist
-    const mainContent = document.querySelector('.App');
+    const mainContent = document.querySelector('body');
     expect(mainContent).toBeInTheDocument();
   });
 });

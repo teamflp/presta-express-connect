@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from '../store/store';
@@ -27,12 +27,11 @@ describe('Login Component', () => {
     expect(document.body).toBeInTheDocument();
   });
 
-  test('displays auth elements', async () => {
+  test('displays auth elements', () => {
     renderWithProviders(<Auth />);
     
-    // Wait for any async elements to load
-    await waitFor(() => {
-      expect(document.body).toBeInTheDocument();
-    });
+    // Simple test to ensure the component renders
+    const body = document.querySelector('body');
+    expect(body).toBeInTheDocument();
   });
 });
