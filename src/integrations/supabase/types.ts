@@ -7,7 +7,7 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "12.2.3 (519615d)"
@@ -549,6 +549,48 @@ export type Database = {
         }
         Relationships: []
       }
+      contact_messages: {
+        Row: {
+          created_at: string
+          email: string
+          handled_at: string | null
+          handled_by: string | null
+          id: string
+          ip: string | null
+          message: string
+          name: string
+          status: Database["public"]["Enums"]["contact_status"]
+          subject: string
+          user_agent: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          handled_at?: string | null
+          handled_by?: string | null
+          id?: string
+          ip?: string | null
+          message: string
+          name: string
+          status?: Database["public"]["Enums"]["contact_status"]
+          subject: string
+          user_agent?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          handled_at?: string | null
+          handled_by?: string | null
+          id?: string
+          ip?: string | null
+          message?: string
+          name?: string
+          status?: Database["public"]["Enums"]["contact_status"]
+          subject?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       daily_challenges: {
         Row: {
           challenge_data: Json
@@ -648,6 +690,60 @@ export type Database = {
         }
         Relationships: []
       }
+      data_deletion_requests: {
+        Row: {
+          admin_notes: string | null
+          email: string | null
+          id: string
+          metadata: Json
+          processed_at: string | null
+          processed_by: string | null
+          reason: string | null
+          requested_at: string
+          status: Database["public"]["Enums"]["deletion_status"]
+          user_id: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          email?: string | null
+          id?: string
+          metadata?: Json
+          processed_at?: string | null
+          processed_by?: string | null
+          reason?: string | null
+          requested_at?: string
+          status?: Database["public"]["Enums"]["deletion_status"]
+          user_id: string
+        }
+        Update: {
+          admin_notes?: string | null
+          email?: string | null
+          id?: string
+          metadata?: Json
+          processed_at?: string | null
+          processed_by?: string | null
+          reason?: string | null
+          requested_at?: string
+          status?: Database["public"]["Enums"]["deletion_status"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "data_deletion_requests_processed_by_fkey"
+            columns: ["processed_by"]
+            isOneToOne: false
+            referencedRelation: "strk_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "data_deletion_requests_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "strk_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       delivery_tracking: {
         Row: {
           created_at: string | null
@@ -699,6 +795,7 @@ export type Database = {
         Row: {
           address: string | null
           created_at: string
+          created_by: string
           email: string
           first_name: string
           id: string
@@ -709,6 +806,7 @@ export type Database = {
         Insert: {
           address?: string | null
           created_at?: string
+          created_by: string
           email: string
           first_name: string
           id?: string
@@ -719,6 +817,7 @@ export type Database = {
         Update: {
           address?: string | null
           created_at?: string
+          created_by?: string
           email?: string
           first_name?: string
           id?: string
@@ -773,6 +872,7 @@ export type Database = {
         Row: {
           client_id: string | null
           created_at: string
+          created_by: string | null
           description: string | null
           id: string
           property_id: string | null
@@ -783,6 +883,7 @@ export type Database = {
         Insert: {
           client_id?: string | null
           created_at?: string
+          created_by?: string | null
           description?: string | null
           id?: string
           property_id?: string | null
@@ -793,6 +894,7 @@ export type Database = {
         Update: {
           client_id?: string | null
           created_at?: string
+          created_by?: string | null
           description?: string | null
           id?: string
           property_id?: string | null
@@ -975,6 +1077,33 @@ export type Database = {
           pronunciation?: string | null
           word?: string
           word_length?: number
+        }
+        Relationships: []
+      }
+      edge_rate_limits: {
+        Row: {
+          count: number
+          id: string
+          key: string
+          route: string
+          window_sec: number
+          window_start: string
+        }
+        Insert: {
+          count?: number
+          id?: string
+          key: string
+          route: string
+          window_sec: number
+          window_start: string
+        }
+        Update: {
+          count?: number
+          id?: string
+          key?: string
+          route?: string
+          window_sec?: number
+          window_start?: string
         }
         Relationships: []
       }
@@ -1700,6 +1829,36 @@ export type Database = {
           },
         ]
       }
+      login_attempts: {
+        Row: {
+          created_at: string | null
+          email: string
+          failure_reason: string | null
+          id: string
+          ip_address: string | null
+          success: boolean
+          user_agent: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          failure_reason?: string | null
+          id?: string
+          ip_address?: string | null
+          success?: boolean
+          user_agent?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          failure_reason?: string | null
+          id?: string
+          ip_address?: string | null
+          success?: boolean
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       message_reactions: {
         Row: {
           created_at: string
@@ -1809,6 +1968,288 @@ export type Database = {
             columns: ["game_id"]
             isOneToOne: false
             referencedRelation: "games"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      nc_categories: {
+        Row: {
+          color: string | null
+          created_at: string
+          description: string | null
+          icon: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: string
+          name: string
+        }
+        Update: {
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      nc_prestataires: {
+        Row: {
+          active: boolean | null
+          address: string | null
+          availability_hours: Json | null
+          certifications: string[] | null
+          city: string | null
+          company_name: string | null
+          created_at: string
+          description: string | null
+          experience_years: number | null
+          hourly_rate: number | null
+          id: string
+          latitude: number | null
+          longitude: number | null
+          phone: string | null
+          rating: number | null
+          reviews_count: number | null
+          specialties: string[] | null
+          updated_at: string
+          user_id: string
+          verified: boolean | null
+          website: string | null
+          zip_code: string | null
+        }
+        Insert: {
+          active?: boolean | null
+          address?: string | null
+          availability_hours?: Json | null
+          certifications?: string[] | null
+          city?: string | null
+          company_name?: string | null
+          created_at?: string
+          description?: string | null
+          experience_years?: number | null
+          hourly_rate?: number | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          phone?: string | null
+          rating?: number | null
+          reviews_count?: number | null
+          specialties?: string[] | null
+          updated_at?: string
+          user_id: string
+          verified?: boolean | null
+          website?: string | null
+          zip_code?: string | null
+        }
+        Update: {
+          active?: boolean | null
+          address?: string | null
+          availability_hours?: Json | null
+          certifications?: string[] | null
+          city?: string | null
+          company_name?: string | null
+          created_at?: string
+          description?: string | null
+          experience_years?: number | null
+          hourly_rate?: number | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          phone?: string | null
+          rating?: number | null
+          reviews_count?: number | null
+          specialties?: string[] | null
+          updated_at?: string
+          user_id?: string
+          verified?: boolean | null
+          website?: string | null
+          zip_code?: string | null
+        }
+        Relationships: []
+      }
+      nc_profiles: {
+        Row: {
+          address: string | null
+          avatar_url: string | null
+          city: string | null
+          created_at: string
+          first_name: string | null
+          id: string
+          last_name: string | null
+          phone: string | null
+          role: string
+          updated_at: string
+          user_id: string
+          zip_code: string | null
+        }
+        Insert: {
+          address?: string | null
+          avatar_url?: string | null
+          city?: string | null
+          created_at?: string
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          phone?: string | null
+          role?: string
+          updated_at?: string
+          user_id: string
+          zip_code?: string | null
+        }
+        Update: {
+          address?: string | null
+          avatar_url?: string | null
+          city?: string | null
+          created_at?: string
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          phone?: string | null
+          role?: string
+          updated_at?: string
+          user_id?: string
+          zip_code?: string | null
+        }
+        Relationships: []
+      }
+      nc_reservations: {
+        Row: {
+          address: string | null
+          city: string | null
+          client_id: string
+          created_at: string
+          duration: number
+          id: string
+          notes: string | null
+          prestataire_id: string
+          reservation_date: string
+          reservation_time: string
+          service_id: string
+          status: string
+          stripe_payment_intent_id: string | null
+          total_price: number
+          updated_at: string
+          zip_code: string | null
+        }
+        Insert: {
+          address?: string | null
+          city?: string | null
+          client_id: string
+          created_at?: string
+          duration: number
+          id?: string
+          notes?: string | null
+          prestataire_id: string
+          reservation_date: string
+          reservation_time: string
+          service_id: string
+          status?: string
+          stripe_payment_intent_id?: string | null
+          total_price: number
+          updated_at?: string
+          zip_code?: string | null
+        }
+        Update: {
+          address?: string | null
+          city?: string | null
+          client_id?: string
+          created_at?: string
+          duration?: number
+          id?: string
+          notes?: string | null
+          prestataire_id?: string
+          reservation_date?: string
+          reservation_time?: string
+          service_id?: string
+          status?: string
+          stripe_payment_intent_id?: string | null
+          total_price?: number
+          updated_at?: string
+          zip_code?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nc_reservations_prestataire_id_fkey"
+            columns: ["prestataire_id"]
+            isOneToOne: false
+            referencedRelation: "nc_prestataires"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "nc_reservations_service_id_fkey"
+            columns: ["service_id"]
+            isOneToOne: false
+            referencedRelation: "nc_services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      nc_services: {
+        Row: {
+          active: boolean | null
+          category_id: string
+          created_at: string
+          description: string | null
+          duration: number
+          id: string
+          images: string[] | null
+          location_type: string
+          name: string
+          prestataire_id: string
+          price: number
+          requirements: string[] | null
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean | null
+          category_id: string
+          created_at?: string
+          description?: string | null
+          duration: number
+          id?: string
+          images?: string[] | null
+          location_type?: string
+          name: string
+          prestataire_id: string
+          price: number
+          requirements?: string[] | null
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean | null
+          category_id?: string
+          created_at?: string
+          description?: string | null
+          duration?: number
+          id?: string
+          images?: string[] | null
+          location_type?: string
+          name?: string
+          prestataire_id?: string
+          price?: number
+          requirements?: string[] | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nc_services_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "nc_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "nc_services_prestataire_id_fkey"
+            columns: ["prestataire_id"]
+            isOneToOne: false
+            referencedRelation: "nc_prestataires"
             referencedColumns: ["id"]
           },
         ]
@@ -1930,6 +2371,44 @@ export type Database = {
           },
         ]
       }
+      order_status_history: {
+        Row: {
+          changed_by: string | null
+          created_at: string | null
+          id: string
+          new_status: string
+          notes: string | null
+          old_status: string | null
+          order_id: string | null
+        }
+        Insert: {
+          changed_by?: string | null
+          created_at?: string | null
+          id?: string
+          new_status: string
+          notes?: string | null
+          old_status?: string | null
+          order_id?: string | null
+        }
+        Update: {
+          changed_by?: string | null
+          created_at?: string | null
+          id?: string
+          new_status?: string
+          notes?: string | null
+          old_status?: string | null
+          order_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_status_history_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       orders: {
         Row: {
           buyer_id: string | null
@@ -1940,9 +2419,12 @@ export type Database = {
           farmer_id: string | null
           id: string
           notes: string | null
+          payment_metadata: Json | null
           payment_method: string | null
           payment_status: string | null
           status: string
+          stripe_payment_intent_id: string | null
+          stripe_session_id: string | null
           total: number
           updated_at: string | null
         }
@@ -1955,9 +2437,12 @@ export type Database = {
           farmer_id?: string | null
           id?: string
           notes?: string | null
+          payment_metadata?: Json | null
           payment_method?: string | null
           payment_status?: string | null
           status: string
+          stripe_payment_intent_id?: string | null
+          stripe_session_id?: string | null
           total: number
           updated_at?: string | null
         }
@@ -1970,9 +2455,12 @@ export type Database = {
           farmer_id?: string | null
           id?: string
           notes?: string | null
+          payment_metadata?: Json | null
           payment_method?: string | null
           payment_status?: string | null
           status?: string
+          stripe_payment_intent_id?: string | null
+          stripe_session_id?: string | null
           total?: number
           updated_at?: string | null
         }
@@ -2011,6 +2499,68 @@ export type Database = {
           logo?: string
           name?: string
           position?: number
+        }
+        Relationships: []
+      }
+      plan_limits: {
+        Row: {
+          enforcement: string
+          feature: string
+          id: string
+          limit_per_day: number | null
+          limit_per_month: number | null
+          plan_id: string
+        }
+        Insert: {
+          enforcement?: string
+          feature: string
+          id?: string
+          limit_per_day?: number | null
+          limit_per_month?: number | null
+          plan_id: string
+        }
+        Update: {
+          enforcement?: string
+          feature?: string
+          id?: string
+          limit_per_day?: number | null
+          limit_per_month?: number | null
+          plan_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "plan_limits_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "subscription_plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      plan_usage: {
+        Row: {
+          feature: string
+          id: string
+          period_end: string
+          period_start: string
+          used: number
+          user_id: string
+        }
+        Insert: {
+          feature: string
+          id?: string
+          period_end: string
+          period_start: string
+          used?: number
+          user_id: string
+        }
+        Update: {
+          feature?: string
+          id?: string
+          period_end?: string
+          period_start?: string
+          used?: number
+          user_id?: string
         }
         Relationships: []
       }
@@ -2394,6 +2944,42 @@ export type Database = {
           },
         ]
       }
+      processed_webhook_events: {
+        Row: {
+          error: string | null
+          event_id: string
+          id: string
+          idempotency_key: string | null
+          payload: Json
+          processed_at: string | null
+          received_at: string
+          source: string
+          status: string
+        }
+        Insert: {
+          error?: string | null
+          event_id: string
+          id?: string
+          idempotency_key?: string | null
+          payload?: Json
+          processed_at?: string | null
+          received_at?: string
+          source: string
+          status?: string
+        }
+        Update: {
+          error?: string | null
+          event_id?: string
+          id?: string
+          idempotency_key?: string | null
+          payload?: Json
+          processed_at?: string | null
+          received_at?: string
+          source?: string
+          status?: string
+        }
+        Relationships: []
+      }
       products: {
         Row: {
           available_from: string | null
@@ -2406,10 +2992,12 @@ export type Database = {
           free_delivery: boolean | null
           id: string
           image_url: string | null
+          images: Json | null
           is_organic: boolean | null
           is_seasonal: boolean | null
           name: string
           price: number
+          primary_image_url: string | null
           quantity: number
           rating: number | null
           reviews_count: number | null
@@ -2428,10 +3016,12 @@ export type Database = {
           free_delivery?: boolean | null
           id?: string
           image_url?: string | null
+          images?: Json | null
           is_organic?: boolean | null
           is_seasonal?: boolean | null
           name: string
           price: number
+          primary_image_url?: string | null
           quantity: number
           rating?: number | null
           reviews_count?: number | null
@@ -2450,10 +3040,12 @@ export type Database = {
           free_delivery?: boolean | null
           id?: string
           image_url?: string | null
+          images?: Json | null
           is_organic?: boolean | null
           is_seasonal?: boolean | null
           name?: string
           price?: number
+          primary_image_url?: string | null
           quantity?: number
           rating?: number | null
           reviews_count?: number | null
@@ -2592,6 +3184,171 @@ export type Database = {
           },
         ]
       }
+      pz_appointments: {
+        Row: {
+          appointment_date: string
+          appointment_type: string
+          created_at: string
+          created_by: string
+          description: string | null
+          end_time: string
+          id: string
+          location: string | null
+          notes: string | null
+          reminder_sent: boolean
+          reminder_sent_at: string | null
+          resident_id: string
+          staff_id: string | null
+          start_time: string
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          appointment_date: string
+          appointment_type: string
+          created_at?: string
+          created_by: string
+          description?: string | null
+          end_time: string
+          id?: string
+          location?: string | null
+          notes?: string | null
+          reminder_sent?: boolean
+          reminder_sent_at?: string | null
+          resident_id: string
+          staff_id?: string | null
+          start_time: string
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          appointment_date?: string
+          appointment_type?: string
+          created_at?: string
+          created_by?: string
+          description?: string | null
+          end_time?: string
+          id?: string
+          location?: string | null
+          notes?: string | null
+          reminder_sent?: boolean
+          reminder_sent_at?: string | null
+          resident_id?: string
+          staff_id?: string | null
+          start_time?: string
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pz_appointments_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "pz_residents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pz_appointments_staff_id_fkey"
+            columns: ["staff_id"]
+            isOneToOne: false
+            referencedRelation: "pz_staff"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pz_audit_logs: {
+        Row: {
+          action: string
+          actor_user_id: string
+          created_at: string
+          description: string | null
+          details: Json | null
+          event_type: string
+          id: string
+          ip_address: string | null
+          target_id: string | null
+          target_table: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          action: string
+          actor_user_id: string
+          created_at?: string
+          description?: string | null
+          details?: Json | null
+          event_type: string
+          id?: string
+          ip_address?: string | null
+          target_id?: string | null
+          target_table?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          action?: string
+          actor_user_id?: string
+          created_at?: string
+          description?: string | null
+          details?: Json | null
+          event_type?: string
+          id?: string
+          ip_address?: string | null
+          target_id?: string | null
+          target_table?: string | null
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
+      pz_billing_rules: {
+        Row: {
+          amount: number
+          applicable_to: string | null
+          auto_generate: boolean
+          created_at: string
+          created_by: string | null
+          description: string | null
+          frequency_days: number | null
+          id: string
+          is_active: boolean
+          name: string
+          room_types: string[] | null
+          rule_type: string
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          applicable_to?: string | null
+          auto_generate?: boolean
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          frequency_days?: number | null
+          id?: string
+          is_active?: boolean
+          name: string
+          room_types?: string[] | null
+          rule_type: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          applicable_to?: string | null
+          auto_generate?: boolean
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          frequency_days?: number | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          room_types?: string[] | null
+          rule_type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       pz_daily_care_logs: {
         Row: {
           care_date: string
@@ -2601,6 +3358,7 @@ export type Database = {
           created_at: string
           id: string
           notes: string | null
+          org_id: string
           resident_id: string
           staff_id: string
           updated_at: string
@@ -2617,6 +3375,7 @@ export type Database = {
           created_at?: string
           id?: string
           notes?: string | null
+          org_id: string
           resident_id: string
           staff_id: string
           updated_at?: string
@@ -2633,6 +3392,7 @@ export type Database = {
           created_at?: string
           id?: string
           notes?: string | null
+          org_id?: string
           resident_id?: string
           staff_id?: string
           updated_at?: string
@@ -2642,6 +3402,13 @@ export type Database = {
           validation_status?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "pz_daily_care_logs_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "pz_organizations"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "pz_daily_care_logs_resident_id_fkey"
             columns: ["resident_id"]
@@ -2661,6 +3428,63 @@ export type Database = {
             columns: ["validated_by"]
             isOneToOne: false
             referencedRelation: "pz_staff"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pz_dietary_restrictions: {
+        Row: {
+          created_at: string
+          end_date: string | null
+          id: string
+          medical_notes: string | null
+          org_id: string
+          prescribed_by: string | null
+          resident_id: string
+          restriction_type: string
+          severity: string
+          start_date: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          end_date?: string | null
+          id?: string
+          medical_notes?: string | null
+          org_id: string
+          prescribed_by?: string | null
+          resident_id: string
+          restriction_type: string
+          severity?: string
+          start_date?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          end_date?: string | null
+          id?: string
+          medical_notes?: string | null
+          org_id?: string
+          prescribed_by?: string | null
+          resident_id?: string
+          restriction_type?: string
+          severity?: string
+          start_date?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pz_dietary_restrictions_prescribed_by_fkey"
+            columns: ["prescribed_by"]
+            isOneToOne: false
+            referencedRelation: "pz_staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pz_dietary_restrictions_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "pz_residents"
             referencedColumns: ["id"]
           },
         ]
@@ -2731,12 +3555,328 @@ export type Database = {
         }
         Relationships: []
       }
+      pz_inventory: {
+        Row: {
+          category: Database["public"]["Enums"]["stock_category"]
+          created_at: string
+          created_by: string | null
+          current_stock: number
+          description: string | null
+          expiry_date: string | null
+          id: string
+          is_active: boolean
+          lot_number: string | null
+          maximum_stock: number | null
+          minimum_stock: number
+          name: string
+          storage_location: string | null
+          supplier_id: string | null
+          unit: string
+          unit_price: number | null
+          updated_at: string
+        }
+        Insert: {
+          category?: Database["public"]["Enums"]["stock_category"]
+          created_at?: string
+          created_by?: string | null
+          current_stock?: number
+          description?: string | null
+          expiry_date?: string | null
+          id?: string
+          is_active?: boolean
+          lot_number?: string | null
+          maximum_stock?: number | null
+          minimum_stock?: number
+          name: string
+          storage_location?: string | null
+          supplier_id?: string | null
+          unit?: string
+          unit_price?: number | null
+          updated_at?: string
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["stock_category"]
+          created_at?: string
+          created_by?: string | null
+          current_stock?: number
+          description?: string | null
+          expiry_date?: string | null
+          id?: string
+          is_active?: boolean
+          lot_number?: string | null
+          maximum_stock?: number | null
+          minimum_stock?: number
+          name?: string
+          storage_location?: string | null
+          supplier_id?: string | null
+          unit?: string
+          unit_price?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pz_inventory_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "pz_suppliers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pz_invoices: {
+        Row: {
+          amount: number
+          billing_rule_id: string | null
+          created_at: string
+          created_by: string | null
+          currency: string
+          description: string | null
+          due_date: string
+          id: string
+          invoice_number: string
+          issue_date: string
+          line_items: Json | null
+          notes: string | null
+          paid_date: string | null
+          payment_terms: string | null
+          resident_id: string | null
+          status: string
+          tax_amount: number | null
+          total_amount: number
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          billing_rule_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          description?: string | null
+          due_date: string
+          id?: string
+          invoice_number: string
+          issue_date: string
+          line_items?: Json | null
+          notes?: string | null
+          paid_date?: string | null
+          payment_terms?: string | null
+          resident_id?: string | null
+          status?: string
+          tax_amount?: number | null
+          total_amount: number
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          billing_rule_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          description?: string | null
+          due_date?: string
+          id?: string
+          invoice_number?: string
+          issue_date?: string
+          line_items?: Json | null
+          notes?: string | null
+          paid_date?: string | null
+          payment_terms?: string | null
+          resident_id?: string | null
+          status?: string
+          tax_amount?: number | null
+          total_amount?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pz_invoices_billing_rule_id_fkey"
+            columns: ["billing_rule_id"]
+            isOneToOne: false
+            referencedRelation: "pz_billing_rules"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pz_invoices_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "pz_residents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pz_leave_attachments: {
+        Row: {
+          created_at: string
+          file_name: string
+          file_path: string
+          file_size: number | null
+          id: string
+          leave_id: string
+          mime_type: string | null
+          uploaded_by: string
+        }
+        Insert: {
+          created_at?: string
+          file_name: string
+          file_path: string
+          file_size?: number | null
+          id?: string
+          leave_id: string
+          mime_type?: string | null
+          uploaded_by: string
+        }
+        Update: {
+          created_at?: string
+          file_name?: string
+          file_path?: string
+          file_size?: number | null
+          id?: string
+          leave_id?: string
+          mime_type?: string | null
+          uploaded_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pz_leave_attachments_leave_id_fkey"
+            columns: ["leave_id"]
+            isOneToOne: false
+            referencedRelation: "pz_leaves"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pz_leave_balances: {
+        Row: {
+          allocated_days: number
+          carried_over_days: number
+          created_at: string
+          id: string
+          leave_type: string
+          remaining_days: number | null
+          staff_id: string
+          updated_at: string
+          used_days: number
+          year: number
+        }
+        Insert: {
+          allocated_days?: number
+          carried_over_days?: number
+          created_at?: string
+          id?: string
+          leave_type: string
+          remaining_days?: number | null
+          staff_id: string
+          updated_at?: string
+          used_days?: number
+          year: number
+        }
+        Update: {
+          allocated_days?: number
+          carried_over_days?: number
+          created_at?: string
+          id?: string
+          leave_type?: string
+          remaining_days?: number | null
+          staff_id?: string
+          updated_at?: string
+          used_days?: number
+          year?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pz_leave_balances_staff_id_fkey"
+            columns: ["staff_id"]
+            isOneToOne: false
+            referencedRelation: "pz_staff"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pz_leave_comments: {
+        Row: {
+          author_user_id: string
+          content: string
+          created_at: string
+          id: string
+          leave_id: string
+        }
+        Insert: {
+          author_user_id: string
+          content: string
+          created_at?: string
+          id?: string
+          leave_id: string
+        }
+        Update: {
+          author_user_id?: string
+          content?: string
+          created_at?: string
+          id?: string
+          leave_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pz_leave_comments_leave_id_fkey"
+            columns: ["leave_id"]
+            isOneToOne: false
+            referencedRelation: "pz_leaves"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pz_leave_status_logs: {
+        Row: {
+          changed_at: string
+          changed_by: string | null
+          id: string
+          leave_id: string
+          new_status: string | null
+          note: string | null
+          old_status: string | null
+        }
+        Insert: {
+          changed_at?: string
+          changed_by?: string | null
+          id?: string
+          leave_id: string
+          new_status?: string | null
+          note?: string | null
+          old_status?: string | null
+        }
+        Update: {
+          changed_at?: string
+          changed_by?: string | null
+          id?: string
+          leave_id?: string
+          new_status?: string | null
+          note?: string | null
+          old_status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pz_leave_status_logs_leave_id_fkey"
+            columns: ["leave_id"]
+            isOneToOne: false
+            referencedRelation: "pz_leaves"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       pz_leaves: {
         Row: {
           approved_at: string | null
           approved_by: string | null
+          approver1_at: string | null
+          approver1_comment: string | null
+          approver1_decision_at: string | null
+          approver1_user_id: string | null
+          approver2_at: string | null
+          approver2_comment: string | null
+          approver2_decision_at: string | null
+          approver2_user_id: string | null
           created_at: string
           days_count: number
+          decision_comment: string | null
           end_date: string
           id: string
           leave_type: string
@@ -2751,8 +3891,17 @@ export type Database = {
         Insert: {
           approved_at?: string | null
           approved_by?: string | null
+          approver1_at?: string | null
+          approver1_comment?: string | null
+          approver1_decision_at?: string | null
+          approver1_user_id?: string | null
+          approver2_at?: string | null
+          approver2_comment?: string | null
+          approver2_decision_at?: string | null
+          approver2_user_id?: string | null
           created_at?: string
           days_count: number
+          decision_comment?: string | null
           end_date: string
           id?: string
           leave_type: string
@@ -2767,8 +3916,17 @@ export type Database = {
         Update: {
           approved_at?: string | null
           approved_by?: string | null
+          approver1_at?: string | null
+          approver1_comment?: string | null
+          approver1_decision_at?: string | null
+          approver1_user_id?: string | null
+          approver2_at?: string | null
+          approver2_comment?: string | null
+          approver2_decision_at?: string | null
+          approver2_user_id?: string | null
           created_at?: string
           days_count?: number
+          decision_comment?: string | null
           end_date?: string
           id?: string
           leave_type?: string
@@ -2798,6 +3956,73 @@ export type Database = {
           {
             foreignKeyName: "pz_leaves_staff_id_fkey"
             columns: ["staff_id"]
+            isOneToOne: false
+            referencedRelation: "pz_staff"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pz_meal_plans: {
+        Row: {
+          created_at: string
+          id: string
+          meal_date: string
+          meal_type: string
+          menu_id: string
+          org_id: string
+          quantity_served: number | null
+          resident_id: string
+          served_by: string | null
+          service_notes: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          meal_date: string
+          meal_type: string
+          menu_id: string
+          org_id: string
+          quantity_served?: number | null
+          resident_id: string
+          served_by?: string | null
+          service_notes?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          meal_date?: string
+          meal_type?: string
+          menu_id?: string
+          org_id?: string
+          quantity_served?: number | null
+          resident_id?: string
+          served_by?: string | null
+          service_notes?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pz_meal_plans_menu_id_fkey"
+            columns: ["menu_id"]
+            isOneToOne: false
+            referencedRelation: "pz_menus"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pz_meal_plans_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "pz_residents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pz_meal_plans_served_by_fkey"
+            columns: ["served_by"]
             isOneToOne: false
             referencedRelation: "pz_staff"
             referencedColumns: ["id"]
@@ -2867,12 +4092,76 @@ export type Database = {
           },
         ]
       }
+      pz_menus: {
+        Row: {
+          allergens: string[] | null
+          calories: number | null
+          carbohydrates: number | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          fiber: number | null
+          id: string
+          ingredients: string[] | null
+          is_active: boolean
+          lipids: number | null
+          meal_type: string
+          name: string
+          org_id: string
+          proteins: number | null
+          sodium: number | null
+          unit_cost: number | null
+          updated_at: string
+        }
+        Insert: {
+          allergens?: string[] | null
+          calories?: number | null
+          carbohydrates?: number | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          fiber?: number | null
+          id?: string
+          ingredients?: string[] | null
+          is_active?: boolean
+          lipids?: number | null
+          meal_type: string
+          name: string
+          org_id: string
+          proteins?: number | null
+          sodium?: number | null
+          unit_cost?: number | null
+          updated_at?: string
+        }
+        Update: {
+          allergens?: string[] | null
+          calories?: number | null
+          carbohydrates?: number | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          fiber?: number | null
+          id?: string
+          ingredients?: string[] | null
+          is_active?: boolean
+          lipids?: number | null
+          meal_type?: string
+          name?: string
+          org_id?: string
+          proteins?: number | null
+          sodium?: number | null
+          unit_cost?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       pz_messages: {
         Row: {
           content: string
           created_at: string
           id: string
           is_read: boolean
+          org_id: string
           read_at: string | null
           recipient_id: string
           recipient_staff_id: string | null
@@ -2885,6 +4174,7 @@ export type Database = {
           created_at?: string
           id?: string
           is_read?: boolean
+          org_id: string
           read_at?: string | null
           recipient_id: string
           recipient_staff_id?: string | null
@@ -2897,6 +4187,7 @@ export type Database = {
           created_at?: string
           id?: string
           is_read?: boolean
+          org_id?: string
           read_at?: string | null
           recipient_id?: string
           recipient_staff_id?: string | null
@@ -2905,6 +4196,13 @@ export type Database = {
           subject?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "pz_messages_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "pz_organizations"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "pz_messages_recipient_staff_id_fkey"
             columns: ["recipient_staff_id"]
@@ -2920,6 +4218,33 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      pz_notification_preferences: {
+        Row: {
+          categories: Json
+          created_at: string
+          email_enabled: boolean
+          in_app_enabled: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          categories?: Json
+          created_at?: string
+          email_enabled?: boolean
+          in_app_enabled?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          categories?: Json
+          created_at?: string
+          email_enabled?: boolean
+          in_app_enabled?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       pz_notifications: {
         Row: {
@@ -2962,6 +4287,236 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      pz_org_members: {
+        Row: {
+          created_at: string
+          org_id: string
+          role: Database["public"]["Enums"]["pz_org_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          org_id: string
+          role?: Database["public"]["Enums"]["pz_org_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          org_id?: string
+          role?: Database["public"]["Enums"]["pz_org_role"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pz_org_members_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "pz_organizations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pz_org_members_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "pz_user_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pz_organizations: {
+        Row: {
+          address: Json
+          contact_email: string | null
+          created_at: string
+          id: string
+          legal_name: string | null
+          logo_url: string | null
+          name: string
+          phone: string | null
+          siret: string | null
+          timezone: string
+          updated_at: string
+        }
+        Insert: {
+          address?: Json
+          contact_email?: string | null
+          created_at?: string
+          id?: string
+          legal_name?: string | null
+          logo_url?: string | null
+          name: string
+          phone?: string | null
+          siret?: string | null
+          timezone?: string
+          updated_at?: string
+        }
+        Update: {
+          address?: Json
+          contact_email?: string | null
+          created_at?: string
+          id?: string
+          legal_name?: string | null
+          logo_url?: string | null
+          name?: string
+          phone?: string | null
+          siret?: string | null
+          timezone?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      pz_payments: {
+        Row: {
+          amount: number
+          created_at: string
+          created_by: string | null
+          currency: string
+          id: string
+          invoice_id: string | null
+          notes: string | null
+          payment_date: string
+          payment_method: string
+          payment_reference: string | null
+          processed_by: string | null
+          status: string
+          transaction_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          id?: string
+          invoice_id?: string | null
+          notes?: string | null
+          payment_date: string
+          payment_method: string
+          payment_reference?: string | null
+          processed_by?: string | null
+          status?: string
+          transaction_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          id?: string
+          invoice_id?: string | null
+          notes?: string | null
+          payment_date?: string
+          payment_method?: string
+          payment_reference?: string | null
+          processed_by?: string | null
+          status?: string
+          transaction_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pz_payments_invoice_id_fkey"
+            columns: ["invoice_id"]
+            isOneToOne: false
+            referencedRelation: "pz_invoices"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pz_push_subscriptions: {
+        Row: {
+          created_at: string
+          endpoint: string
+          id: string
+          subscription: Json
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          endpoint: string
+          id?: string
+          subscription: Json
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          endpoint?: string
+          id?: string
+          subscription?: Json
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      pz_resident_contacts: {
+        Row: {
+          address: string | null
+          created_at: string
+          created_by: string | null
+          email: string | null
+          emergency_contact: boolean | null
+          first_name: string
+          id: string
+          is_primary: boolean | null
+          last_name: string
+          notes: string | null
+          phone: string | null
+          relationship: string
+          resident_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          emergency_contact?: boolean | null
+          first_name: string
+          id?: string
+          is_primary?: boolean | null
+          last_name: string
+          notes?: string | null
+          phone?: string | null
+          relationship: string
+          resident_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          emergency_contact?: boolean | null
+          first_name?: string
+          id?: string
+          is_primary?: boolean | null
+          last_name?: string
+          notes?: string | null
+          phone?: string | null
+          relationship?: string
+          resident_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pz_resident_contacts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "pz_staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pz_resident_contacts_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "pz_residents"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       pz_resident_history: {
         Row: {
@@ -3014,6 +4569,47 @@ export type Database = {
           },
         ]
       }
+      pz_resident_qr_codes: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          last_scanned: string | null
+          qr_code: string
+          resident_id: string
+          scan_count: number
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          last_scanned?: string | null
+          qr_code: string
+          resident_id: string
+          scan_count?: number
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          last_scanned?: string | null
+          qr_code?: string
+          resident_id?: string
+          scan_count?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pz_resident_qr_codes_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "pz_residents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       pz_residents: {
         Row: {
           admission_date: string
@@ -3032,6 +4628,7 @@ export type Database = {
           id: string
           last_name: string
           medical_notes: string | null
+          org_id: string
           pathologies: string[] | null
           room_number: string
           updated_at: string
@@ -3053,6 +4650,7 @@ export type Database = {
           id?: string
           last_name: string
           medical_notes?: string | null
+          org_id: string
           pathologies?: string[] | null
           room_number: string
           updated_at?: string
@@ -3074,6 +4672,7 @@ export type Database = {
           id?: string
           last_name?: string
           medical_notes?: string | null
+          org_id?: string
           pathologies?: string[] | null
           room_number?: string
           updated_at?: string
@@ -3084,6 +4683,13 @@ export type Database = {
             columns: ["archived_by"]
             isOneToOne: false
             referencedRelation: "pz_staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pz_residents_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "pz_organizations"
             referencedColumns: ["id"]
           },
         ]
@@ -3295,9 +4901,10 @@ export type Database = {
           floor_id: string | null
           id: string
           notes: string | null
+          occupancy_count: number
+          org_id: string
           resident_id: string | null
           room_number: string
-          room_type: string | null
           room_type_id: string | null
           status: string | null
           updated_at: string | null
@@ -3310,9 +4917,10 @@ export type Database = {
           floor_id?: string | null
           id?: string
           notes?: string | null
+          occupancy_count?: number
+          org_id: string
           resident_id?: string | null
           room_number: string
-          room_type?: string | null
           room_type_id?: string | null
           status?: string | null
           updated_at?: string | null
@@ -3325,9 +4933,10 @@ export type Database = {
           floor_id?: string | null
           id?: string
           notes?: string | null
+          occupancy_count?: number
+          org_id?: string
           resident_id?: string | null
           room_number?: string
-          room_type?: string | null
           room_type_id?: string | null
           status?: string | null
           updated_at?: string | null
@@ -3338,6 +4947,13 @@ export type Database = {
             columns: ["floor_id"]
             isOneToOne: false
             referencedRelation: "pz_floors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pz_rooms_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "pz_organizations"
             referencedColumns: ["id"]
           },
           {
@@ -3424,6 +5040,7 @@ export type Database = {
           id: string
           is_active: boolean
           last_name: string
+          org_id: string
           phone: string | null
           position: string
           role: Database["public"]["Enums"]["staff_role"]
@@ -3441,6 +5058,7 @@ export type Database = {
           id?: string
           is_active?: boolean
           last_name: string
+          org_id: string
           phone?: string | null
           position: string
           role?: Database["public"]["Enums"]["staff_role"]
@@ -3458,6 +5076,7 @@ export type Database = {
           id?: string
           is_active?: boolean
           last_name?: string
+          org_id?: string
           phone?: string | null
           position?: string
           role?: Database["public"]["Enums"]["staff_role"]
@@ -3465,7 +5084,82 @@ export type Database = {
           start_date?: string | null
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "pz_staff_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "pz_organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pz_staff_certifications: {
+        Row: {
+          certificate_file_path: string | null
+          created_at: string
+          created_by: string | null
+          expiry_date: string | null
+          id: string
+          notes: string | null
+          obtained_date: string
+          score: number | null
+          staff_id: string
+          status: string
+          training_program_id: string
+          updated_at: string
+        }
+        Insert: {
+          certificate_file_path?: string | null
+          created_at?: string
+          created_by?: string | null
+          expiry_date?: string | null
+          id?: string
+          notes?: string | null
+          obtained_date: string
+          score?: number | null
+          staff_id: string
+          status?: string
+          training_program_id: string
+          updated_at?: string
+        }
+        Update: {
+          certificate_file_path?: string | null
+          created_at?: string
+          created_by?: string | null
+          expiry_date?: string | null
+          id?: string
+          notes?: string | null
+          obtained_date?: string
+          score?: number | null
+          staff_id?: string
+          status?: string
+          training_program_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_staff_certifications_program"
+            columns: ["training_program_id"]
+            isOneToOne: false
+            referencedRelation: "pz_training_programs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fk_staff_certifications_staff"
+            columns: ["staff_id"]
+            isOneToOne: false
+            referencedRelation: "pz_staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pz_staff_certifications_training_program_id_fkey"
+            columns: ["training_program_id"]
+            isOneToOne: false
+            referencedRelation: "pz_training_programs"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       pz_staff_contracts: {
         Row: {
@@ -3561,9 +5255,424 @@ export type Database = {
           },
         ]
       }
+      pz_stock_movements: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          inventory_id: string
+          movement_date: string
+          movement_type: Database["public"]["Enums"]["movement_type"]
+          notes: string | null
+          quantity: number
+          reason: string | null
+          reference_number: string | null
+          staff_id: string | null
+          supplier_id: string | null
+          unit_price: number | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          inventory_id: string
+          movement_date?: string
+          movement_type: Database["public"]["Enums"]["movement_type"]
+          notes?: string | null
+          quantity: number
+          reason?: string | null
+          reference_number?: string | null
+          staff_id?: string | null
+          supplier_id?: string | null
+          unit_price?: number | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          inventory_id?: string
+          movement_date?: string
+          movement_type?: Database["public"]["Enums"]["movement_type"]
+          notes?: string | null
+          quantity?: number
+          reason?: string | null
+          reference_number?: string | null
+          staff_id?: string | null
+          supplier_id?: string | null
+          unit_price?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pz_stock_movements_inventory_id_fkey"
+            columns: ["inventory_id"]
+            isOneToOne: false
+            referencedRelation: "pz_inventory"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pz_stock_movements_staff_id_fkey"
+            columns: ["staff_id"]
+            isOneToOne: false
+            referencedRelation: "pz_staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pz_stock_movements_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "pz_suppliers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pz_suppliers: {
+        Row: {
+          address: string | null
+          contact_person: string | null
+          created_at: string
+          created_by: string | null
+          email: string | null
+          id: string
+          is_active: boolean
+          name: string
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          contact_person?: string | null
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          contact_person?: string | null
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      pz_telemedicine_consultations: {
+        Row: {
+          consultation_type: string
+          created_at: string
+          duration_minutes: number
+          ended_at: string | null
+          id: string
+          join_token: string | null
+          notes: string | null
+          participants: Json | null
+          recording_url: string | null
+          resident_id: string
+          room_id: string | null
+          room_url: string | null
+          scheduled_by: string
+          scheduled_for: string
+          started_at: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          consultation_type?: string
+          created_at?: string
+          duration_minutes?: number
+          ended_at?: string | null
+          id?: string
+          join_token?: string | null
+          notes?: string | null
+          participants?: Json | null
+          recording_url?: string | null
+          resident_id: string
+          room_id?: string | null
+          room_url?: string | null
+          scheduled_by: string
+          scheduled_for: string
+          started_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          consultation_type?: string
+          created_at?: string
+          duration_minutes?: number
+          ended_at?: string | null
+          id?: string
+          join_token?: string | null
+          notes?: string | null
+          participants?: Json | null
+          recording_url?: string | null
+          resident_id?: string
+          room_id?: string | null
+          room_url?: string | null
+          scheduled_by?: string
+          scheduled_for?: string
+          started_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pz_telemedicine_consultations_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "pz_residents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pz_telemedicine_consultations_scheduled_by_fkey"
+            columns: ["scheduled_by"]
+            isOneToOne: false
+            referencedRelation: "pz_staff"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pz_telemedicine_recordings: {
+        Row: {
+          access_log: Json | null
+          consultation_id: string
+          created_at: string
+          duration_seconds: number | null
+          file_size: number | null
+          id: string
+          recording_ended: string | null
+          recording_started: string
+          recording_url: string
+          retention_until: string | null
+        }
+        Insert: {
+          access_log?: Json | null
+          consultation_id: string
+          created_at?: string
+          duration_seconds?: number | null
+          file_size?: number | null
+          id?: string
+          recording_ended?: string | null
+          recording_started: string
+          recording_url: string
+          retention_until?: string | null
+        }
+        Update: {
+          access_log?: Json | null
+          consultation_id?: string
+          created_at?: string
+          duration_seconds?: number | null
+          file_size?: number | null
+          id?: string
+          recording_ended?: string | null
+          recording_started?: string
+          recording_url?: string
+          retention_until?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pz_telemedicine_recordings_consultation_id_fkey"
+            columns: ["consultation_id"]
+            isOneToOne: false
+            referencedRelation: "pz_telemedicine_consultations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pz_telemedicine_sessions: {
+        Row: {
+          consultation_id: string
+          created_at: string
+          id: string
+          joined_at: string
+          left_at: string | null
+          participant_id: string
+          participant_type: string
+          session_data: Json | null
+        }
+        Insert: {
+          consultation_id: string
+          created_at?: string
+          id?: string
+          joined_at?: string
+          left_at?: string | null
+          participant_id: string
+          participant_type: string
+          session_data?: Json | null
+        }
+        Update: {
+          consultation_id?: string
+          created_at?: string
+          id?: string
+          joined_at?: string
+          left_at?: string | null
+          participant_id?: string
+          participant_type?: string
+          session_data?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pz_telemedicine_sessions_consultation_id_fkey"
+            columns: ["consultation_id"]
+            isOneToOne: false
+            referencedRelation: "pz_telemedicine_consultations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pz_training_enrollments: {
+        Row: {
+          attendance_status: string | null
+          completion_score: number | null
+          created_at: string
+          enrollment_date: string
+          id: string
+          notes: string | null
+          session_id: string
+          staff_id: string
+          updated_at: string
+        }
+        Insert: {
+          attendance_status?: string | null
+          completion_score?: number | null
+          created_at?: string
+          enrollment_date?: string
+          id?: string
+          notes?: string | null
+          session_id: string
+          staff_id: string
+          updated_at?: string
+        }
+        Update: {
+          attendance_status?: string | null
+          completion_score?: number | null
+          created_at?: string
+          enrollment_date?: string
+          id?: string
+          notes?: string | null
+          session_id?: string
+          staff_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pz_training_enrollments_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "pz_training_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pz_training_programs: {
+        Row: {
+          category: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          is_active: boolean
+          is_mandatory: boolean
+          min_score: number | null
+          name: string
+          updated_at: string
+          validity_period_months: number | null
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          is_mandatory?: boolean
+          min_score?: number | null
+          name: string
+          updated_at?: string
+          validity_period_months?: number | null
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          is_mandatory?: boolean
+          min_score?: number | null
+          name?: string
+          updated_at?: string
+          validity_period_months?: number | null
+        }
+        Relationships: []
+      }
+      pz_training_sessions: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          description: string | null
+          end_datetime: string
+          id: string
+          instructor_name: string | null
+          location: string | null
+          max_participants: number | null
+          start_datetime: string
+          status: string
+          title: string
+          training_program_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          end_datetime: string
+          id?: string
+          instructor_name?: string | null
+          location?: string | null
+          max_participants?: number | null
+          start_datetime: string
+          status?: string
+          title: string
+          training_program_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          end_datetime?: string
+          id?: string
+          instructor_name?: string | null
+          location?: string | null
+          max_participants?: number | null
+          start_datetime?: string
+          status?: string
+          title?: string
+          training_program_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pz_training_sessions_training_program_id_fkey"
+            columns: ["training_program_id"]
+            isOneToOne: false
+            referencedRelation: "pz_training_programs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       pz_user_profiles: {
         Row: {
           created_at: string
+          current_org_id: string | null
           first_name: string
           id: string
           last_name: string
@@ -3574,6 +5683,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          current_org_id?: string | null
           first_name: string
           id: string
           last_name: string
@@ -3584,6 +5694,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          current_org_id?: string | null
           first_name?: string
           id?: string
           last_name?: string
@@ -3598,6 +5709,215 @@ export type Database = {
             columns: ["staff_id"]
             isOneToOne: false
             referencedRelation: "pz_staff"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pz_visit_slot_exceptions: {
+        Row: {
+          alternative_end_time: string | null
+          alternative_max_visitors: number | null
+          alternative_start_time: string | null
+          created_at: string
+          created_by: string
+          exception_date: string
+          id: string
+          is_closed: boolean
+          reason: string
+          visit_slot_id: string
+        }
+        Insert: {
+          alternative_end_time?: string | null
+          alternative_max_visitors?: number | null
+          alternative_start_time?: string | null
+          created_at?: string
+          created_by: string
+          exception_date: string
+          id?: string
+          is_closed?: boolean
+          reason: string
+          visit_slot_id: string
+        }
+        Update: {
+          alternative_end_time?: string | null
+          alternative_max_visitors?: number | null
+          alternative_start_time?: string | null
+          created_at?: string
+          created_by?: string
+          exception_date?: string
+          id?: string
+          is_closed?: boolean
+          reason?: string
+          visit_slot_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pz_visit_slot_exceptions_visit_slot_id_fkey"
+            columns: ["visit_slot_id"]
+            isOneToOne: false
+            referencedRelation: "pz_visit_slots"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pz_visit_slots: {
+        Row: {
+          created_at: string
+          day_of_week: number
+          end_time: string
+          id: string
+          is_active: boolean
+          max_visitors: number
+          start_time: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          day_of_week: number
+          end_time: string
+          id?: string
+          is_active?: boolean
+          max_visitors?: number
+          start_time: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          day_of_week?: number
+          end_time?: string
+          id?: string
+          is_active?: boolean
+          max_visitors?: number
+          start_time?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      pz_visit_types: {
+        Row: {
+          color: string
+          created_at: string
+          duration_minutes: number
+          icon: string
+          id: string
+          is_active: boolean
+          name: string
+          requires_staff: boolean
+        }
+        Insert: {
+          color?: string
+          created_at?: string
+          duration_minutes?: number
+          icon?: string
+          id?: string
+          is_active?: boolean
+          name: string
+          requires_staff?: boolean
+        }
+        Update: {
+          color?: string
+          created_at?: string
+          duration_minutes?: number
+          icon?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          requires_staff?: boolean
+        }
+        Relationships: []
+      }
+      pz_visits: {
+        Row: {
+          cancellation_reason: string | null
+          cancelled_at: string | null
+          confirmed_at: string | null
+          confirmed_by: string | null
+          contact_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          notes: string | null
+          resident_id: string
+          special_requests: string | null
+          status: string
+          updated_at: string
+          visit_date: string
+          visit_slot_id: string
+          visit_type_id: string | null
+          visitor_count: number
+        }
+        Insert: {
+          cancellation_reason?: string | null
+          cancelled_at?: string | null
+          confirmed_at?: string | null
+          confirmed_by?: string | null
+          contact_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          notes?: string | null
+          resident_id: string
+          special_requests?: string | null
+          status?: string
+          updated_at?: string
+          visit_date: string
+          visit_slot_id: string
+          visit_type_id?: string | null
+          visitor_count?: number
+        }
+        Update: {
+          cancellation_reason?: string | null
+          cancelled_at?: string | null
+          confirmed_at?: string | null
+          confirmed_by?: string | null
+          contact_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          notes?: string | null
+          resident_id?: string
+          special_requests?: string | null
+          status?: string
+          updated_at?: string
+          visit_date?: string
+          visit_slot_id?: string
+          visit_type_id?: string | null
+          visitor_count?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pz_visits_confirmed_by_fkey"
+            columns: ["confirmed_by"]
+            isOneToOne: false
+            referencedRelation: "pz_staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pz_visits_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "pz_resident_contacts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pz_visits_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "pz_residents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pz_visits_visit_slot_id_fkey"
+            columns: ["visit_slot_id"]
+            isOneToOne: false
+            referencedRelation: "pz_visit_slots"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pz_visits_visit_type_id_fkey"
+            columns: ["visit_type_id"]
+            isOneToOne: false
+            referencedRelation: "pz_visit_types"
             referencedColumns: ["id"]
           },
         ]
@@ -5793,6 +8113,75 @@ export type Database = {
         }
         Relationships: []
       }
+      security_audit_log: {
+        Row: {
+          event_type: string
+          id: string
+          ip_address: string | null
+          new_values: Json | null
+          old_values: Json | null
+          record_id: string | null
+          table_name: string | null
+          timestamp: string | null
+          user_agent: string | null
+          user_email: string | null
+          user_id: string | null
+        }
+        Insert: {
+          event_type: string
+          id?: string
+          ip_address?: string | null
+          new_values?: Json | null
+          old_values?: Json | null
+          record_id?: string | null
+          table_name?: string | null
+          timestamp?: string | null
+          user_agent?: string | null
+          user_email?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          event_type?: string
+          id?: string
+          ip_address?: string | null
+          new_values?: Json | null
+          old_values?: Json | null
+          record_id?: string | null
+          table_name?: string | null
+          timestamp?: string | null
+          user_agent?: string | null
+          user_email?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      stripe_webhook_events: {
+        Row: {
+          event_id: string
+          last_error: string | null
+          processed_at: string | null
+          received_at: string
+          status: string
+          type: string
+        }
+        Insert: {
+          event_id: string
+          last_error?: string | null
+          processed_at?: string | null
+          received_at?: string
+          status?: string
+          type: string
+        }
+        Update: {
+          event_id?: string
+          last_error?: string | null
+          processed_at?: string | null
+          received_at?: string
+          status?: string
+          type?: string
+        }
+        Relationships: []
+      }
       strk_absences: {
         Row: {
           course_id: string | null
@@ -6051,30 +8440,51 @@ export type Database = {
         }
         Relationships: []
       }
-      strk_class_students: {
+      strk_audit_logs: {
         Row: {
-          class_id: string
+          action: string
+          actor_email: string | null
+          actor_id: string | null
+          after_data: Json | null
+          before_data: Json | null
           created_at: string
-          enrollment_date: string
+          details: Json
+          entity: string
+          entity_id: string | null
           id: string
-          is_active: boolean
-          student_id: string
+          institution_id: string | null
+          ip: unknown | null
+          user_agent: string | null
         }
         Insert: {
-          class_id: string
+          action: string
+          actor_email?: string | null
+          actor_id?: string | null
+          after_data?: Json | null
+          before_data?: Json | null
           created_at?: string
-          enrollment_date?: string
+          details?: Json
+          entity: string
+          entity_id?: string | null
           id?: string
-          is_active?: boolean
-          student_id: string
+          institution_id?: string | null
+          ip?: unknown | null
+          user_agent?: string | null
         }
         Update: {
-          class_id?: string
+          action?: string
+          actor_email?: string | null
+          actor_id?: string | null
+          after_data?: Json | null
+          before_data?: Json | null
           created_at?: string
-          enrollment_date?: string
+          details?: Json
+          entity?: string
+          entity_id?: string | null
           id?: string
-          is_active?: boolean
-          student_id?: string
+          institution_id?: string | null
+          ip?: unknown | null
+          user_agent?: string | null
         }
         Relationships: []
       }
@@ -6871,6 +9281,7 @@ export type Database = {
           phone_number: string | null
           profile_image: string | null
           role: Database["public"]["Enums"]["strk_user_role"]
+          status: Database["public"]["Enums"]["strk_profile_status"]
           updated_at: string | null
         }
         Insert: {
@@ -6883,6 +9294,7 @@ export type Database = {
           phone_number?: string | null
           profile_image?: string | null
           role?: Database["public"]["Enums"]["strk_user_role"]
+          status?: Database["public"]["Enums"]["strk_profile_status"]
           updated_at?: string | null
         }
         Update: {
@@ -6895,6 +9307,7 @@ export type Database = {
           phone_number?: string | null
           profile_image?: string | null
           role?: Database["public"]["Enums"]["strk_user_role"]
+          status?: Database["public"]["Enums"]["strk_profile_status"]
           updated_at?: string | null
         }
         Relationships: [
@@ -7073,11 +9486,115 @@ export type Database = {
         }
         Relationships: []
       }
+      strk_signature_evidence: {
+        Row: {
+          created_at: string
+          document_hash: string
+          id: string
+          metadata: Json
+          raw_signature_data: string | null
+          signature_id: string
+          signer_email: string | null
+          signer_ip: unknown | null
+          signer_user_agent: string | null
+          signer_user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          document_hash: string
+          id?: string
+          metadata?: Json
+          raw_signature_data?: string | null
+          signature_id: string
+          signer_email?: string | null
+          signer_ip?: unknown | null
+          signer_user_agent?: string | null
+          signer_user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          document_hash?: string
+          id?: string
+          metadata?: Json
+          raw_signature_data?: string | null
+          signature_id?: string
+          signer_email?: string | null
+          signer_ip?: unknown | null
+          signer_user_agent?: string | null
+          signer_user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "strk_signature_evidence_signature_id_fkey"
+            columns: ["signature_id"]
+            isOneToOne: false
+            referencedRelation: "strk_signatures"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      strk_signature_links: {
+        Row: {
+          attempt_count: number
+          created_at: string
+          created_by: string
+          expires_at: string
+          id: string
+          last_ip: unknown | null
+          last_user_agent: string | null
+          max_attempts: number
+          signature_id: string
+          status: Database["public"]["Enums"]["signature_link_status"]
+          token: string | null
+          token_hash: string | null
+          used_at: string | null
+        }
+        Insert: {
+          attempt_count?: number
+          created_at?: string
+          created_by: string
+          expires_at: string
+          id?: string
+          last_ip?: unknown | null
+          last_user_agent?: string | null
+          max_attempts?: number
+          signature_id: string
+          status?: Database["public"]["Enums"]["signature_link_status"]
+          token?: string | null
+          token_hash?: string | null
+          used_at?: string | null
+        }
+        Update: {
+          attempt_count?: number
+          created_at?: string
+          created_by?: string
+          expires_at?: string
+          id?: string
+          last_ip?: unknown | null
+          last_user_agent?: string | null
+          max_attempts?: number
+          signature_id?: string
+          status?: Database["public"]["Enums"]["signature_link_status"]
+          token?: string | null
+          token_hash?: string | null
+          used_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "strk_signature_links_signature_id_fkey"
+            columns: ["signature_id"]
+            isOneToOne: false
+            referencedRelation: "strk_signatures"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       strk_signatures: {
         Row: {
           completed_at: string | null
           created_at: string | null
           date: string
+          document_hash: string | null
           expires_at: string | null
           id: string
           institution_id: string
@@ -7096,6 +9613,7 @@ export type Database = {
           completed_at?: string | null
           created_at?: string | null
           date: string
+          document_hash?: string | null
           expires_at?: string | null
           id?: string
           institution_id: string
@@ -7114,6 +9632,7 @@ export type Database = {
           completed_at?: string | null
           created_at?: string | null
           date?: string
+          document_hash?: string | null
           expires_at?: string | null
           id?: string
           institution_id?: string
@@ -7162,21 +9681,33 @@ export type Database = {
       strk_student_classes: {
         Row: {
           class_id: string
+          created_at: string
           enrolled_at: string
+          enrollment_date: string
           id: string
+          is_active: boolean
           student_id: string
+          updated_at: string
         }
         Insert: {
           class_id: string
+          created_at?: string
           enrolled_at?: string
+          enrollment_date?: string
           id?: string
+          is_active?: boolean
           student_id: string
+          updated_at?: string
         }
         Update: {
           class_id?: string
+          created_at?: string
           enrolled_at?: string
+          enrollment_date?: string
           id?: string
+          is_active?: boolean
           student_id?: string
+          updated_at?: string
         }
         Relationships: [
           {
@@ -7457,6 +9988,7 @@ export type Database = {
       }
       subscription_plans: {
         Row: {
+          billing_cycle: string | null
           created_at: string | null
           features: Json
           id: string
@@ -7475,6 +10007,7 @@ export type Database = {
           updated_at: string | null
         }
         Insert: {
+          billing_cycle?: string | null
           created_at?: string | null
           features?: Json
           id?: string
@@ -7493,6 +10026,7 @@ export type Database = {
           updated_at?: string | null
         }
         Update: {
+          billing_cycle?: string | null
           created_at?: string | null
           features?: Json
           id?: string
@@ -7836,6 +10370,53 @@ export type Database = {
         }
         Relationships: []
       }
+      user_sessions: {
+        Row: {
+          created_at: string
+          device: string | null
+          id: string
+          ip: unknown | null
+          is_current: boolean | null
+          last_seen_at: string
+          revoked_at: string | null
+          revoked_reason: string | null
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          device?: string | null
+          id?: string
+          ip?: unknown | null
+          is_current?: boolean | null
+          last_seen_at?: string
+          revoked_at?: string | null
+          revoked_reason?: string | null
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          device?: string | null
+          id?: string
+          ip?: unknown | null
+          is_current?: boolean | null
+          last_seen_at?: string
+          revoked_at?: string | null
+          revoked_reason?: string | null
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_sessions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "strk_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_settings: {
         Row: {
           created_at: string
@@ -7957,40 +10538,168 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      strk_class_students: {
+        Row: {
+          class_id: string | null
+          created_at: string | null
+          enrollment_date: string | null
+          id: string | null
+          is_active: boolean | null
+          student_id: string | null
+        }
+        Insert: {
+          class_id?: string | null
+          created_at?: string | null
+          enrollment_date?: string | null
+          id?: string | null
+          is_active?: boolean | null
+          student_id?: string | null
+        }
+        Update: {
+          class_id?: string | null
+          created_at?: string | null
+          enrollment_date?: string | null
+          id?: string | null
+          is_active?: boolean | null
+          student_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "strk_student_classes_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "strk_classes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "strk_student_classes_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "strk_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
+      _period_bounds: {
+        Args: { p_kind: string }
+        Returns: {
+          end_at: string
+          start_at: string
+        }[]
+      }
+      _strk_get_class_institution: {
+        Args: { p_class: string }
+        Returns: string
+      }
+      adjust_leave_balance_for_leave: {
+        Args: { p_leave_id: string; p_sign: number; p_use_new: boolean }
+        Returns: undefined
+      }
+      adjust_leave_balance_for_period: {
+        Args: {
+          p_end: string
+          p_sign: number
+          p_staff: string
+          p_start: string
+          p_type: string
+        }
+        Returns: undefined
+      }
       calculate_average_score: {
         Args: { p_user_id: string }
         Returns: number
+      }
+      check_expiring_items: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      check_visit_slot_availability: {
+        Args: {
+          p_exclude_visit_id?: string
+          p_visit_date: string
+          p_visit_slot_id: string
+          p_visitor_count: number
+        }
+        Returns: boolean
       }
       cleanup_expired_notifications: {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
       create_ai_game: {
-        Args: { p_user_id: string; p_difficulty: string }
+        Args: { p_difficulty: string; p_user_id: string }
+        Returns: string
+      }
+      create_dietary_restriction: {
+        Args: {
+          p_end_date: string
+          p_medical_notes: string
+          p_prescribed_by: string
+          p_resident_id: string
+          p_restriction_type: string
+          p_severity: string
+          p_start_date: string
+        }
         Returns: string
       }
       create_game_notification: {
         Args: {
-          p_user_id: string
-          p_type: string
-          p_title: string
-          p_message: string
           p_game_id?: string
+          p_message: string
+          p_title: string
+          p_type: string
+          p_user_id: string
         }
         Returns: string
       }
       create_notification: {
         Args: {
-          p_user_id: string
-          p_title: string
-          p_message: string
-          p_type?: string
-          p_priority?: string
           p_data?: Json
+          p_message: string
+          p_priority?: string
+          p_title: string
+          p_type?: string
+          p_user_id: string
         }
+        Returns: string
+      }
+      current_org_id: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      current_staff_id: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      debug_auth_state: {
+        Args: Record<PropertyKey, never>
+        Returns: Json
+      }
+      generate_invoice_number: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      get_active_message_recipients: {
+        Args: Record<PropertyKey, never> | { include_self?: boolean }
+        Returns: {
+          email: string
+          first_name: string
+          id: string
+          last_name: string
+        }[]
+      }
+      get_active_plan_id: {
+        Args: { p_user_id: string }
+        Returns: string
+      }
+      get_current_strk_institution_id: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      get_current_strk_role: {
+        Args: Record<PropertyKey, never>
         Returns: string
       }
       get_current_user_role: {
@@ -8000,6 +10709,15 @@ export type Database = {
       get_current_user_role_pz: {
         Args: Record<PropertyKey, never>
         Returns: string
+      }
+      get_expiring_certifications: {
+        Args: { days_ahead?: number }
+        Returns: {
+          days_until_expiry: number
+          expiry_date: string
+          program_name: string
+          staff_name: string
+        }[]
       }
       get_my_role: {
         Args: Record<PropertyKey, never>
@@ -8016,37 +10734,140 @@ export type Database = {
           role: string
         }
       }
+      get_unread_message_count: {
+        Args: Record<PropertyKey, never>
+        Returns: number
+      }
       get_user_by_email: {
         Args: { user_email: string }
         Returns: {
-          id: string
           email: string
+          id: string
         }[]
+      }
+      increment_plan_usage: {
+        Args: { p_amount?: number; p_feature: string; p_user_id: string }
+        Returns: boolean
       }
       is_user_premium: {
         Args: { user_uuid: string }
         Returns: boolean
       }
+      log_audit_event: {
+        Args: {
+          p_action: string
+          p_description?: string
+          p_details?: Json
+          p_event_type: string
+          p_target_id: string
+          p_target_table: string
+        }
+        Returns: string
+      }
+      log_security_event: {
+        Args: {
+          p_event_type: string
+          p_new_values?: Json
+          p_old_values?: Json
+          p_record_id?: string
+          p_table_name?: string
+        }
+        Returns: undefined
+      }
+      mark_all_notifications_read: {
+        Args: Record<PropertyKey, never>
+        Returns: number
+      }
+      reassign_residents_and_apply_room_action: {
+        Args: {
+          p_assignments: Json
+          p_final_action?: string
+          p_source_room: string
+        }
+        Returns: Json
+      }
+      record_rate_limit_hit: {
+        Args: {
+          p_key: string
+          p_max: number
+          p_route: string
+          p_window_sec: number
+        }
+        Returns: boolean
+      }
+      self_upgrade_to_teacher: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
+      strk_can_manage_students: {
+        Args: { target_institution: string }
+        Returns: boolean
+      }
+      strk_log_audit: {
+        Args: {
+          p_action: string
+          p_details?: Json
+          p_entity: string
+          p_entity_id: string
+          p_institution: string
+        }
+        Returns: undefined
+      }
       update_elo_ratings: {
-        Args: { winner_id: string; loser_id: string; is_draw?: boolean }
+        Args: { is_draw?: boolean; loser_id: string; winner_id: string }
+        Returns: undefined
+      }
+      update_order_status: {
+        Args: { new_status: string; notes?: string; order_id: string }
+        Returns: boolean
+      }
+      update_room_occupancy: {
+        Args: { p_room_number: string }
         Returns: undefined
       }
       update_user_profile: {
-        Args: { user_id: string; profile_data: Json }
+        Args: { profile_data: Json; user_id: string }
         Returns: undefined
+      }
+      update_user_role: {
+        Args: { p_new_role: string; p_target_user_id: string }
+        Returns: boolean
+      }
+      upsert_leave_balance: {
+        Args: { p_staff: string; p_type: string; p_year: number }
+        Returns: undefined
+      }
+      user_can_access_leave: {
+        Args: { p_leave_id: string }
+        Returns: boolean
       }
       user_has_permission: {
         Args: { permission_name: string }
         Returns: boolean
       }
+      user_is_member_of_club: {
+        Args: { p_club_id: string }
+        Returns: boolean
+      }
       validate_role_change: {
-        Args: { target_user_id: string; new_role: string }
+        Args: { new_role: string; target_user_id: string }
         Returns: boolean
       }
     }
     Enums: {
-      contract_type: "CDI" | "CDD" | "Interim" | "Stagiaire"
+      contact_status: "new" | "processing" | "handled" | "spam"
+      contract_type: "CDI" | "CDD" | "Interim" | "Stagiaire" | "Vacations"
+      deletion_status:
+        | "pending"
+        | "approved"
+        | "rejected"
+        | "processed"
+        | "canceled"
+      movement_type: "entree" | "sortie" | "ajustement" | "peremption"
+      pz_org_role: "admin" | "rh" | "soignant" | "viewer"
+      signature_link_status: "active" | "used" | "expired" | "revoked"
       staff_role: "admin" | "infirmier" | "aide-soignant"
+      stock_category: "medicament" | "equipement" | "consommable" | "autre"
       strk_absence_type: "absence" | "lateness"
       strk_institution_type:
         | "school"
@@ -8056,6 +10877,7 @@ export type Database = {
         | "training_center"
         | "elementary_school"
         | "private_school"
+      strk_profile_status: "active" | "inactive" | "suspended"
       strk_signature_status: "pending" | "completed" | "expired"
       strk_signature_type: "entry" | "exit" | "document"
       strk_user_role: "admin" | "school_admin" | "teacher" | "student"
@@ -8186,8 +11008,20 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      contract_type: ["CDI", "CDD", "Interim", "Stagiaire"],
+      contact_status: ["new", "processing", "handled", "spam"],
+      contract_type: ["CDI", "CDD", "Interim", "Stagiaire", "Vacations"],
+      deletion_status: [
+        "pending",
+        "approved",
+        "rejected",
+        "processed",
+        "canceled",
+      ],
+      movement_type: ["entree", "sortie", "ajustement", "peremption"],
+      pz_org_role: ["admin", "rh", "soignant", "viewer"],
+      signature_link_status: ["active", "used", "expired", "revoked"],
       staff_role: ["admin", "infirmier", "aide-soignant"],
+      stock_category: ["medicament", "equipement", "consommable", "autre"],
       strk_absence_type: ["absence", "lateness"],
       strk_institution_type: [
         "school",
@@ -8198,6 +11032,7 @@ export const Constants = {
         "elementary_school",
         "private_school",
       ],
+      strk_profile_status: ["active", "inactive", "suspended"],
       strk_signature_status: ["pending", "completed", "expired"],
       strk_signature_type: ["entry", "exit", "document"],
       strk_user_role: ["admin", "school_admin", "teacher", "student"],
