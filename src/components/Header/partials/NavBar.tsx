@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Navbar, Nav, Container, Button } from 'react-bootstrap';
+import { Navbar, Nav, Container } from 'react-bootstrap';
 import { User, LogOut, Settings, Menu, X } from 'lucide-react';
 import { useAuth } from '../../Auth/AuthWrapper';
 
@@ -98,22 +98,20 @@ function NavBar() {
               </div>
             ) : (
               <div className="d-flex gap-2">
-                <Button 
-                  as={Link} 
+                <Link 
                   to="/auth" 
-                  variant="outline-primary"
+                  className="btn btn-outline-primary"
                   onClick={() => setExpanded(false)}
                 >
                   Connexion
-                </Button>
-                <Button 
-                  as={Link} 
+                </Link>
+                <Link 
                   to="/auth" 
-                  variant="primary"
+                  className="btn btn-primary"
                   onClick={() => setExpanded(false)}
                 >
                   Inscription
-                </Button>
+                </Link>
               </div>
             )}
           </Nav>
