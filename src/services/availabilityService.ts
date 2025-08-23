@@ -35,8 +35,12 @@ export const availabilityService = {
         .order('day_of_week')
         .order('start_time');
 
-      if (error) throw error;
-      return (data || []) as AvailabilitySlot[];
+      if (error) {
+        console.error('Error fetching availability:', error);
+        return [];
+      }
+      
+      return (data || []) as unknown as AvailabilitySlot[];
     } catch (error) {
       console.error('Error fetching availability:', error);
       return [];
@@ -86,8 +90,12 @@ export const availabilityService = {
       }
 
       const { data, error } = await query;
-      if (error) throw error;
-      return (data || []) as BookingException[];
+      if (error) {
+        console.error('Error fetching booking exceptions:', error);
+        return [];
+      }
+      
+      return (data || []) as unknown as BookingException[];
     } catch (error) {
       console.error('Error fetching booking exceptions:', error);
       return [];

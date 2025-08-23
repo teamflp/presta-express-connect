@@ -41,8 +41,12 @@ export const messageService = {
         .eq('is_archived', false)
         .order('last_message_at', { ascending: false });
 
-      if (error) throw error;
-      return data || [];
+      if (error) {
+        console.error('Error fetching message threads:', error);
+        return [];
+      }
+      
+      return (data || []) as unknown as any[];
     } catch (error) {
       console.error('Error fetching message threads:', error);
       return [];
@@ -62,8 +66,12 @@ export const messageService = {
         .eq('thread_id', threadId)
         .order('created_at', { ascending: true });
 
-      if (error) throw error;
-      return data || [];
+      if (error) {
+        console.error('Error fetching thread messages:', error);
+        return [];
+      }
+      
+      return (data || []) as unknown as any[];
     } catch (error) {
       console.error('Error fetching thread messages:', error);
       return [];
@@ -85,7 +93,7 @@ export const messageService = {
         .single();
 
       if (existingThread) {
-        return existingThread as MessageThread;
+        return existingThread as unknown as MessageThread;
       }
 
       // Create new thread
@@ -100,7 +108,7 @@ export const messageService = {
         .single();
 
       if (error) throw error;
-      return data as MessageThread;
+      return data as unknown as MessageThread;
     } catch (error) {
       console.error('Error creating/getting thread:', error);
       return null;
@@ -131,7 +139,7 @@ export const messageService = {
         .update({ last_message_at: new Date().toISOString() })
         .eq('id', threadId);
 
-      return data as Message;
+      return data as unknown as Message;
     } catch (error) {
       console.error('Error sending message:', error);
       toast.error('Erreur lors de l\'envoi du message');
@@ -144,10 +152,12 @@ export const messageService = {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      await supabase.rpc('mark_messages_as_read', {
-        thread_uuid: threadId,
-        user_uuid: user.id
-      });
+      // Utilisation d'une requête simple en attendant que la fonction RPC soit disponible
+      await supabase
+        .from('messages' as any)
+        .update({ is_read: true })
+        .eq('thread_id', threadId)
+        .neq('sender_id', user.id);
     } catch (error) {
       console.error('Error marking messages as read:', error);
     }
@@ -158,11 +168,15 @@ export const messageService = {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return 0;
 
+      // Requête simple en attendant que la fonction RPC soit disponible
       const { data, error } = await supabase
-        .rpc('get_unread_messages_count', { user_uuid: user.id });
+        .from('messages' as any)
+        .select('id', { count: 'exact' })
+        .eq('is_read', false)
+        .neq('sender_id', user.id);
 
       if (error) throw error;
-      return data || 0;
+      return data?.length || 0;
     } catch (error) {
       console.error('Error getting unread messages count:', error);
       return 0;

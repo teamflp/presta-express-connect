@@ -1,7 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { profileService } from '../services/profileService';
-import { Profile } from '../types/database';
+import { profileService, Profile } from '../services/profileService';
 
 export const useProfile = () => {
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -9,17 +8,27 @@ export const useProfile = () => {
 
   const fetchProfile = async () => {
     setLoading(true);
-    const data = await profileService.getCurrentUserProfile();
-    setProfile(data);
-    setLoading(false);
+    try {
+      const data = await profileService.getCurrentUserProfile();
+      setProfile(data);
+    } catch (error) {
+      console.error('Error fetching profile:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const updateProfile = async (profileData: Partial<Profile>) => {
-    const updatedProfile = await profileService.updateProfile(profileData);
-    if (updatedProfile) {
-      setProfile(updatedProfile);
+    try {
+      const updatedProfile = await profileService.updateProfile(profileData);
+      if (updatedProfile) {
+        setProfile(updatedProfile);
+      }
+      return updatedProfile;
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      return null;
     }
-    return updatedProfile;
   };
 
   useEffect(() => {

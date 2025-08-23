@@ -1,7 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { messageService } from '../services/messageService';
-import { MessageThread, Message } from '../types/database';
+import { messageService, MessageThread, Message } from '../services/messageService';
 
 export const useMessages = () => {
   const [threads, setThreads] = useState<any[]>([]);
@@ -10,31 +9,50 @@ export const useMessages = () => {
 
   const fetchThreads = async () => {
     setLoading(true);
-    const data = await messageService.getMessageThreads();
-    setThreads(data);
-    setLoading(false);
+    try {
+      const data = await messageService.getMessageThreads();
+      setThreads(data);
+    } catch (error) {
+      console.error('Error fetching threads:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const fetchUnreadCount = async () => {
-    const count = await messageService.getUnreadMessagesCount();
-    setUnreadCount(count);
+    try {
+      const count = await messageService.getUnreadMessagesCount();
+      setUnreadCount(count);
+    } catch (error) {
+      console.error('Error fetching unread count:', error);
+    }
   };
 
   const sendMessage = async (threadId: string, content: string) => {
-    const message = await messageService.sendMessage(threadId, content);
-    if (message) {
-      await fetchThreads(); // Refresh threads
-      await fetchUnreadCount();
+    try {
+      const message = await messageService.sendMessage(threadId, content);
+      if (message) {
+        await fetchThreads(); // Refresh threads
+        await fetchUnreadCount();
+      }
+      return message;
+    } catch (error) {
+      console.error('Error sending message:', error);
+      return null;
     }
-    return message;
   };
 
   const createThread = async (artisanId: string, reservationId?: string) => {
-    const thread = await messageService.createOrGetThread(artisanId, reservationId);
-    if (thread) {
-      await fetchThreads();
+    try {
+      const thread = await messageService.createOrGetThread(artisanId, reservationId);
+      if (thread) {
+        await fetchThreads();
+      }
+      return thread;
+    } catch (error) {
+      console.error('Error creating thread:', error);
+      return null;
     }
-    return thread;
   };
 
   useEffect(() => {

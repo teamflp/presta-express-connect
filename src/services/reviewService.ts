@@ -31,8 +31,12 @@ export const reviewService = {
         .eq('is_moderated', true)
         .order('created_at', { ascending: false });
 
-      if (error) throw error;
-      return (data || []) as Review[];
+      if (error) {
+        console.error('Error fetching reviews:', error);
+        return [];
+      }
+      
+      return (data || []) as unknown as Review[];
     } catch (error) {
       console.error('Error fetching reviews:', error);
       return [];
@@ -62,7 +66,7 @@ export const reviewService = {
       if (error) throw error;
       
       toast.success('Avis publié avec succès');
-      return data as Review;
+      return data as unknown as Review;
     } catch (error) {
       console.error('Error creating review:', error);
       toast.error('Erreur lors de la publication de l\'avis');
@@ -90,20 +94,20 @@ export const reviewService = {
 
   async getArtisanRating(artisanId: string): Promise<{ average: number; count: number }> {
     try {
+      // Calcul simple en attendant que les fonctions RPC soient disponibles
       const { data, error } = await supabase
-        .rpc('get_artisan_average_rating', { artisan_uuid: artisanId });
+        .from('reviews' as any)
+        .select('rating')
+        .eq('artisan_id', artisanId)
+        .eq('is_moderated', true);
 
       if (error) throw error;
 
-      const { data: countData, error: countError } = await supabase
-        .rpc('get_artisan_reviews_count', { artisan_uuid: artisanId });
+      const reviews = data || [];
+      const count = reviews.length;
+      const average = count > 0 ? reviews.reduce((sum: number, review: any) => sum + review.rating, 0) / count : 0;
 
-      if (countError) throw countError;
-
-      return {
-        average: data || 0,
-        count: countData || 0
-      };
+      return { average, count };
     } catch (error) {
       console.error('Error fetching artisan rating:', error);
       return { average: 0, count: 0 };

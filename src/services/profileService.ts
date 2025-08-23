@@ -1,7 +1,26 @@
 
 import { supabase } from '@/integrations/supabase/client';
-import { Profile } from '../types/database';
 import { toast } from 'react-hot-toast';
+
+// Interface temporaire pour Profile
+interface Profile {
+  id: string;
+  email: string;
+  first_name?: string;
+  last_name?: string;
+  role: 'client' | 'artisan' | 'admin';
+  phone?: string;
+  address?: string;
+  city?: string;
+  postal_code?: string;
+  latitude?: number;
+  longitude?: number;
+  avatar_url?: string;
+  bio?: string;
+  is_verified: boolean;
+  created_at: string;
+  updated_at: string;
+}
 
 export const profileService = {
   async getCurrentUserProfile(): Promise<Profile | null> {
@@ -15,8 +34,12 @@ export const profileService = {
         .eq('id', user.id)
         .single();
 
-      if (error) throw error;
-      return data;
+      if (error) {
+        console.error('Error fetching profile:', error);
+        return null;
+      }
+      
+      return data as unknown as Profile;
     } catch (error) {
       console.error('Error fetching profile:', error);
       return null;
@@ -38,7 +61,7 @@ export const profileService = {
       if (error) throw error;
       
       toast.success('Profil mis à jour avec succès');
-      return data;
+      return data as unknown as Profile;
     } catch (error) {
       console.error('Error updating profile:', error);
       toast.error('Erreur lors de la mise à jour du profil');
@@ -55,8 +78,12 @@ export const profileService = {
         .eq('role', 'artisan')
         .single();
 
-      if (error) throw error;
-      return data;
+      if (error) {
+        console.error('Error fetching artisan profile:', error);
+        return null;
+      }
+      
+      return data as unknown as Profile;
     } catch (error) {
       console.error('Error fetching artisan profile:', error);
       return null;
@@ -84,10 +111,13 @@ export const profileService = {
       const { data, error } = await query;
       if (error) throw error;
       
-      return data || [];
+      return (data || []) as unknown as Profile[];
     } catch (error) {
       console.error('Error searching artisans:', error);
       return [];
     }
   }
 };
+
+// Export du type pour utilisation dans d'autres fichiers
+export type { Profile };

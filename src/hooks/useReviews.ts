@@ -1,7 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { reviewService } from '../services/reviewService';
-import { Review } from '../types/database';
+import { reviewService, Review } from '../services/reviewService';
 
 export const useReviews = (artisanId?: string) => {
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -12,14 +11,19 @@ export const useReviews = (artisanId?: string) => {
     if (!artisanId) return;
     
     setLoading(true);
-    const [reviewsData, ratingData] = await Promise.all([
-      reviewService.getArtisanReviews(artisanId),
-      reviewService.getArtisanRating(artisanId)
-    ]);
-    
-    setReviews(reviewsData);
-    setRating(ratingData);
-    setLoading(false);
+    try {
+      const [reviewsData, ratingData] = await Promise.all([
+        reviewService.getArtisanReviews(artisanId),
+        reviewService.getArtisanRating(artisanId)
+      ]);
+      
+      setReviews(reviewsData);
+      setRating(ratingData);
+    } catch (error) {
+      console.error('Error fetching reviews:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const createReview = async (reviewData: {
@@ -29,11 +33,16 @@ export const useReviews = (artisanId?: string) => {
     title?: string;
     comment?: string;
   }) => {
-    const newReview = await reviewService.createReview(reviewData);
-    if (newReview) {
-      await fetchReviews(); // Refresh reviews
+    try {
+      const newReview = await reviewService.createReview(reviewData);
+      if (newReview) {
+        await fetchReviews(); // Refresh reviews
+      }
+      return newReview;
+    } catch (error) {
+      console.error('Error creating review:', error);
+      return null;
     }
-    return newReview;
   };
 
   useEffect(() => {
