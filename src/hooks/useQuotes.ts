@@ -1,15 +1,15 @@
 
 import { useState, useEffect } from 'react';
-import { quoteService, Quote, QuoteData } from '../services/quoteService';
+import { quoteService, QuoteType, QuoteDataType } from '../services/quoteService';
 
 export const useQuotes = (type: 'client' | 'artisan' = 'client', reservationId?: string) => {
-  const [quotes, setQuotes] = useState<Quote[]>([]);
+  const [quotes, setQuotes] = useState<QuoteType[]>([]);
   const [loading, setLoading] = useState(false);
 
   const fetchQuotes = async () => {
     setLoading(true);
     try {
-      let data: Quote[];
+      let data: QuoteType[];
       
       if (reservationId) {
         data = await quoteService.getQuotesByReservation(reservationId);
@@ -27,7 +27,7 @@ export const useQuotes = (type: 'client' | 'artisan' = 'client', reservationId?:
     }
   };
 
-  const generateQuote = async (quoteData: QuoteData) => {
+  const generateQuote = async (quoteData: QuoteDataType) => {
     try {
       const newQuote = await quoteService.generateQuote(quoteData);
       if (newQuote) {

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { MapPin, Star, Phone, Clock, Award } from 'lucide-react';
 import { useArtisans } from '../hooks/useArtisans';
-import { SearchFilters } from '../services/artisanService';
+import { SearchFiltersType } from '../services/artisanService';
 import { toast } from 'react-hot-toast';
 
 function SearchResultsPhase2() {
@@ -11,7 +11,7 @@ function SearchResultsPhase2() {
   const [userLocation, setUserLocation] = useState<{latitude: number; longitude: number} | null>(null);
   
   // Initialize filters from URL params
-  const initialFilters: SearchFilters = {
+  const initialFilters: SearchFiltersType = {
     category: searchParams.get('category') || undefined,
     city: searchParams.get('location') || undefined,
     emergency: searchParams.get('emergency') === 'true',
@@ -49,7 +49,7 @@ function SearchResultsPhase2() {
     }
   }, []);
 
-  const handleFilterChange = (newFilters: Partial<SearchFilters>) => {
+  const handleFilterChange = (newFilters: Partial<SearchFiltersType>) => {
     const updatedFilters = { ...filters, ...newFilters };
     setFilters(updatedFilters);
     searchArtisans(updatedFilters);

@@ -1,22 +1,22 @@
 
 import { useState, useEffect } from 'react';
-import { artisanService, SearchFilters, ArtisanProfile } from '../services/artisanService';
+import { artisanService, ArtisanProfile, SearchFiltersType } from '../services/artisanService';
 
-export const useArtisans = (initialFilters?: SearchFilters) => {
+export const useArtisans = (initialFilters?: SearchFiltersType) => {
   const [artisans, setArtisans] = useState<ArtisanProfile[]>([]);
   const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
-  const [filters, setFilters] = useState<SearchFilters>(initialFilters || {});
+  const [filters, setFilters] = useState<SearchFiltersType>(initialFilters || {});
 
-  const searchArtisans = async (newFilters?: SearchFilters, newPage = 1) => {
+  const searchArtisans = async (newFilters?: SearchFiltersType, newPage = 1) => {
     setLoading(true);
     try {
       const searchFilters = newFilters || filters;
       const result = await artisanService.searchArtisans(searchFilters, newPage);
       
-      setArtisans(result.artisans);
-      setTotal(result.total);
+      setArtisans(result.artisans || []);
+      setTotal(result.total || 0);
       setPage(newPage);
       
       if (newFilters) {

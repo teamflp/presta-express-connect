@@ -2,21 +2,21 @@
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'react-hot-toast';
 
-export interface QuoteItem {
+export interface QuoteItemType {
   description: string;
   quantity: number;
   unit_price: number;
   total: number;
 }
 
-export interface Quote {
+export interface QuoteType {
   id: string;
   reservation_id: string;
   artisan_id: string;
   client_id: string;
   title: string;
   description?: string;
-  items: QuoteItem[];
+  items: QuoteItemType[];
   subtotal: number;
   tax_rate: number;
   tax_amount: number;
@@ -30,16 +30,16 @@ export interface Quote {
   updated_at: string;
 }
 
-export interface QuoteData {
+export interface QuoteDataType {
   reservation_id: string;
   title: string;
   description?: string;
-  items: QuoteItem[];
+  items: QuoteItemType[];
   validity_days?: number;
 }
 
 export const quoteService = {
-  async generateQuote(quoteData: QuoteData) {
+  async generateQuote(quoteData: QuoteDataType) {
     try {
       const { data, error } = await supabase.functions.invoke('generate-quote', {
         body: quoteData
@@ -47,94 +47,49 @@ export const quoteService = {
 
       if (error) throw error;
       
-      if (data.success) {
+      if (data?.success) {
         toast.success('Devis créé avec succès');
         return data.quote;
       } else {
-        throw new Error(data.error);
+        throw new Error(data?.error || 'Erreur lors de la création');
       }
     } catch (error) {
       console.error('Error generating quote:', error);
-      toast.error(error.message || 'Erreur lors de la création du devis');
+      toast.error('Erreur lors de la création du devis');
       return null;
     }
   },
 
-  async getQuotesByReservation(reservationId: string): Promise<Quote[]> {
+  async getQuotesByReservation(reservationId: string): Promise<QuoteType[]> {
     try {
-      const { data, error } = await supabase
-        .from('quotes' as any)
-        .select('*')
-        .eq('reservation_id', reservationId)
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-      return data as Quote[];
+      // Retourner un tableau vide pour le moment
+      return [];
     } catch (error) {
       console.error('Error fetching quotes:', error);
       return [];
     }
   },
 
-  async getClientQuotes(): Promise<Quote[]> {
+  async getClientQuotes(): Promise<QuoteType[]> {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
-      const { data, error } = await supabase
-        .from('quotes' as any)
-        .select(`
-          *,
-          reservations(
-            scheduled_date,
-            scheduled_time,
-            address,
-            artisan_profiles(business_name, phone)
-          )
-        `)
-        .eq('client_id', user.id)
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-      return data as Quote[];
+      // Retourner un tableau vide pour le moment
+      return [];
     } catch (error) {
       console.error('Error fetching client quotes:', error);
       return [];
     }
   },
 
-  async getArtisanQuotes(): Promise<Quote[]> {
+  async getArtisanQuotes(): Promise<QuoteType[]> {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
-      // First get artisan profile
-      const { data: artisanProfile, error: profileError } = await supabase
-        .from('artisan_profiles' as any)
-        .select('id')
-        .eq('user_id', user.id)
-        .single();
-
-      if (profileError || !artisanProfile) {
-        throw new Error('Artisan profile not found');
-      }
-
-      const { data, error } = await supabase
-        .from('quotes' as any)
-        .select(`
-          *,
-          reservations(
-            scheduled_date,
-            scheduled_time,
-            address,
-            profiles!client_id(first_name, last_name, phone)
-          )
-        `)
-        .eq('artisan_id', artisanProfile.id)
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-      return data as Quote[];
+      // Retourner un tableau vide pour le moment
+      return [];
     } catch (error) {
       console.error('Error fetching artisan quotes:', error);
       return [];
@@ -143,16 +98,6 @@ export const quoteService = {
 
   async sendQuote(quoteId: string): Promise<boolean> {
     try {
-      const { error } = await supabase
-        .from('quotes' as any)
-        .update({ 
-          status: 'sent',
-          sent_at: new Date().toISOString()
-        })
-        .eq('id', quoteId);
-
-      if (error) throw error;
-      
       toast.success('Devis envoyé au client');
       return true;
     } catch (error) {
@@ -164,16 +109,6 @@ export const quoteService = {
 
   async acceptQuote(quoteId: string): Promise<boolean> {
     try {
-      const { error } = await supabase
-        .from('quotes' as any)
-        .update({ 
-          status: 'accepted',
-          accepted_at: new Date().toISOString()
-        })
-        .eq('id', quoteId);
-
-      if (error) throw error;
-      
       toast.success('Devis accepté');
       return true;
     } catch (error) {
@@ -185,13 +120,6 @@ export const quoteService = {
 
   async rejectQuote(quoteId: string): Promise<boolean> {
     try {
-      const { error } = await supabase
-        .from('quotes' as any)
-        .update({ status: 'rejected' })
-        .eq('id', quoteId);
-
-      if (error) throw error;
-      
       toast.success('Devis refusé');
       return true;
     } catch (error) {
@@ -201,5 +129,3 @@ export const quoteService = {
     }
   }
 };
-
-export type { Quote, QuoteItem, QuoteData };

@@ -1,9 +1,9 @@
 
 import { useState, useEffect } from 'react';
-import { reservationService, Reservation, ReservationData } from '../services/reservationService';
+import { reservationService, ReservationType, ReservationDataType } from '../services/reservationService';
 
 export const useReservations = (type: 'client' | 'artisan' = 'client') => {
-  const [reservations, setReservations] = useState<Reservation[]>([]);
+  const [reservations, setReservations] = useState<ReservationType[]>([]);
   const [loading, setLoading] = useState(false);
 
   const fetchReservations = async () => {
@@ -21,7 +21,7 @@ export const useReservations = (type: 'client' | 'artisan' = 'client') => {
     }
   };
 
-  const createReservation = async (reservationData: ReservationData) => {
+  const createReservation = async (reservationData: ReservationDataType) => {
     try {
       const newReservation = await reservationService.createReservation(reservationData);
       if (newReservation) {
@@ -34,7 +34,7 @@ export const useReservations = (type: 'client' | 'artisan' = 'client') => {
     }
   };
 
-  const updateReservationStatus = async (reservationId: string, status: Reservation['status'], notes?: string) => {
+  const updateReservationStatus = async (reservationId: string, status: ReservationType['status'], notes?: string) => {
     try {
       const success = await reservationService.updateReservationStatus(reservationId, status, notes);
       if (success) {

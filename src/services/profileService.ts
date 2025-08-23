@@ -39,7 +39,7 @@ export const profileService = {
         return null;
       }
       
-      return data as Profile;
+      return data as unknown as Profile;
     } catch (error) {
       console.error('Error fetching profile:', error);
       return null;
@@ -61,7 +61,7 @@ export const profileService = {
       if (error) throw error;
       
       toast.success('Profil mis à jour avec succès');
-      return data as Profile;
+      return data as unknown as Profile;
     } catch (error) {
       console.error('Error updating profile:', error);
       toast.error('Erreur lors de la mise à jour du profil');
@@ -83,7 +83,7 @@ export const profileService = {
         return null;
       }
       
-      return data as Profile;
+      return data as unknown as Profile;
     } catch (error) {
       console.error('Error fetching artisan profile:', error);
       return null;
@@ -111,7 +111,7 @@ export const profileService = {
       const { data, error } = await query;
       if (error) throw error;
       
-      return (data || []) as Profile[];
+      return (data || []) as unknown as Profile[];
     } catch (error) {
       console.error('Error searching artisans:', error);
       return [];

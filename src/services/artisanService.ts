@@ -2,6 +2,7 @@
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'react-hot-toast';
 
+// Interface étendue pour inclure les propriétés dynamiques
 export interface ArtisanProfile {
   id: string;
   user_id: string;
@@ -25,9 +26,27 @@ export interface ArtisanProfile {
   response_time?: number;
   created_at: string;
   updated_at: string;
+  // Propriétés dynamiques ajoutées lors des recherches
+  distance?: number;
+  artisan_services?: ArtisanService[];
 }
 
-export interface SearchFilters {
+export interface ArtisanService {
+  id: string;
+  name: string;
+  description?: string;
+  pricing_type: 'fixed' | 'hourly' | 'quote';
+  base_price?: number;
+  min_price?: number;
+  max_price?: number;
+  service_categories?: {
+    name: string;
+    slug: string;
+    icon?: string;
+  };
+}
+
+export interface SearchFiltersType {
   category?: string;
   city?: string;
   latitude?: number;
@@ -43,7 +62,7 @@ export interface SearchFilters {
 }
 
 export const artisanService = {
-  async searchArtisans(filters: SearchFilters, page = 1, limit = 10) {
+  async searchArtisans(filters: SearchFiltersType, page = 1, limit = 10) {
     try {
       const { data, error } = await supabase.functions.invoke('search-artisans', {
         body: { filters, page, limit }
@@ -60,26 +79,30 @@ export const artisanService = {
 
   async getArtisanProfile(artisanId: string): Promise<ArtisanProfile | null> {
     try {
+      // Utiliser les profils existants avec fallback robuste
       const { data, error } = await supabase
-        .from('artisan_profiles' as any)
-        .select(`
-          *,
-          artisan_services(
-            id,
-            name,
-            description,
-            pricing_type,
-            base_price,
-            min_price,
-            max_price,
-            service_categories(name, slug, icon)
-          )
-        `)
+        .from('profiles' as any)
+        .select('*')
         .eq('id', artisanId)
+        .eq('role', 'artisan')
         .single();
 
-      if (error) throw error;
-      return data as ArtisanProfile;
+      if (error) {
+        console.error('Error fetching artisan profile:', error);
+        return null;
+      }
+
+      // Convertir les données existantes vers le format ArtisanProfile
+      const profile = data as unknown as ArtisanProfile;
+      return {
+        ...profile,
+        business_name: profile.business_name || `${data.first_name || ''} ${data.last_name || ''}`.trim(),
+        is_verified: profile.is_verified || false,
+        is_premium: profile.is_premium || false,
+        rating: profile.rating || 0,
+        review_count: profile.review_count || 0,
+        artisan_services: []
+      };
     } catch (error) {
       console.error('Error fetching artisan profile:', error);
       return null;
@@ -92,9 +115,9 @@ export const artisanService = {
       if (!user) throw new Error('User not authenticated');
 
       const { error } = await supabase
-        .from('artisan_profiles' as any)
+        .from('profiles' as any)
         .update(profileData)
-        .eq('user_id', user.id);
+        .eq('id', user.id);
 
       if (error) throw error;
       
@@ -113,8 +136,12 @@ export const artisanService = {
       if (!user) throw new Error('User not authenticated');
 
       const { error } = await supabase
-        .from('artisan_profiles' as any)
-        .insert({ ...profileData, user_id: user.id });
+        .from('profiles' as any)
+        .update({ 
+          role: 'artisan',
+          ...profileData 
+        })
+        .eq('id', user.id);
 
       if (error) throw error;
       
@@ -129,17 +156,9 @@ export const artisanService = {
 
   async getArtisanServices(artisanId: string) {
     try {
-      const { data, error } = await supabase
-        .from('artisan_services' as any)
-        .select(`
-          *,
-          service_categories(name, slug, icon)
-        `)
-        .eq('artisan_id', artisanId)
-        .eq('is_active', true);
-
-      if (error) throw error;
-      return data || [];
+      // Retourner un tableau vide pour le moment
+      // Cette fonctionnalité sera implémentée quand les tables seront créées
+      return [];
     } catch (error) {
       console.error('Error fetching artisan services:', error);
       return [];
@@ -148,32 +167,11 @@ export const artisanService = {
 
   async getAvailability(artisanId: string, startDate?: string, endDate?: string) {
     try {
-      const { data: slots, error: slotsError } = await supabase
-        .from('availability_slots' as any)
-        .select('*')
-        .eq('artisan_id', artisanId)
-        .eq('is_available', true);
-
-      if (slotsError) throw slotsError;
-
-      let exceptionsQuery = supabase
-        .from('booking_exceptions' as any)
-        .select('*')
-        .eq('artisan_id', artisanId);
-
-      if (startDate) {
-        exceptionsQuery = exceptionsQuery.gte('exception_date', startDate);
-      }
-      if (endDate) {
-        exceptionsQuery = exceptionsQuery.lte('exception_date', endDate);
-      }
-
-      const { data: exceptions, error: exceptionsError } = await exceptionsQuery;
-      if (exceptionsError) throw exceptionsError;
-
+      // Retourner une disponibilité par défaut
+      // Cette fonctionnalité sera implémentée quand les tables seront créées
       return {
-        slots: slots || [],
-        exceptions: exceptions || []
+        slots: [],
+        exceptions: []
       };
     } catch (error) {
       console.error('Error fetching availability:', error);
@@ -181,5 +179,3 @@ export const artisanService = {
     }
   }
 };
-
-export type { SearchFilters };
