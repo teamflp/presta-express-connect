@@ -1,7 +1,29 @@
 
 import { supabase } from '@/integrations/supabase/client';
-import { MessageThread, Message } from '../types/database';
 import { toast } from 'react-hot-toast';
+
+// Types temporaires jusqu'à ce que les types Supabase soient régénérés
+interface MessageThread {
+  id: string;
+  client_id: string;
+  artisan_id: string;
+  reservation_id?: string;
+  subject?: string;
+  is_archived: boolean;
+  last_message_at: string;
+  created_at: string;
+}
+
+interface Message {
+  id: string;
+  thread_id: string;
+  sender_id: string;
+  content: string;
+  message_type: 'text' | 'image' | 'file';
+  file_url?: string;
+  is_read: boolean;
+  created_at: string;
+}
 
 export const messageService = {
   async getMessageThreads(): Promise<(MessageThread & { 
@@ -10,7 +32,7 @@ export const messageService = {
   })[]> {
     try {
       const { data, error } = await supabase
-        .from('message_threads')
+        .from('message_threads' as any)
         .select(`
           *,
           client:profiles!client_id(first_name, last_name, avatar_url),
@@ -32,7 +54,7 @@ export const messageService = {
   })[]> {
     try {
       const { data, error } = await supabase
-        .from('messages')
+        .from('messages' as any)
         .select(`
           *,
           sender:profiles!sender_id(first_name, last_name, avatar_url)
@@ -55,7 +77,7 @@ export const messageService = {
 
       // Try to find existing thread
       const { data: existingThread } = await supabase
-        .from('message_threads')
+        .from('message_threads' as any)
         .select('*')
         .eq('client_id', user.id)
         .eq('artisan_id', artisanId)
@@ -63,12 +85,12 @@ export const messageService = {
         .single();
 
       if (existingThread) {
-        return existingThread;
+        return existingThread as MessageThread;
       }
 
       // Create new thread
       const { data, error } = await supabase
-        .from('message_threads')
+        .from('message_threads' as any)
         .insert({
           client_id: user.id,
           artisan_id: artisanId,
@@ -78,7 +100,7 @@ export const messageService = {
         .single();
 
       if (error) throw error;
-      return data;
+      return data as MessageThread;
     } catch (error) {
       console.error('Error creating/getting thread:', error);
       return null;
@@ -91,7 +113,7 @@ export const messageService = {
       if (!user) throw new Error('User not authenticated');
 
       const { data, error } = await supabase
-        .from('messages')
+        .from('messages' as any)
         .insert({
           thread_id: threadId,
           sender_id: user.id,
@@ -105,11 +127,11 @@ export const messageService = {
 
       // Update thread last_message_at
       await supabase
-        .from('message_threads')
+        .from('message_threads' as any)
         .update({ last_message_at: new Date().toISOString() })
         .eq('id', threadId);
 
-      return data;
+      return data as Message;
     } catch (error) {
       console.error('Error sending message:', error);
       toast.error('Erreur lors de l\'envoi du message');
@@ -147,3 +169,6 @@ export const messageService = {
     }
   }
 };
+
+// Export des types pour utilisation dans d'autres fichiers
+export type { MessageThread, Message };

@@ -1,13 +1,28 @@
 
 import { supabase } from '@/integrations/supabase/client';
-import { Review } from '../types/database';
 import { toast } from 'react-hot-toast';
+
+// Types temporaires jusqu'à ce que les types Supabase soient régénérés
+interface Review {
+  id: string;
+  reviewer_id: string;
+  artisan_id: string;
+  reservation_id?: string;
+  rating: number;
+  title?: string;
+  comment?: string;
+  response_from_artisan?: string;
+  is_verified: boolean;
+  is_moderated: boolean;
+  created_at: string;
+  updated_at: string;
+}
 
 export const reviewService = {
   async getArtisanReviews(artisanId: string): Promise<Review[]> {
     try {
       const { data, error } = await supabase
-        .from('reviews')
+        .from('reviews' as any)
         .select(`
           *,
           reviewer:profiles!reviewer_id(first_name, last_name, avatar_url)
@@ -17,7 +32,7 @@ export const reviewService = {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      return data || [];
+      return (data || []) as Review[];
     } catch (error) {
       console.error('Error fetching reviews:', error);
       return [];
@@ -36,7 +51,7 @@ export const reviewService = {
       if (!user) throw new Error('User not authenticated');
 
       const { data, error } = await supabase
-        .from('reviews')
+        .from('reviews' as any)
         .insert({
           ...reviewData,
           reviewer_id: user.id,
@@ -47,7 +62,7 @@ export const reviewService = {
       if (error) throw error;
       
       toast.success('Avis publié avec succès');
-      return data;
+      return data as Review;
     } catch (error) {
       console.error('Error creating review:', error);
       toast.error('Erreur lors de la publication de l\'avis');
@@ -58,7 +73,7 @@ export const reviewService = {
   async updateArtisanResponse(reviewId: string, response: string): Promise<boolean> {
     try {
       const { error } = await supabase
-        .from('reviews')
+        .from('reviews' as any)
         .update({ response_from_artisan: response })
         .eq('id', reviewId);
 
@@ -95,3 +110,6 @@ export const reviewService = {
     }
   }
 };
+
+// Export des types pour utilisation dans d'autres fichiers
+export type { Review };

@@ -1,13 +1,34 @@
 
 import { supabase } from '@/integrations/supabase/client';
-import { AvailabilitySlot, BookingException } from '../types/database';
 import { toast } from 'react-hot-toast';
+
+// Types temporaires jusqu'à ce que les types Supabase soient régénérés
+interface AvailabilitySlot {
+  id: string;
+  artisan_id: string;
+  day_of_week: number;
+  start_time: string;
+  end_time: string;
+  is_available: boolean;
+  created_at: string;
+}
+
+interface BookingException {
+  id: string;
+  artisan_id: string;
+  exception_date: string;
+  start_time?: string;
+  end_time?: string;
+  reason?: string;
+  exception_type: 'unavailable' | 'special_hours';
+  created_at: string;
+}
 
 export const availabilityService = {
   async getArtisanAvailability(artisanId: string): Promise<AvailabilitySlot[]> {
     try {
       const { data, error } = await supabase
-        .from('availability_slots')
+        .from('availability_slots' as any)
         .select('*')
         .eq('artisan_id', artisanId)
         .eq('is_available', true)
@@ -15,7 +36,7 @@ export const availabilityService = {
         .order('start_time');
 
       if (error) throw error;
-      return data || [];
+      return (data || []) as AvailabilitySlot[];
     } catch (error) {
       console.error('Error fetching availability:', error);
       return [];
@@ -29,13 +50,13 @@ export const availabilityService = {
 
       // Delete existing slots for this artisan
       await supabase
-        .from('availability_slots')
+        .from('availability_slots' as any)
         .delete()
         .eq('artisan_id', user.id);
 
       // Insert new slots
       const { error } = await supabase
-        .from('availability_slots')
+        .from('availability_slots' as any)
         .insert(slots.map(slot => ({ ...slot, artisan_id: user.id })));
 
       if (error) throw error;
@@ -52,7 +73,7 @@ export const availabilityService = {
   async getBookingExceptions(artisanId: string, startDate?: string, endDate?: string): Promise<BookingException[]> {
     try {
       let query = supabase
-        .from('booking_exceptions')
+        .from('booking_exceptions' as any)
         .select('*')
         .eq('artisan_id', artisanId)
         .order('exception_date');
@@ -66,7 +87,7 @@ export const availabilityService = {
 
       const { data, error } = await query;
       if (error) throw error;
-      return data || [];
+      return (data || []) as BookingException[];
     } catch (error) {
       console.error('Error fetching booking exceptions:', error);
       return [];
@@ -79,7 +100,7 @@ export const availabilityService = {
       if (!user) throw new Error('User not authenticated');
 
       const { error } = await supabase
-        .from('booking_exceptions')
+        .from('booking_exceptions' as any)
         .insert({ ...exception, artisan_id: user.id });
 
       if (error) throw error;
@@ -96,7 +117,7 @@ export const availabilityService = {
   async deleteBookingException(exceptionId: string): Promise<boolean> {
     try {
       const { error } = await supabase
-        .from('booking_exceptions')
+        .from('booking_exceptions' as any)
         .delete()
         .eq('id', exceptionId);
 
@@ -111,3 +132,6 @@ export const availabilityService = {
     }
   }
 };
+
+// Export des types pour utilisation dans d'autres fichiers
+export type { AvailabilitySlot, BookingException };
