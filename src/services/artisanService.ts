@@ -28,10 +28,10 @@ export interface ArtisanProfile {
   updated_at: string;
   // Propriétés dynamiques ajoutées lors des recherches
   distance?: number;
-  artisan_services?: ArtisanService[];
+  artisan_services?: ArtisanServiceType[];
 }
 
-export interface ArtisanService {
+export interface ArtisanServiceType {
   id: string;
   name: string;
   description?: string;
@@ -92,17 +92,40 @@ export const artisanService = {
         return null;
       }
 
-      // Convertir les données existantes vers le format ArtisanProfile
-      const profile = data as unknown as ArtisanProfile;
-      return {
-        ...profile,
-        business_name: profile.business_name || `${data.first_name || ''} ${data.last_name || ''}`.trim(),
-        is_verified: profile.is_verified || false,
-        is_premium: profile.is_premium || false,
-        rating: profile.rating || 0,
-        review_count: profile.review_count || 0,
+      // Vérifier que les données existent avant d'y accéder
+      if (!data) {
+        return null;
+      }
+
+      // Convertir les données existantes vers le format ArtisanProfile avec vérification
+      const rawData = data as any;
+      const profile: ArtisanProfile = {
+        id: rawData.id || artisanId,
+        user_id: rawData.user_id || rawData.id,
+        business_name: rawData.business_name || `${rawData.first_name || ''} ${rawData.last_name || ''}`.trim() || 'Artisan Professionnel',
+        siret: rawData.siret,
+        specialties: rawData.specialties || [],
+        experience_years: rawData.experience_years,
+        service_radius: rawData.service_radius || 30,
+        address: rawData.address,
+        city: rawData.city,
+        postal_code: rawData.postal_code,
+        phone: rawData.phone,
+        website: rawData.website,
+        description: rawData.description,
+        hourly_rate: rawData.hourly_rate,
+        minimum_service_fee: rawData.minimum_service_fee,
+        is_verified: rawData.is_verified || false,
+        is_premium: rawData.is_premium || false,
+        rating: rawData.rating || 0,
+        review_count: rawData.review_count || 0,
+        response_time: rawData.response_time || 24,
+        created_at: rawData.created_at || new Date().toISOString(),
+        updated_at: rawData.updated_at || new Date().toISOString(),
         artisan_services: []
       };
+
+      return profile;
     } catch (error) {
       console.error('Error fetching artisan profile:', error);
       return null;
