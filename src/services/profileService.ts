@@ -2,7 +2,7 @@
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'react-hot-toast';
 
-// Interface temporaire pour Profile
+// Interface simple pour Profile sans récursion
 interface Profile {
   id: string;
   email: string;
@@ -29,7 +29,7 @@ export const profileService = {
       if (!user) return null;
 
       const { data, error } = await supabase
-        .from('profiles')
+        .from('profiles' as any)
         .select('*')
         .eq('id', user.id)
         .single();
@@ -39,7 +39,7 @@ export const profileService = {
         return null;
       }
       
-      return data as unknown as Profile;
+      return data as Profile;
     } catch (error) {
       console.error('Error fetching profile:', error);
       return null;
@@ -52,7 +52,7 @@ export const profileService = {
       if (!user) throw new Error('User not authenticated');
 
       const { data, error } = await supabase
-        .from('profiles')
+        .from('profiles' as any)
         .update(profileData)
         .eq('id', user.id)
         .select()
@@ -61,7 +61,7 @@ export const profileService = {
       if (error) throw error;
       
       toast.success('Profil mis à jour avec succès');
-      return data as unknown as Profile;
+      return data as Profile;
     } catch (error) {
       console.error('Error updating profile:', error);
       toast.error('Erreur lors de la mise à jour du profil');
@@ -72,7 +72,7 @@ export const profileService = {
   async getArtisanProfile(artisanId: string): Promise<Profile | null> {
     try {
       const { data, error } = await supabase
-        .from('profiles')
+        .from('profiles' as any)
         .select('*')
         .eq('id', artisanId)
         .eq('role', 'artisan')
@@ -83,7 +83,7 @@ export const profileService = {
         return null;
       }
       
-      return data as unknown as Profile;
+      return data as Profile;
     } catch (error) {
       console.error('Error fetching artisan profile:', error);
       return null;
@@ -99,7 +99,7 @@ export const profileService = {
   }): Promise<Profile[]> {
     try {
       let query = supabase
-        .from('profiles')
+        .from('profiles' as any)
         .select('*')
         .eq('role', 'artisan')
         .eq('is_verified', true);
@@ -111,7 +111,7 @@ export const profileService = {
       const { data, error } = await query;
       if (error) throw error;
       
-      return (data || []) as unknown as Profile[];
+      return (data || []) as Profile[];
     } catch (error) {
       console.error('Error searching artisans:', error);
       return [];
